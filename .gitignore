@@ -1,0 +1,6 @@
+./node_modules
+./dist
+./src/logs/*
+./src/temp/*
+./src/svg/*
+./src/configs/production.json
