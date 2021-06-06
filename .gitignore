@@ -4,3 +4,4 @@
 ./src/temp/*
 ./src/svg/*
 ./src/configs/production.json
+package-lock.json
