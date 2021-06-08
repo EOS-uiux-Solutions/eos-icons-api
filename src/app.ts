@@ -1,4 +1,5 @@
 import Express from 'express'
+process.env.NODE_CONFIG_DIR = 'configs'
 
 class App {
     application: Express.Application

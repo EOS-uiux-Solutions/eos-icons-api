@@ -3,5 +3,5 @@ dist
 src/logs/*
 src/temp/**
 src/svg/**
-src/configs/production.json
+src/configs/default.json
 package-lock.json
