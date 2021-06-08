@@ -1,0 +1,4 @@
+{
+    "env": "production",
+    "FRONTEND_HOST": ""
+}
