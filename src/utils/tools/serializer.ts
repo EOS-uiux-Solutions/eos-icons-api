@@ -1,4 +1,5 @@
 import { ExportType } from 'contracts/types'
+
 const serializer = (payload: any, format: ExportType, customized: boolean = false) => {
   const data = {
     customizationConfig: {},

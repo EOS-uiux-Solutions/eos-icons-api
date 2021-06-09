@@ -3,7 +3,7 @@ import zipFolderPackage from 'zip-folder'
 // promise-style version of zip-folder
 const pzipFolder = pify(zipFolderPackage)
 
-async function zipFolder (folderPath: string, outputPath: string) {
+const zipFolder = async (folderPath: string, outputPath: string) => {
   try {
     await pzipFolder(folderPath, outputPath)
   } catch (err) {

@@ -1,8 +1,9 @@
 import pify from 'pify'
 import svg2img from 'svg2img'
+// promise-style version of zip-folder
 const psvg2img = pify(svg2img)
 
-async function svgToPng (pngSize: string, svgPath: string) {
+const svgToPng = async (pngSize: string, svgPath: string) => {
   try {
     const svgOptions = {
       width: pngSize,

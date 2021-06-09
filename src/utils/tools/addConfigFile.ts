@@ -1,6 +1,6 @@
 import { promises as pfs } from 'fs'
 
-async function addConfigFile (path: string, data: string) {
+const addConfigFile = async (path: string, data: string) => {
   try {
     await pfs.writeFile(path, data)
   } catch (err) {
