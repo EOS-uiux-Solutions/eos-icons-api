@@ -5,8 +5,7 @@ const serializer = (payload: any, format: ExportType, customized: boolean = fals
     customized: customized,
     timestamp: new Date(),
     icons: payload.icons,
-    format: format,
-    location: undefined
+    format: format
   }
 
   if (customized) {
