@@ -1,15 +1,11 @@
 import Express from 'express'
 process.env.NODE_CONFIG_DIR = 'configs'
 
-class App {
-    application: Express.Application
-    constructor (application: Express.Application) {
-      this.application = application
-    }
+const app:Express.Application = Express();
 
-    get appInstance () {
-      return this.application
-    }
-}
+(async () => {
+  // other configurations will be set from here:
 
-export default App
+})()
+
+export default app
