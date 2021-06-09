@@ -10,11 +10,7 @@
     "esModuleInterop": true,                        /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
     /* Advanced Options */
     "skipLibCheck": true,                           /* Skip type checking of declaration files. */
-<<<<<<< HEAD
     "forceConsistentCasingInFileNames": true,        /* Disallow inconsistently-cased references to the same file. */
     "noImplicitAny": false,                          /* nable error reporting for expressions and declarations with an implied `any` type.. */
-=======
-    "forceConsistentCasingInFileNames": true        /* Disallow inconsistently-cased references to the same file. */
->>>>>>> b3e6285c08a87cdd0d603ded676493a34d6463ac
   }
 }
