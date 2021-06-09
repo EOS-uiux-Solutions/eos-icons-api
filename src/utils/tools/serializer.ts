@@ -1,8 +1,14 @@
-import { ExportType } from 'contracts/types'
+import { ExportType, customizedIconsPayload } from 'contracts/types'
+import { AnalyticsModelInterface } from 'models'
 
-const serializer = (payload: any, format: ExportType, customized: boolean = false) => {
-  const data = {
-    customizationConfig: {},
+const serializer = (payload: customizedIconsPayload, format: ExportType, customized: boolean = false) => {
+  const data: AnalyticsModelInterface = {
+    customizationConfig: {
+      colorCode: '',
+      rotateAngle: 0,
+      flip: { horizontal: false, vertical: false },
+      size: 0
+    },
     customized: customized,
     timestamp: new Date(),
     icons: payload.icons,
@@ -10,7 +16,8 @@ const serializer = (payload: any, format: ExportType, customized: boolean = fals
   }
 
   if (customized) {
-    data.customizationConfig = payload.customizationConfig
+    data.customizationConfig = payload.customizationConfig!
+    data.customizationConfig.size = payload.exportSize
   }
   return data
 }
