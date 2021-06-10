@@ -1,7 +1,7 @@
 /* eslint-disable import/first */
 process.env.NODE_CONFIG_DIR = './src/configs'
 import Express from 'express'
-import { configure, routers } from './start'
+import { configure, routers, errorHandlers } from './start'
 import configs from './configs'
 
 const app:Express.Application = Express();
@@ -11,6 +11,8 @@ const app:Express.Application = Express();
   configure(app)
   // init the routers:
   app.use(configs.API_PREFIX, routers)
+  // init the main error handlers:
+  errorHandlers(app)
 })()
 
 export default app

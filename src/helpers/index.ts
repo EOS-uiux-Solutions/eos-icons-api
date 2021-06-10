@@ -1,2 +1,2 @@
-export { default as handleError } from './handleError'
+export { handleError, HttpError } from './handleError'
 export { default as respond } from './respond'
