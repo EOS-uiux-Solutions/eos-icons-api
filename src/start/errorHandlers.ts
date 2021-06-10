@@ -5,7 +5,6 @@ const logger = new Logger('NODE')
 
 export default (app:Express.Application) => {
   app.use((err:HttpError, req:Express.Request, res:Express.Response, next:Express.NextFunction) => {
-    logger.logError('Handled Error', err)
     handleError(err, res)
   })
 
