@@ -1,11 +1,16 @@
+/* eslint-disable import/first */
+process.env.NODE_CONFIG_DIR = './src/configs'
 import Express from 'express'
-process.env.NODE_CONFIG_DIR = 'configs'
+import { configure, routers } from './start'
+import configs from './configs'
 
 const app:Express.Application = Express();
 
 (async () => {
-  // other configurations will be set from here:
-
+  // Configure the appliction (Parser, and additonal headers):
+  configure(app)
+  // init the routers:
+  app.use(configs.API_PREFIX, routers)
 })()
 
 export default app

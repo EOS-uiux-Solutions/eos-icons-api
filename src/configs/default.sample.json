@@ -1,4 +1,5 @@
 {
     "env": "development",
-    "FRONTEND_HOST": ""
+    "FRONTEND_HOST": "",
+    "API_PREFIX": "/"
 }
