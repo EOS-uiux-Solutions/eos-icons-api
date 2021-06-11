@@ -1,6 +1,6 @@
 import winston from 'winston'
-import configs from '../configs'
-import { HttpError } from '../helpers/'
+import configs from 'configs'
+import { HttpError } from 'helpers'
 
 const dateFormat = () => {
   return new Date(Date.now()).toLocaleString()
@@ -33,4 +33,10 @@ class Logger {
   }
 }
 
-export default Logger
+// Default logger, will be used to throw errors due to non-APIs issues:
+const NodeLogger = new Logger('NODE')
+
+export {
+  Logger,
+  NodeLogger
+}
