@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "preinstall": "npm update eos-icons ",
+    "postinstall": "grunt -b ./src moveFiles  && cp node_modules/eos-icons/animated-svg/*.svg svg/",
     "build": "tsc --project ./",
     "start:dev": "nodemon ./src/server.ts",
-    "start": "ts-node --transpile-only   ./src/server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "grunt -b ./src moveFiles  && ts-node --transpile-only   ./src/server.ts",
     "lint": "eslint \"src/*\"",
     "lint:fix": "eslint \"src/*\" --fix"
   },
