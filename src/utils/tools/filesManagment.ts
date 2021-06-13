@@ -8,16 +8,16 @@ const moveMissingSvgVersion = async ({ outlineSvgDir, normalSvgDir, tempFolder }
     }
 
     // Get all the outline icons version
-    const outlineList = fs.readdirSync(outlineSvgDir).filter((ele: string | string[]) => ele.includes('.svg'))
-    const eosIcons = fs.readdirSync(normalSvgDir).filter((ele: string | string[]) => ele.includes('.svg'))
+    const outlineList = fs.readdirSync(outlineSvgDir).filter((iconName: string) => iconName.includes('.svg'))
+    const eosIcons = fs.readdirSync(normalSvgDir).filter((iconName: string) => iconName.includes('.svg'))
 
-    const filtered = eosIcons.filter((icon: any) => {
+    const filtered = eosIcons.filter((icon: string) => {
       return outlineList.indexOf(icon) < 0
     })
     console.log('filtered: ', filtered)
 
     // Move the missing files to complete the outline version
-    filtered.forEach((icon: any) => {
+    filtered.forEach((icon: string) => {
       fs.copyFile(`${normalSvgDir}/${icon}`, `${tempFolder}/${icon}`, (err: any) => {
         if (err) throw err
       })
