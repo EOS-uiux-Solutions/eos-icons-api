@@ -3,7 +3,7 @@ import zipFolder from './tools/zipFolder'
 
 import { tempDirectory } from '../common/constants'
 
-class FontCustomizer {
+class FontFactory {
     icons: Array<string>
     timestamp: number
     theme: string
@@ -35,4 +35,4 @@ class FontCustomizer {
     }
 }
 
-export default FontCustomizer
+export default FontFactory
