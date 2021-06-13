@@ -1,6 +1,6 @@
 import Express from 'express'
 
-interface HttpError {
+interface HttpError extends Error {
     statusCode: number,
     message: string
 }
@@ -14,4 +14,7 @@ const handleError = (err: HttpError, res: Express.Response) => {
   })
 }
 
-export default handleError
+export {
+  handleError,
+  HttpError
+}
