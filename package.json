@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc --project ./",
-    "start:dev": "nodemon ./src/server.ts",
-    "start": "ts-node --transpile-only   ./src/server.ts",
+    "start:dev": "NODE_PATH=./src nodemon ./src/server.ts",
+    "start": "NODE_PATH=./src ts-node --transpile-only   ./src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint \"src/*\"",
     "lint:fix": "eslint \"src/*\" --fix"
@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "config": "^3.3.6",
+    "mongoose": "^5.12.13",
     "pify": "^3.0.0",
     "svg2img": "^0.9.3",
     "ts-node": "^10.0.0",

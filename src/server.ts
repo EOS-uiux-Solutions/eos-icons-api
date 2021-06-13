@@ -1,4 +1,4 @@
-import App from './app'
+import App from 'app'
 import * as http from 'http'
 
 const PORT: string | number = process.env.PORT || 3131
