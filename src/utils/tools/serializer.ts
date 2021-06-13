@@ -1,4 +1,4 @@
-import { ExportType, customizedIconsPayload } from 'contracts/types'
+import { ExportType, customizedIconsPayload } from 'common/types'
 import { AnalyticsModelInterface } from 'models'
 
 const serializer = (payload: customizedIconsPayload, format: ExportType, customized: boolean = false) => {

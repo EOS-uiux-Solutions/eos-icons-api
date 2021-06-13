@@ -1,4 +1,4 @@
-import { ExportType, customizedConfig } from 'contracts/types'
+import { ExportType, customizedConfig } from 'common/types'
 
 export interface AnalyticsModelInterface {
     customizationConfig: customizedConfig,
