@@ -7,8 +7,9 @@
     "preinstall": "npm update eos-icons ",
     "postinstall": "grunt -b ./src moveFiles  && cp node_modules/eos-icons/animated-svg/*.svg svg/",
     "build": "tsc --project ./",
-    "start:dev": "nodemon ./src/server.ts",
-    "start": "grunt -b ./src moveFiles  && ts-node --transpile-only   ./src/server.ts",
+    "start:dev": "NODE_PATH=./src nodemon ./src/server.ts",
+    "start": "NODE_PATH=./src ts-node --transpile-only   ./src/server.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint \"src/*\"",
     "lint:fix": "eslint \"src/*\" --fix"
   },
@@ -47,9 +48,11 @@
     "grunt-sass": "^3.1.0",
     "grunt-text-replace": "^0.4.0",
     "grunt-webfont": "^1.7.2",
+    "mongoose": "^5.12.13",
     "pify": "^3.0.0",
     "svg2img": "^0.9.3",
     "ts-node": "^10.0.0",
+    "winston": "^3.3.3",
     "zip-folder": "^1.0.0"
   }
 }
