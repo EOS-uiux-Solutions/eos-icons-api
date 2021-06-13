@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "preinstall": "npm update eos-icons ",
-    "postinstall": "grunt -b ./src moveFiles  && cp node_modules/eos-icons/animated-svg/*.svg svg/",
+    "postinstall": "grunt -b ./src moveFiles && cp node_modules/eos-icons/animated-svg/*.svg svg/",
     "build": "tsc --project ./",
-    "start:dev": "grunt -b ./src moveFiles  && NODE_PATH=./src nodemon ./src/server.ts",
-    "start": "grunt -b ./src moveFiles  && NODE_PATH=./src ts-node --transpile-only   ./src/server.ts",
+    "start:dev": "grunt -b ./src moveFiles && NODE_PATH=./src nodemon ./src/server.ts",
+    "start": "grunt -b ./src moveFiles && NODE_PATH=./src ts-node --transpile-only   ./src/server.ts",
     "lint": "eslint \"src/*\"",
     "lint:fix": "eslint \"src/*\" --fix"
   },
