@@ -1,8 +1,6 @@
 import fs, { promises as pfs } from 'fs'
 import SvgFactory from './svgFactory'
-import svgToPng from './tools/svgToPng'
-import addConfigFile from './tools/addConfigFile'
-import zipFolder from './tools/zipFolder'
+import { svgToPng, addConfigFile, zipFolder } from './tools'
 import { tempDirectory, svgDirectory, outlinedDirectory } from 'common/constants'
 import { customizedIconsPayload } from 'common/types'
 
