@@ -1,0 +1,6 @@
+export { default as addConfigFile } from './addConfigFile'
+export { default as moveMissingSvgVersion } from './filesManagment'
+export { default as isProduction } from './isProduction'
+export { default as serializer } from './serializer'
+export { default as svgToPng } from './svgToPng'
+export { default as zipFolder } from './zipFolder'
