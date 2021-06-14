@@ -4,9 +4,9 @@ import zipFolder from './tools/zipFolder'
 import { tempDirectory } from '../common/constants'
 
 class FontFactory {
-    icons: Array<string>
-    timestamp: number
-    theme: string
+    private icons: Array<string>
+    private timestamp: number
+    private theme: string
 
     constructor (icons: Array<string>, timestamp: number, theme: string) {
       this.icons = icons
