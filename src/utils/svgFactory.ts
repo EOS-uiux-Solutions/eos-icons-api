@@ -1,7 +1,7 @@
 import fs, { promises as pfs } from 'fs'
 import { customizedConfig, flipObject } from 'common/types'
 
-class CustomSvg {
+class svgFactory {
     private svgCode: string = '';
     private pathToSvg: string;
     private outputPathToSvg: string;
@@ -69,4 +69,4 @@ class CustomSvg {
     }
 }
 
-export default CustomSvg
+export default svgFactory
