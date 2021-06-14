@@ -1,39 +1,45 @@
-import { promises as pfs } from 'fs'
+import fs, { promises as pfs } from 'fs'
 import SvgFactory from './svgFactory'
 import svgToPng from './tools/svgToPng'
 import addConfigFile from './tools/addConfigFile'
 import zipFolder from './tools/zipFolder'
-import { tempDirectory, svgDirectory } from 'common/constants'
+import { tempDirectory, svgDirectory, outlinedDirectory } from 'common/constants'
+import { customizedIconsPayload } from 'common/types'
 
-class ImageCustomizer {
-    payload: any;
-    timestamp: number;
-    iconsOutputPath: string;
+class ImageFactory {
+    private payload: any;
+    private timestamp: number;
+    private iconsOutputPath: string;
+    private distDir: string;
+    // this will be used to locate the svg folder, either `svg` or `svg-outlined`
+    private svgDir: string;
 
-    constructor (payload: any, timestamp: number) {
+    constructor (payload: customizedIconsPayload, timestamp: number, theme: boolean) {
       this.payload = payload
       this.timestamp = timestamp
-      this.iconsOutputPath = `${tempDirectory}dist_${this.timestamp}/${this.payload.exportAs}/`
+      this.svgDir = theme ? outlinedDirectory : svgDirectory
+      this.distDir = `${tempDirectory}dist_${this.timestamp}/`
+      this.iconsOutputPath = `${this.distDir + this.payload.exportAs}/`
     }
 
-    async createDirectory () {
+    private async createDirectory () {
       try {
-        const isTempDirExists = await pfs.stat(tempDirectory)
+        const isTempDirExists = fs.existsSync(tempDirectory)
         if (!isTempDirExists) {
           await pfs.mkdir(tempDirectory)
         }
-        await pfs.mkdir(`${tempDirectory}dist_${this.timestamp}/`)
+        await pfs.mkdir(this.distDir)
         await pfs.mkdir(this.iconsOutputPath)
       } catch (err) {
-        throw new Error(`An error occured while creating the '${tempDirectory}dist_${this.timestamp}' directory: ${err}`)
+        throw new Error(`An error occured while creating the '${this.distDir}' directory: ${err}`)
       }
     }
 
-    async createSvg () {
+    private async createSvg () {
       try {
         for (let i = 0; i < this.payload.icons.length; i++) {
           const iconName = this.payload.icons[i]
-          const srcPath = `${svgDirectory + iconName}.svg`
+          const srcPath = `${this.svgDir + iconName}.svg`
           const outputPath = `${this.iconsOutputPath + iconName}.svg`
           const config = this.payload.customizationConfig
 
@@ -41,11 +47,11 @@ class ImageCustomizer {
           await customIconObject.finalizeIcon()
         }
       } catch (err) {
-        throw new Error(`⛔️ Some error occurred while generating zip file: ${err}`)
+        throw new Error(`Some error occurred while generating zip file: ${err}`)
       }
     }
 
-    async createPng () {
+    private async createPng () {
       try {
         for (let i = 0; i < this.payload.icons.length; i++) {
           const iconName = this.payload.icons[i]
@@ -60,13 +66,12 @@ class ImageCustomizer {
       }
     }
 
-    async finalize () {
-      const folderPath = `${tempDirectory}dist_${this.timestamp}`
-      const configFilePath = `${folderPath}/customizationConfig.json`
-      const zipOutputPath = `${folderPath}.zip`
+    private async finalize () {
+      const configFilePath = `${this.distDir}/customizationConfig.json`
+      const zipOutputPath = `${this.distDir}.zip`
 
       await addConfigFile(configFilePath, JSON.stringify(this.payload))
-      await zipFolder(folderPath, zipOutputPath)
+      await zipFolder(this.distDir, zipOutputPath)
     }
 
     async generatePack () {
@@ -79,4 +84,4 @@ class ImageCustomizer {
     }
 }
 
-export default ImageCustomizer
+export default ImageFactory
