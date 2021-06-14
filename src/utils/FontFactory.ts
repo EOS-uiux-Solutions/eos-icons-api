@@ -1,5 +1,4 @@
-import addConfigFile from './tools/addConfigFile'
-import zipFolder from './tools/zipFolder'
+import { zipFolder, addConfigFile } from './tools'
 
 import { tempDirectory } from '../common/constants'
 
