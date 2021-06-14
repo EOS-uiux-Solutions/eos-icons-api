@@ -6,7 +6,7 @@
 export type ExportType = 'png' | 'svg' | 'font';
 
 // The allowed flip properties:
-interface flipObject {
+export interface flipObject {
     horizontal: boolean,
     vertical: boolean
 }
