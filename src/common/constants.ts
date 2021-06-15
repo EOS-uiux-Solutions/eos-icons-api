@@ -18,3 +18,4 @@ export const FILES_PATHS = {
 export const tempDirectory = path.join(__dirname, '..', '/temp')
 export const svgDirectory = path.join(__dirname, '..', '/svg')
 export const outlinedDirectory = path.join(__dirname, '..', '/svg-outlined')
+
