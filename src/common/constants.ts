@@ -15,6 +15,6 @@ export const FILES_PATHS = {
 // Directories used in APIs (V1)
 // *********************************
 
-export const tempDirectory = path.join(__dirname, '..', '/temp/')
-export const svgDirectory = path.join(__dirname, '..', '/svg/')
-export const outlinedDirectory = path.join(__dirname, '..', '/svg-outlined/')
+export const tempDirectory = path.join(__dirname, '..', '/temp')
+export const svgDirectory = path.join(__dirname, '..', '/svg')
+export const outlinedDirectory = path.join(__dirname, '..', '/svg-outlined')

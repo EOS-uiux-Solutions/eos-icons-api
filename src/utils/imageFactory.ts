@@ -16,7 +16,7 @@ class ImageFactory {
       this.payload = payload
       this.timestamp = timestamp
       this.svgDir = theme ? outlinedDirectory : svgDirectory
-      this.distDir = `${tempDirectory}dist_${this.timestamp}/`
+      this.distDir = `${tempDirectory}/dist_${this.timestamp}/`
       this.iconsOutputPath = `${this.distDir + this.payload.exportAs}/`
     }
 
