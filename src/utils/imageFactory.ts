@@ -1,7 +1,7 @@
 import fs, { promises as pfs } from 'fs'
-import SvgFactory from './svgFactory'
-import { svgToPng, addConfigFile, zipFolder } from './tools'
-import { tempDirectory, ThemesDirectories } from 'common/constants'
+import SvgFactory from './SvgFactory'
+import { svgToPng, addConfigFile, zipFolder, getThemeDir } from './tools'
+import { tempDirectory } from 'common/constants'
 import { customizedIconsPayload, iconsTheme, iconsThemeV1 } from 'common/types'
 
 class ImageFactory {
@@ -17,14 +17,7 @@ class ImageFactory {
       this.timestamp = timestamp
       this.distDir = `${tempDirectory}/dist_${this.timestamp}/`
       this.iconsOutputPath = `${this.distDir + this.payload.exportAs}/`
-      // Backward compatability for V1 APIs:
-      if (theme === 'svg') {
-        this.themeDir = ThemesDirectories[iconsTheme.filled]
-      } else if (theme === 'svg-outlined') {
-        this.themeDir = ThemesDirectories[iconsTheme.outlined]
-      } else {
-        this.themeDir = ThemesDirectories[theme]
-      }
+      this.themeDir = getThemeDir(theme)
     }
 
     private async createDirectory () {

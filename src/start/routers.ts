@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { v1router } from 'routers'
 const router = Router()
 
 // Startup Route:
@@ -7,5 +8,6 @@ router.get('/', function (req, res) {
 })
 
 // Configure Routes:
+router.use(v1router.prefix, v1router.router)
 
 export default router

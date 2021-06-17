@@ -1,27 +1,27 @@
-import fs, { promises as pfs } from 'fs'
+import fs from 'fs'
 import { customizedConfig, flipObject } from 'common/types'
 
 class SvgFactory {
     private svgCode: string = '';
     private pathToSvg: string;
-    private outputPathToSvg: string;
     private colorCode: string;
     private rotateAngle: number;
     private flip: flipObject;
+    private customized: boolean;
 
-    constructor (pathToSvg: string, outputPathToSvg: string, customizationConfig: customizedConfig) {
+    constructor (pathToSvg: string, customizationConfig: customizedConfig, customized: boolean = false) {
       this.pathToSvg = pathToSvg
-      this.outputPathToSvg = outputPathToSvg
       this.colorCode = customizationConfig.colorCode!
       this.rotateAngle = customizationConfig.rotateAngle!
       this.flip = customizationConfig.flip!
+      this.customized = customized
     }
 
     get getSvgCode () {
       return this.svgCode
     }
 
-    readSvgCode () {
+    private readSvgCode () {
       if (fs.existsSync(this.pathToSvg)) {
         this.svgCode = fs.readFileSync(this.pathToSvg, 'utf8')
       } else {
@@ -29,17 +29,19 @@ class SvgFactory {
       }
     }
 
-    modifySvgCode () {
+    private modifySvgCode () {
       const gTagOpen = `<g ${this.changeColor()} transform="${this.rotateIcon()} ${this.flipIcon()}">`
       const index1 = this.svgCode.indexOf('>') + 1
       const index2 = this.svgCode.lastIndexOf('<')
       this.svgCode = `${this.svgCode.slice(0, index1)}${gTagOpen}${this.svgCode.slice(index1, index2)}</g></svg>`
     }
 
-    async finalizeIcon () {
+    finalizeIcon () {
       this.readSvgCode()
-      this.modifySvgCode()
-      await pfs.writeFile(this.outputPathToSvg, this.svgCode)
+      if (this.customized) {
+        this.modifySvgCode()
+      }
+      return this.svgCode
     }
 
     private changeColor () {
