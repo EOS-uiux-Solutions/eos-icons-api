@@ -1,21 +1,21 @@
 import fs, { promises as pfs } from 'fs'
 import SvgFactory from './svgFactory'
 import { svgToPng, addConfigFile, zipFolder } from './tools'
-import { tempDirectory, svgDirectory, outlinedDirectory } from 'common/constants'
-import { customizedIconsPayload } from 'common/types'
+import { tempDirectory, ThemesDirectories } from 'common/constants'
+import { customizedIconsPayload, iconsTheme } from 'common/types'
 
 class ImageFactory {
     private payload: any;
     private timestamp: number;
     private iconsOutputPath: string;
     private distDir: string;
-    // this will be used to locate the svg folder, either `svg` or `svg-outlined`
-    private svgDir: string;
+    // Will be used to locate the icons folder based on the theme
+    private themeDir: string;
 
-    constructor (payload: customizedIconsPayload, timestamp: number, theme: boolean) {
+    constructor (payload: customizedIconsPayload, timestamp: number, theme: iconsTheme) {
       this.payload = payload
       this.timestamp = timestamp
-      this.svgDir = theme ? outlinedDirectory : svgDirectory
+      this.themeDir = ThemesDirectories[theme]
       this.distDir = `${tempDirectory}/dist_${this.timestamp}/`
       this.iconsOutputPath = `${this.distDir + this.payload.exportAs}/`
     }
@@ -37,7 +37,7 @@ class ImageFactory {
       try {
         for (let i = 0; i < this.payload.icons.length; i++) {
           const iconName = this.payload.icons[i]
-          const srcPath = `${this.svgDir + iconName}.svg`
+          const srcPath = `${this.themeDir + iconName}.svg`
           const outputPath = `${this.iconsOutputPath + iconName}.svg`
           const config = this.payload.customizationConfig
 

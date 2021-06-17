@@ -1,4 +1,5 @@
 import path from 'path'
+import { themesDictionary, iconsTheme } from './types'
 
 // *********************************
 // Grunt - Files Paths:
@@ -16,5 +17,10 @@ export const FILES_PATHS = {
 // *********************************
 
 export const tempDirectory = path.join(__dirname, '..', '/temp')
-export const svgDirectory = path.join(__dirname, '..', '/svg')
-export const outlinedDirectory = path.join(__dirname, '..', '/svg-outlined')
+const svgDirectory = path.join(__dirname, '..', '/svg')
+const outlinedDirectory = path.join(__dirname, '..', '/svg-outlined')
+
+export const ThemesDirectories: themesDictionary = {
+  [iconsTheme.svg]: svgDirectory,
+  [iconsTheme.outlined]: outlinedDirectory
+}
