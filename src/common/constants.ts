@@ -21,6 +21,6 @@ const svgDirectory = path.join(__dirname, '..', '/svg')
 const outlinedDirectory = path.join(__dirname, '..', '/svg-outlined')
 
 export const ThemesDirectories: themesDictionary = {
-  [iconsTheme.svg]: svgDirectory,
+  [iconsTheme.filled]: svgDirectory,
   [iconsTheme.outlined]: outlinedDirectory
 }
