@@ -48,6 +48,7 @@
     "grunt-text-replace": "^0.4.0",
     "grunt-webfont": "^1.7.2",
     "mongoose": "^5.12.13",
+    "node-cmd": "^4.0.0",
     "pify": "^3.0.0",
     "svg2img": "^0.9.3",
     "ts-node": "^10.0.0",
