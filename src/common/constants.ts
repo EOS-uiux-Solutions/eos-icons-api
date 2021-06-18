@@ -17,7 +17,7 @@ export const FILES_PATHS = {
 // *********************************
 
 export const tempDirectory = path.join(__dirname, '..', '/temp')
-const svgDirectory = path.join(__dirname, '..', '/svg')
+export const svgDirectory = path.join(__dirname, '..', '/svg')
 const outlinedDirectory = path.join(__dirname, '..', '/svg-outlined')
 
 export const ThemesDirectories: themesDictionary = {
