@@ -1,5 +1,5 @@
 import { ExportType, customizedIconsPayload } from 'common/types'
-import analyticsModel from 'models'
+import { analyticsModel } from 'components/analytics'
 
 const serializer = (payload: customizedIconsPayload, format: ExportType, customized: boolean = false) => {
   const data: analyticsModel.IAnalytics = {
