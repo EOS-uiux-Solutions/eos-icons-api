@@ -15,8 +15,8 @@ class ImageFactory {
     constructor (payload: customizedIconsPayload, timestamp: number, theme: iconsThemeV1 | iconsTheme) {
       this.payload = payload
       this.timestamp = timestamp
-      this.distDir = `${tempDirectory}/dist_${this.timestamp}/`
-      this.iconsOutputPath = `${this.distDir + this.payload.exportAs}/`
+      this.distDir = `${tempDirectory}/dist_${this.timestamp}`
+      this.iconsOutputPath = `${this.distDir}/${this.payload.exportAs}`
       this.themeDir = getThemeDir(theme)
     }
 
@@ -48,8 +48,8 @@ class ImageFactory {
       try {
         for (let i = 0; i < this.payload.icons.length; i++) {
           const iconName = this.payload.icons[i]
-          const iconPath = `${this.iconsOutputPath + iconName}.svg`
-          const outputPath = `${this.iconsOutputPath + iconName}.${this.payload.exportAs}`
+          const iconPath = `${this.themeDir}/${iconName}.svg`
+          const outputPath = `${this.iconsOutputPath}/${iconName}.${this.payload.exportAs}`
           // make the modification on the svg:
           const modifiedSvg = this.modifySvg(iconPath)
           if (this.payload.exportAs === 'png') {
@@ -68,7 +68,7 @@ class ImageFactory {
 
     private async generateTheIconsPack () {
       const configFilePath = `${this.distDir}/customizationConfig.json`
-      const zipOutputPath = `${this.distDir}.zip`
+      const zipOutputPath = `${this.distDir}/dist_${this.timestamp}.zip`
       await this.createDirectory()
       await this.createIconFile()
       await addConfigFile(configFilePath, JSON.stringify(this.payload))
