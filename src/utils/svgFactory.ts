@@ -30,7 +30,7 @@ class SvgFactory {
     }
 
     private modifySvgCode () {
-      const gTagOpen = `<g ${this.changeColor()} transform="${this.rotateIcon()} ${this.flipIcon()}">`
+      const gTagOpen = `<g ${this.changeColor()} transform="${this.flipIcon()} ${this.rotateIcon()}">`
       const index1 = this.svgCode.indexOf('>') + 1
       const index2 = this.svgCode.lastIndexOf('<')
       this.svgCode = `${this.svgCode.slice(0, index1)}${gTagOpen}${this.svgCode.slice(index1, index2)}</g></svg>`
