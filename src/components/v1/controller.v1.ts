@@ -53,7 +53,7 @@ const iconCustomization = async (req: Express.Request, res: Express.Response, ne
     await imageCreator.generateTheIconsPack()
     const serializedData = serializer(req.body, req.body.exportAs, true)
     analyticsServices.createAnalyticDocument(serializedData)
-    res.send(timestamp)
+    res.status(200).send((timestamp).toString())
   } catch (err) {
     IconsLogger.logError('iconCustomization', err)
     next(err)
