@@ -5,6 +5,7 @@ import { getThemeDir, serializer } from 'utils/tools'
 import { iconsTheme, iconsThemeV1 } from 'common/types'
 import { SvgFactory } from 'utils'
 import { analyticsServices } from 'services'
+import ImageFactory from 'utils/imageFactory'
 const IconsLogger = new Logger('Icons Controller')
 
 const getSVGCode = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
@@ -44,7 +45,23 @@ const downloadSVG = async (req: Express.Request, res: Express.Response, next: Ex
   }
 }
 
+const iconCustomization = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
+  try {
+    const timestamp = Math.floor(Date.now())
+    const theme = req.query.theme as iconsThemeV1 | iconsTheme
+    const imageCreator = new ImageFactory(req.body, timestamp, theme)
+    await imageCreator.generateTheIconsPack()
+    const serializedData = serializer(req.body, req.body.exportAs, true)
+    analyticsServices.createAnalyticDocument(serializedData)
+    res.send(timestamp)
+  } catch (err) {
+    IconsLogger.logError('iconCustomization', err)
+    next(err)
+  }
+}
+
 export {
   getSVGCode,
-  downloadSVG
+  downloadSVG,
+  iconCustomization
 }
