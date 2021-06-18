@@ -1,5 +1,5 @@
 import express from 'express'
-import * as controller from 'controllers/v1/icons.controller'
+import * as controller from './controller.v1'
 const router = express.Router()
 
 const prefix = ''
