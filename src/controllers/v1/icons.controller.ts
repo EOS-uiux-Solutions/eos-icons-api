@@ -2,8 +2,9 @@ import Express from 'express'
 import { Logger } from 'helpers'
 import { getSvgCodePayload } from './interfaces'
 import { getThemeDir } from 'utils/tools'
-import { iconsTheme, iconsThemeV1 } from 'common/types'
+import { iconsTheme, iconsThemeV1, ExportType } from 'common/types'
 import { SvgFactory } from 'utils'
+import { analyticsServices } from 'services'
 const IconsLogger = new Logger('Icons Controller')
 
 const getSVGCode = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
@@ -28,6 +29,27 @@ const getSVGCode = async (req: Express.Request, res: Express.Response, next: Exp
   }
 }
 
+const downloadSVG = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
+  try {
+    const theme = req.query.theme as iconsThemeV1 | iconsTheme
+    const iconName = req.params.iconName as string
+    const themeDir = getThemeDir(theme)
+    const iconPath = `${themeDir}/${iconName}.svg`
+    const analyticData = {
+      icons: [iconName],
+      format: 'svg' as ExportType,
+      customized: false,
+      timestamp: Math.floor(Date.now())
+    }
+    analyticsServices.createAnalyticDocument(analyticData)
+    res.download(iconPath)
+  } catch (err) {
+    IconsLogger.logError('getSVGCode', err)
+    next(err)
+  }
+}
+
 export {
-  getSVGCode
+  getSVGCode,
+  downloadSVG
 }
