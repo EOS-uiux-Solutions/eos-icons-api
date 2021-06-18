@@ -36,7 +36,7 @@ const downloadSVG = async (req: Express.Request, res: Express.Response, next: Ex
     // set paths:
     const themeDir = getThemeDir(theme)
     const iconPath = `${themeDir}/${iconName}.svg`
-    // post analytics data to db:
+    // add analytics data to db:
     const serializedData = serializer({ icons: [iconName] }, 'svg')
     analyticsServices.createAnalyticDocument(serializedData)
     res.download(iconPath)
