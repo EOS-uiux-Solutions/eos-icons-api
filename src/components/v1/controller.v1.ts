@@ -58,7 +58,7 @@ const downloadPNG = async (req: Express.Request, res: Express.Response, next: Ex
     // convert svg to png:
     const pngBuffer = await svgToPng(pngSize, iconPath)
     await pfs.writeFile(outputPath, pngBuffer)
-    // post analytics data in db:
+    // add analytics data to db:
     const serializedData = serializer({ icons: [iconName] }, 'png')
     analyticsServices.createAnalyticDocument(serializedData)
     res.download(outputPath)
