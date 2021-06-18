@@ -1,4 +1,4 @@
-import analyticsModel from 'models'
+import * as analyticsModel from './analytics.model'
 
 const { Model } = analyticsModel
 
