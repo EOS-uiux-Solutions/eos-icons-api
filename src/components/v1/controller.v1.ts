@@ -1,6 +1,6 @@
 import Express from 'express'
 import { Logger } from 'helpers'
-import { getSvgCodePayload } from './icons.interfaces'
+import { getSvgCodePayload } from './interfaces.v1'
 import { getThemeDir } from 'utils/tools'
 import { iconsTheme, iconsThemeV1 } from 'common/types'
 import { SvgFactory } from 'utils'

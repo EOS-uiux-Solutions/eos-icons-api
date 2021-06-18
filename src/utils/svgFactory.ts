@@ -11,9 +11,9 @@ class SvgFactory {
 
     constructor (pathToSvg: string, customizationConfig: customizedConfig, customized: boolean = false) {
       this.pathToSvg = pathToSvg
-      this.colorCode = customizationConfig.colorCode!
-      this.rotateAngle = customizationConfig.rotateAngle!
-      this.flip = customizationConfig.flip!
+      this.colorCode = customizationConfig?.colorCode!
+      this.rotateAngle = customizationConfig?.rotateAngle!
+      this.flip = customizationConfig?.flip!
       this.customized = customized
     }
 
