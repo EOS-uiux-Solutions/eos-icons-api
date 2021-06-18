@@ -33,53 +33,46 @@ class ImageFactory {
       }
     }
 
-    private async createSvg () {
+    private modifySvg (iconPath: string) {
       try {
-        for (let i = 0; i < this.payload.icons.length; i++) {
-          const iconName = this.payload.icons[i]
-          const srcPath = `${this.themeDir + iconName}.svg`
-          const outputPath = `${this.iconsOutputPath + iconName}.svg`
-          const config = this.payload.customizationConfig
-
-          const svgCustomizer = new SvgFactory(srcPath, config, !!config)
-          const customizedSvg = svgCustomizer.finalizeIcon()
-          await pfs.writeFile(outputPath, customizedSvg)
-        }
+        const config = this.payload.customizationConfig
+        const svgCustomizer = new SvgFactory(iconPath, config, !!config)
+        const customizedSvg = svgCustomizer.finalizeIcon()
+        return customizedSvg
       } catch (err) {
-        throw new Error(`Some error occurred while generating zip file: ${err}`)
+        throw new Error(`Some error occurred while modifying - ${iconPath} - :  ${err}`)
       }
     }
 
-    private async createPng () {
+    private async createIconFile () {
       try {
         for (let i = 0; i < this.payload.icons.length; i++) {
           const iconName = this.payload.icons[i]
           const iconPath = `${this.iconsOutputPath + iconName}.svg`
-          const outputPath = `${this.iconsOutputPath + iconName}.png`
-          const pngBuffer = await svgToPng(this.payload.exportSize, iconPath)
-          await pfs.writeFile(outputPath, pngBuffer)
-          await pfs.unlink(iconPath)
+          const outputPath = `${this.iconsOutputPath + iconName}.${this.payload.exportAs}`
+          // make the modification on the svg:
+          const modifiedSvg = this.modifySvg(iconPath)
+          if (this.payload.exportAs === 'png') {
+            // if the requested type is png make the conversion:
+            const pngBuffer = await svgToPng(this.payload.exportSize, modifiedSvg)
+            await pfs.writeFile(outputPath, pngBuffer)
+          } else {
+            // else, write the svg file
+            await pfs.writeFile(outputPath, modifiedSvg)
+          }
         }
       } catch (err) {
         throw new Error(`Some error occurred while creating PNG file: ${err}`)
       }
     }
 
-    private async finalize () {
+    private async generateTheIconsPack () {
       const configFilePath = `${this.distDir}/customizationConfig.json`
       const zipOutputPath = `${this.distDir}.zip`
-
+      await this.createDirectory()
+      await this.createIconFile()
       await addConfigFile(configFilePath, JSON.stringify(this.payload))
       await zipFolder(this.distDir, zipOutputPath)
-    }
-
-    async generatePack () {
-      await this.createDirectory()
-      await this.createSvg()
-      if (this.payload.exportAs === 'png') {
-        await this.createPng()
-      }
-      await this.finalize()
     }
 }
 
