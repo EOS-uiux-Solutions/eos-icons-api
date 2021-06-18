@@ -41,8 +41,9 @@ class ImageFactory {
           const outputPath = `${this.iconsOutputPath + iconName}.svg`
           const config = this.payload.customizationConfig
 
-          const customIconObject = new SvgFactory(srcPath, outputPath, config)
-          await customIconObject.finalizeIcon()
+          const svgCustomizer = new SvgFactory(srcPath, config, !!config)
+          const customizedSvg = svgCustomizer.finalizeIcon()
+          await pfs.writeFile(outputPath, customizedSvg)
         }
       } catch (err) {
         throw new Error(`Some error occurred while generating zip file: ${err}`)
