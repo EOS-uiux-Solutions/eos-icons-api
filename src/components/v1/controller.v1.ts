@@ -4,7 +4,7 @@ import { getSvgCodePayload } from './interfaces.v1'
 import { getThemeDir, serializer } from 'utils/tools'
 import { iconsTheme, iconsThemeV1 } from 'common/types'
 import { SvgFactory } from 'utils'
-import { analyticsServices } from 'services'
+import { analyticsServices } from '../analytics'
 const IconsLogger = new Logger('Icons Controller')
 
 const getSVGCode = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
