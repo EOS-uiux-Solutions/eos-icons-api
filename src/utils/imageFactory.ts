@@ -15,8 +15,8 @@ class ImageFactory {
     constructor (payload: customizedIconsPayload, timestamp: number, theme: iconsThemeV1 | iconsTheme) {
       this.payload = payload
       this.timestamp = timestamp
-      this.distDir = `${tempDirectory}/dist_${this.timestamp}/`
-      this.iconsOutputPath = `${this.distDir + this.payload.exportAs}/`
+      this.distDir = `${tempDirectory}/dist_${this.timestamp}`
+      this.iconsOutputPath = `${this.distDir}/${this.payload.exportAs}`
       this.themeDir = getThemeDir(theme)
     }
 
@@ -49,7 +49,11 @@ class ImageFactory {
         for (let i = 0; i < this.payload.icons.length; i++) {
           const iconName = this.payload.icons[i]
           const iconPath = `${this.themeDir}/${iconName}.svg`
+<<<<<<< HEAD
           const outputPath = `${this.iconsOutputPath + iconName}.${this.payload.exportAs}`
+=======
+          const outputPath = `${this.iconsOutputPath}/${iconName}.${this.payload.exportAs}`
+>>>>>>> ee65e141a0ae015e6d3febf3844893f3cc15036f
           // make the modification on the svg:
           const modifiedSvg = this.modifySvg(iconPath)
           if (this.payload.exportAs === 'png') {
