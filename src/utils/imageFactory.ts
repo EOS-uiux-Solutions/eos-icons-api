@@ -66,7 +66,7 @@ class ImageFactory {
       }
     }
 
-    private async generateTheIconsPack () {
+    async generateTheIconsPack () {
       const configFilePath = `${this.distDir}/customizationConfig.json`
       const zipOutputPath = `${this.distDir}/dist_${this.timestamp}.zip`
       await this.createDirectory()
