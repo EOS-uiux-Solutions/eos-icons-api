@@ -1,9 +1,11 @@
 import Express from 'express'
 import { Logger } from 'helpers'
 import { getSvgCodePayload } from './interfaces.v1'
-import { getThemeDir } from 'utils/tools'
+import { getThemeDir, serializer } from 'utils/tools'
 import { iconsTheme, iconsThemeV1 } from 'common/types'
 import { SvgFactory } from 'utils'
+import { analyticsServices } from 'services'
+import ImageFactory from 'utils/imageFactory'
 const IconsLogger = new Logger('Icons Controller')
 
 const getSVGCode = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
@@ -28,6 +30,38 @@ const getSVGCode = async (req: Express.Request, res: Express.Response, next: Exp
   }
 }
 
+const downloadSVG = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
+  try {
+    const theme = req.query.theme as iconsThemeV1 | iconsTheme
+    const iconName = req.params.iconName as string
+    const themeDir = getThemeDir(theme)
+    const iconPath = `${themeDir}/${iconName}.svg`
+    const serializedData = serializer({ icons: [iconName] }, 'svg', false)
+    analyticsServices.createAnalyticDocument(serializedData)
+    res.download(iconPath)
+  } catch (err) {
+    IconsLogger.logError('getSVGCode', err)
+    next(err)
+  }
+}
+
+const iconCustomization = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
+  try {
+    const timestamp = Math.floor(Date.now())
+    const theme = req.query.theme as iconsThemeV1 | iconsTheme
+    const imageCreator = new ImageFactory(req.body, timestamp, theme)
+    await imageCreator.generateTheIconsPack()
+    const serializedData = serializer(req.body, req.body.exportAs, true)
+    analyticsServices.createAnalyticDocument(serializedData)
+    res.status(200).send((timestamp).toString())
+  } catch (err) {
+    IconsLogger.logError('iconCustomization', err)
+    next(err)
+  }
+}
+
 export {
-  getSVGCode
+  getSVGCode,
+  downloadSVG,
+  iconCustomization
 }

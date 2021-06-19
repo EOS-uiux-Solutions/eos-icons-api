@@ -1,1 +1,1 @@
-export * from './analytics.model'
+export * as default from './analytics.model'
