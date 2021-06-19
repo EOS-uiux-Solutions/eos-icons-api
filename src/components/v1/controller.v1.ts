@@ -46,7 +46,7 @@ const downloadSVG = async (req: Express.Request, res: Express.Response, next: Ex
   }
 }
 
-const iconsApi = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
+const fontsApi = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
   try {
     const icons = req.body.icons as string[]
     const theme = req.query.theme as iconsThemeV1 | iconsTheme
@@ -66,5 +66,5 @@ const iconsApi = async (req: Express.Request, res: Express.Response, next: Expre
 export {
   getSVGCode,
   downloadSVG,
-  iconsApi
+  fontsApi
 }
