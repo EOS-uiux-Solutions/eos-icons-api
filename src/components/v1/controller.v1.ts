@@ -1,10 +1,12 @@
+import { promises as pfs } from 'fs'
 import Express from 'express'
 import { Logger } from 'helpers'
 import { getSvgCodePayload } from './interfaces.v1'
-import { getThemeDir, serializer } from 'utils/tools'
+import { getThemeDir, serializer, svgToPng } from 'utils/tools'
 import { iconsTheme, iconsThemeV1 } from 'common/types'
 import { FontFactory, SvgFactory } from 'utils'
 import { analyticsServices } from '../analytics'
+import { tempDirectory } from 'common/constants'
 const IconsLogger = new Logger('Icons Controller')
 
 const getSVGCode = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
@@ -59,6 +61,27 @@ const fontsApi = async (req: Express.Request, res: Express.Response, next: Expre
     res.status(200).send((serializedData.timestamp).toString())
   } catch (err) {
     IconsLogger.logError('iconsApi', err)
+  }
+}
+
+const downloadPNG = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
+  try {
+    const iconName = req.params.iconName as string
+    const pngSize = req.params.pngSize as string
+    const theme = req.query.theme as iconsThemeV1 | iconsTheme
+    // set paths:
+    const themeDir = getThemeDir(theme)
+    const iconPath = `${themeDir}/${iconName}.svg`
+    const outputPath = `${tempDirectory}/${iconName}_${pngSize}.png`
+    // convert svg to png:
+    const pngBuffer = await svgToPng(pngSize, iconPath)
+    await pfs.writeFile(outputPath, pngBuffer)
+    // add analytics data to db:
+    const serializedData = serializer({ icons: [iconName] }, 'png')
+    analyticsServices.createAnalyticDocument(serializedData)
+    res.download(outputPath)
+  } catch (err) {
+    IconsLogger.logError('pngDownload', err)
     next(err)
   }
 }
@@ -66,5 +89,6 @@ const fontsApi = async (req: Express.Request, res: Express.Response, next: Expre
 export {
   getSVGCode,
   downloadSVG,
-  fontsApi
+  fontsApi,
+  downloadPNG
 }
