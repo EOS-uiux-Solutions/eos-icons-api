@@ -6,6 +6,7 @@ const prefix = ''
 
 router.post('/icon/svg/svgcode', controller.getSVGCode)
 router.get('/icon/svg/download/:iconName', controller.downloadSVG)
+router.get('/icon/png/download/:iconName/:pngSize', controller.downloadPNG)
 
 export {
   router,
