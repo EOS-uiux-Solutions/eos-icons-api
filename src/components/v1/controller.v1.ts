@@ -50,7 +50,6 @@ const downloadSVG = async (req: Express.Request, res: Express.Response, next: Ex
   }
 }
 
-<<<<<<< HEAD
 const fontsApi = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
   try {
     const icons = req.body.icons as string[]
@@ -67,8 +66,6 @@ const fontsApi = async (req: Express.Request, res: Express.Response, next: Expre
   }
 }
 
-=======
->>>>>>> 981933b0894064379429fc773d0b205aecbcd35c
 const downloadPNG = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
   try {
     const iconName = req.params.iconName as string
@@ -108,10 +105,7 @@ const iconCustomization = async (req: Express.Request, res: Express.Response, ne
 export {
   getSVGCode,
   downloadSVG,
-<<<<<<< HEAD
   fontsApi,
-=======
->>>>>>> 981933b0894064379429fc773d0b205aecbcd35c
   downloadPNG,
   iconCustomization
 }
