@@ -86,9 +86,29 @@ const iconCustomization = async (req: Express.Request, res: Express.Response, ne
   }
 }
 
+const downloadImage = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
+  try {
+    let file = ''
+    const { ts } = req.query
+    const dist = `dist_${ts}`
+    // type and iconName will be sent if the type is not zip
+    const { type } = req.query
+    const { iconName } = req.query
+    if (type && iconName) {
+      file = `${tempDirectory}/${dist}/${type}/${iconName}.${type}`
+    }
+    file = `${tempDirectory}/${dist}.zip`
+    res.download(file)
+  } catch (err) {
+    IconsLogger.logError('downloadImage', err)
+    next(err)
+  }
+}
+
 export {
   getSVGCode,
   downloadSVG,
   downloadPNG,
-  iconCustomization
+  iconCustomization,
+  downloadImage
 }
