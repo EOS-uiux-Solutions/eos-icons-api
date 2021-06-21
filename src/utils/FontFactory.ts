@@ -2,15 +2,16 @@ import util from 'util'
 import cmd from 'node-cmd'
 import { zipFolder, addConfigFile } from './tools'
 import { tempDirectory } from '../common/constants'
+import { iconsTheme, iconsThemeV1 } from 'common/types'
 // promise-style version of cmd.get
 const pcmdGet = util.promisify(cmd.get)
 
 class FontFactory {
-    private icons: Array<string>
+    private icons: string[]
     private timestamp: number
-    private theme: string
+    private theme: iconsTheme | iconsThemeV1
 
-    constructor (icons: Array<string>, timestamp: number, theme: string) {
+    constructor (icons: string[], timestamp: number, theme: iconsTheme | iconsThemeV1) {
       this.icons = icons
       this.timestamp = timestamp
       this.theme = theme

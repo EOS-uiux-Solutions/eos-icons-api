@@ -3,10 +3,10 @@ import Express from 'express'
 import { Logger } from 'helpers'
 import { getSvgCodePayload } from './interfaces.v1'
 import { getThemeDir, serializer, svgToPng } from 'utils/tools'
-import { SvgFactory } from 'utils'
+import { iconsTheme, iconsThemeV1 } from 'common/types'
+import { FontFactory, SvgFactory } from 'utils'
 import { analyticsServices } from '../analytics'
 import { tempDirectory } from 'common/constants'
-import { iconsTheme, iconsThemeV1 } from 'common/types'
 import ImageFactory from 'utils/imageFactory'
 
 const IconsLogger = new Logger('Icons Controller')
@@ -50,6 +50,22 @@ const downloadSVG = async (req: Express.Request, res: Express.Response, next: Ex
   }
 }
 
+const fontsApi = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
+  try {
+    const icons = req.body.icons as string[]
+    const theme = req.query.theme as iconsThemeV1 | iconsTheme
+    const serializedData = serializer({ icons: icons }, 'font')
+    // generate the font package:
+    const fontMaker = new FontFactory(icons, serializedData.timestamp, theme || iconsThemeV1.svg)
+    await fontMaker.generateFiles()
+    // add analytics data to db:
+    await analyticsServices.createAnalyticDocument(serializedData)
+    res.status(200).send((serializedData.timestamp).toString())
+  } catch (err) {
+    IconsLogger.logError('iconsApi', err)
+  }
+}
+
 const downloadPNG = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
   try {
     const iconName = req.params.iconName as string
@@ -89,6 +105,7 @@ const iconCustomization = async (req: Express.Request, res: Express.Response, ne
 export {
   getSVGCode,
   downloadSVG,
+  fontsApi,
   downloadPNG,
   iconCustomization
 }
