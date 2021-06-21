@@ -8,8 +8,7 @@ import { executeTestCommand } from 'tests/testing-script'
 const app:Express.Application = Express();
 
 (async () => {
-  //
-  console.log(process.env.NODE_ENV)
+  // To run the Postman tests
   if (process.env.NODE_ENV === 'test') {
     executeTestCommand()
   }
