@@ -1,0 +1,9 @@
+{
+    "env": "test",
+    "FRONTEND_HOST": "",
+    "API_PREFIX": "/",
+    "LOG_FILE_PATH": "./src/logs",
+    "Databases": {
+        "MongoURI": "mongodb://localhost:27017"
+    }
+}
