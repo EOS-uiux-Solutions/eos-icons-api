@@ -1,8 +1,5 @@
 node_modules
 dist
 src/logs/*
-src/temp/**
-src/svg/**
-src/svg-outlined/**
 src/configs/default.json
 package-lock.json
