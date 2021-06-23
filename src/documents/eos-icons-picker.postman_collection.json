@@ -1,0 +1,247 @@
+{
+	"info": {
+		"_postman_id": "1ac6ccd4-6e64-4b93-91b3-bb145b1d4ef0",
+		"name": "eos-icons-picker",
+		"description": "EOS ICONS PICKER BACKEND",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Home",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3131/",
+					"host": [
+						"localhost"
+					],
+					"port": "3131",
+					"path": [
+						""
+					]
+				},
+				"description": "Home"
+			},
+			"response": []
+		},
+		{
+			"name": "SVG single icon download",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Content-Type is SVG\", function () {",
+							"    pm.response.to.be.header(\"Content-Type\", \"image/svg+xml\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3131/icon/svg/download/admin",
+					"host": [
+						"localhost"
+					],
+					"port": "3131",
+					"path": [
+						"icon",
+						"svg",
+						"download",
+						"admin"
+					]
+				},
+				"description": "SVG Single Icon download"
+			},
+			"response": []
+		},
+		{
+			"name": "PNG single icon download",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Content-Type is PNG\", function () {",
+							"    pm.response.to.be.header(\"Content-Type\", \"image/png\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3131/icon/png/download/kubelet/500",
+					"host": [
+						"localhost"
+					],
+					"port": "3131",
+					"path": [
+						"icon",
+						"png",
+						"download",
+						"kubelet",
+						"500"
+					]
+				},
+				"description": "PNG single icon download"
+			},
+			"response": []
+		},
+		{
+			"name": "Customized PNG's",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"// check for zip file in download",
+							"// setting timeout because right now timestamp is returned before pack is created",
+							"setTimeout(() => {",
+							"    pm.sendRequest(`http://localhost:3131/download?ts=${pm.response.text()}`, (error, response) => {",
+							"//   console.log(error);",
+							"  if (error) {",
+							"    console.log(error);",
+							"  }",
+							"  pm.test('Check ZIP file', () => {",
+							"    pm.expect(error).to.equal(null);",
+							"    pm.expect(response).to.have.property('code', 200);",
+							"    pm.expect(response).to.have.property('status', 'OK');",
+							"    pm.expect(response).to.be.header(\"Content-Type\", \"application/zip\");",
+							"  });",
+							"});",
+							"}, 500)",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"icons\": [\"cluster_role\", \"pin\", \"timeout\"],\n    \"exportAs\" : \"png\",\n    \"exportSize\": \"500\",\n    \"customizationConfig\": {\"colorCode\": \"#000000\", \"rotateAngle\": 250, \"flip\": {\n        \"horizontal\": true,\n        \"vertical\": false\n    }}\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3131/icon-customization",
+					"host": [
+						"localhost"
+					],
+					"port": "3131",
+					"path": [
+						"icon-customization"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Custom Font",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"// // check for zip file in download",
+							"// pm.sendRequest(`http://localhost:3131/download?ts=${pm.response.text()}`, (error, response) => {",
+							"// //   console.log(error);",
+							"//   if (error) {",
+							"//     console.log(error);",
+							"//   }",
+							"//   pm.test('Check ZIP file', () => {",
+							"//     pm.expect(error).to.equal(null);",
+							"//     pm.expect(response).to.have.property('code', 200);",
+							"//     pm.expect(response).to.have.property('status', 'OK');",
+							"//     pm.expect(response).to.be.header(\"Content-Type\", \"application/zip\");",
+							"//   });",
+							"// });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"icons\": [\"timeout\", \"abstract\", \"4k\"]}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3131/iconsapi",
+					"host": [
+						"localhost"
+					],
+					"port": "3131",
+					"path": [
+						"iconsapi"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch SvgCode",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"iconArray\": [\"5g\", \"4k\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3131/icon/svg/svgcode",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3131",
+					"path": [
+						"icon",
+						"svg",
+						"svgcode"
+					]
+				},
+				"description": "This POST request accepts a array of iconNames and returns a Array of respective SvgCode"
+			},
+			"response": []
+		}
+	]
+}
