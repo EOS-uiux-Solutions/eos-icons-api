@@ -1,0 +1,1 @@
+web: grunt -b ./src moveFiles && NODE_PATH=./src ts-node --transpile-only ./src/server.ts
