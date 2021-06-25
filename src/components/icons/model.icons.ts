@@ -8,11 +8,11 @@ const iconsSchema = new Schema({
   dont: { type: String, required: true },
   tags: { type: [String], required: true },
   category: { type: Schema.Types.Mixed, required: true },
-  type: String,
-  date: { type: Schema.Types.Date, required: true },
-  hasOutlined: { type: Boolean, required: true },
-  dateOutlined: { type: Schema.Types.Date, required: true },
-  label: { type: String, required: true }
+  type: { type: String, required: true },
+  date: { type: String, required: true },
+  hasOutlined: Boolean,
+  dateOutlined: String,
+  label: String
 })
 
 // the latter interface contains ORM-based functions such as save().

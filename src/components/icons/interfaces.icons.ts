@@ -11,7 +11,7 @@ export interface IconInterface {
     category: string | string[],
     type: iconType,
     date: string,
-    hasOutlined?: boolean | undefined,
-    dateOutlined?: Date | undefined,
-    label?: string | undefined
+    hasOutlined?: boolean,
+    dateOutlined?: string,
+    label?: string
     }
