@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 import { ExportType, customizedConfig } from 'common/types'
 
 export interface IAnalytics {
@@ -10,19 +10,19 @@ export interface IAnalytics {
   }
 
 // Sub-schemas:
-const flipSchema = new mongoose.Schema({
+const flipSchema = new Schema({
   horizontal: Boolean,
   vertical: Boolean,
   flip: String
 })
 
-const customizationSchema = new mongoose.Schema({
+const customizationSchema = new Schema({
   colorCode: String,
   rotateAngle: Number,
   flip: flipSchema
 })
 // Main Schema:
-const analyticsSchema = new mongoose.Schema({
+const analyticsSchema = new Schema({
   customizationConfig: { type: customizationSchema, required: false },
   customized: { type: Boolean, required: true },
   timestamp: { type: Number, required: true },

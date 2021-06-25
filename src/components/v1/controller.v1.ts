@@ -9,7 +9,7 @@ import { analyticsServices } from '../analytics'
 import { tempDirectory } from 'common/constants'
 import ImageFactory from 'utils/imageFactory'
 
-const IconsLogger = new Logger('Icons Controller')
+const V1Logger = new Logger('V1 Controller')
 
 const getSVGCode = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
   try {
@@ -28,7 +28,7 @@ const getSVGCode = async (req: Express.Request, res: Express.Response, next: Exp
     }
     res.status(200).json({ responseObject: customizedSVGs })
   } catch (err) {
-    IconsLogger.logError('getSVGCode', err)
+    V1Logger.logError('getSVGCode', err)
     next(err)
   }
 }
@@ -45,7 +45,7 @@ const downloadSVG = async (req: Express.Request, res: Express.Response, next: Ex
     analyticsServices.createAnalyticDocument(serializedData)
     res.download(iconPath)
   } catch (err) {
-    IconsLogger.logError('getSVGCode', err)
+    V1Logger.logError('getSVGCode', err)
     next(err)
   }
 }
@@ -62,7 +62,7 @@ const fontsApi = async (req: Express.Request, res: Express.Response, next: Expre
     await analyticsServices.createAnalyticDocument(serializedData)
     res.status(200).send((serializedData.timestamp).toString())
   } catch (err) {
-    IconsLogger.logError('iconsApi', err)
+    V1Logger.logError('iconsApi', err)
   }
 }
 
@@ -83,7 +83,7 @@ const downloadPNG = async (req: Express.Request, res: Express.Response, next: Ex
     analyticsServices.createAnalyticDocument(serializedData)
     res.download(outputPath)
   } catch (err) {
-    IconsLogger.logError('pngDownload', err)
+    V1Logger.logError('pngDownload', err)
   }
 }
 
@@ -97,7 +97,7 @@ const iconCustomization = async (req: Express.Request, res: Express.Response, ne
     analyticsServices.createAnalyticDocument(serializedData)
     res.status(200).send((timestamp).toString())
   } catch (err) {
-    IconsLogger.logError('iconCustomization', err)
+    V1Logger.logError('iconCustomization', err)
     next(err)
   }
 }
@@ -116,7 +116,7 @@ const downloadImage = async (req: Express.Request, res: Express.Response, next: 
     file = `${tempDirectory}/${dist}.zip`
     res.download(file)
   } catch (err) {
-    IconsLogger.logError('downloadImage', err)
+    V1Logger.logError('downloadImage', err)
     next(err)
   }
 }
