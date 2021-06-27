@@ -6,6 +6,7 @@ const updateDBIcons = async () => {
     // Retrieve the icons' JSON file content:
     const iconsJSONfile = await axios.get(getEncodedLink('dist/js/eos-icons.json'))
     const iconsArray = iconsJSONfile.data as object[]
+    return iconsArray
   } catch (err) {
     NodeLogger.logError('UdpateDBIcons', err)
   }
