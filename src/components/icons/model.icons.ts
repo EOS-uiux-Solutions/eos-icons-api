@@ -4,6 +4,7 @@ import { IconInterface } from './interfaces.icons'
 // Main Schema:
 const iconsSchema = new Schema({
   name: { type: String, required: true },
+  svg: { type: String, required: true },
   do: { type: String, required: true },
   dont: { type: String, required: true },
   tags: { type: [String], required: true },
@@ -14,7 +15,8 @@ const iconsSchema = new Schema({
   dateOutlined: String,
   label: String
 })
-
+// Indexes
+iconsSchema.index({ name: 1 })
 // the latter interface contains ORM-based functions such as save().
 interface IIconsModel extends IconInterface, mongoose.Document { }
 // The model:
