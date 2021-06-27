@@ -8,7 +8,8 @@ interface configsInterface {
     LOG_FILE_PATH: string
     Databases: {
     MongoURI: string
-    }
+    },
+    GITLAB_READ_API: string
 }
 
 const configs: configsInterface = {
@@ -16,6 +17,7 @@ const configs: configsInterface = {
   FRONTEND_HOST: process.env.FRONTEND_HOST as string,
   API_PREFIX: process.env.API_PREFIX as string,
   LOG_FILE_PATH: process.env.LOG_FILE_PATH as string,
+  GITLAB_READ_API: process.env.GITLAB_READ_API as string,
   Databases: {
     MongoURI: process.env.MongoURI as string
   }
