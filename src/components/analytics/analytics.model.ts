@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose'
 import { ExportType, customizedConfig } from 'common/types'
 
-export interface IAnalytics {
+export interface analyticsInterface {
     customizationConfig?: customizedConfig,
     customized: boolean,
     timestamp: number,
@@ -31,6 +31,6 @@ const analyticsSchema = new Schema({
 })
 
 // the latter interface contains ORM-based functions such as save().
-interface IAnalyticsModel extends IAnalytics, mongoose.Document { }
+interface IAnalyticsModel extends analyticsInterface, mongoose.Document { }
 // The model:
 export const Model = mongoose.model<IAnalyticsModel>('analytics', analyticsSchema)
