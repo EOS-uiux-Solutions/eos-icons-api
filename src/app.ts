@@ -1,5 +1,4 @@
 /* eslint-disable import/first */
-process.env.NODE_CONFIG_DIR = './src/configs'
 import Express from 'express'
 import { configure, routers, errorHandlers } from 'start'
 import { mongoDBconnector } from 'databases'

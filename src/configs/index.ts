@@ -1,4 +1,5 @@
-import config from 'config'
+import dotenv from 'dotenv'
+dotenv.config({ path: './src/configs/.env' })
 
 interface configsInterface {
     env: string,
@@ -11,12 +12,12 @@ interface configsInterface {
 }
 
 const configs: configsInterface = {
-  env: config.get('env'),
-  FRONTEND_HOST: config.get('FRONTEND_HOST'),
-  API_PREFIX: config.get('API_PREFIX'),
-  LOG_FILE_PATH: config.get('LOG_FILE_PATH'),
+  env: process.env.env as string,
+  FRONTEND_HOST: process.env.FRONTEND_HOST as string,
+  API_PREFIX: process.env.API_PREFIX as string,
+  LOG_FILE_PATH: process.env.LOG_FILE_PATH as string,
   Databases: {
-    MongoURI: config.get('Databases.MongoURI')
+    MongoURI: process.env.MongoURI as string
   }
 }
 
