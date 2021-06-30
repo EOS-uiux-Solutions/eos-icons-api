@@ -2,7 +2,7 @@ import fs, { promises as pfs } from 'fs'
 import SvgFactory from './SvgFactory'
 import { svgToPng, addConfigFile, zipFolder, getThemeDir } from './tools'
 import { tempDirectory } from 'common/constants'
-import { customizedIconsPayload, iconsTheme, iconsThemeV1 } from 'common/types'
+import { CustomizedIconsPayload, iconsTheme, iconsThemeV1 } from 'common/types'
 
 class ImageFactory {
     private payload: any;
@@ -12,7 +12,7 @@ class ImageFactory {
     // Will be used to locate the icons folder based on the theme
     private themeDir: string;
 
-    constructor (payload: customizedIconsPayload, timestamp: number, theme: iconsThemeV1 | iconsTheme) {
+    constructor (payload: CustomizedIconsPayload, timestamp: number, theme: iconsThemeV1 | iconsTheme) {
       this.payload = payload
       this.timestamp = timestamp
       this.distDir = `${tempDirectory}/dist_${this.timestamp}`

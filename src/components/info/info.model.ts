@@ -7,7 +7,7 @@ export interface InfoInterface {
   }
 
 // Main Schema:
-const InfoSchema = new Schema({
+const infoSchema = new Schema({
   iconsAdded: { type: [String], required: true },
   iconsDeleted: { type: [String], required: true },
   iconsUpdated: { type: [String], required: true }
@@ -16,9 +16,9 @@ const InfoSchema = new Schema({
   collection: 'info'
 })
 // Indexes
-InfoSchema.index({ createdAt: -1 })
+infoSchema.index({ createdAt: -1 })
 
 // the latter interface contains ORM-based functions such as save().
 interface IInfoModel extends InfoInterface, mongoose.Document { }
 // The model:
-export const Model = mongoose.model<IInfoModel>('info', InfoSchema)
+export const Model = mongoose.model<IInfoModel>('info', infoSchema)
