@@ -1,8 +1,8 @@
-import { ExportType, customizedIconsPayload } from 'common/types'
+import { ExportType, CustomizedIconsPayload } from 'common/types'
 import { analyticsModel } from 'components/analytics'
 
-const serializer = (payload: customizedIconsPayload, format: ExportType, customized: boolean = false) => {
-  const data: analyticsModel.IAnalytics = {
+const serializer = (payload: CustomizedIconsPayload, format: ExportType, customized: boolean = false) => {
+  const data: analyticsModel.AnalyticsInterface = {
     customizationConfig: {
       colorCode: '',
       rotateAngle: 0,

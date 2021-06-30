@@ -1,15 +1,15 @@
 import fs from 'fs'
-import { customizedConfig, flipObject } from 'common/types'
+import { CustomizedConfig, FlipObject } from 'common/types'
 
 class SvgFactory {
     private svgCode: string = '';
     private pathToSvg: string;
     private colorCode: string;
     private rotateAngle: number;
-    private flip: flipObject;
+    private flip: FlipObject;
     private customized: boolean;
 
-    constructor (pathToSvg: string, customizationConfig: customizedConfig, customized: boolean = false) {
+    constructor (pathToSvg: string, customizationConfig: CustomizedConfig, customized: boolean = false) {
       this.pathToSvg = pathToSvg
       this.colorCode = customizationConfig?.colorCode!
       this.rotateAngle = customizationConfig?.rotateAngle!

@@ -1,7 +1,7 @@
 import { promises as pfs } from 'fs'
 import Express from 'express'
 import { Logger } from 'helpers'
-import { getSvgCodePayload } from './interfaces.v1'
+import { GetSvgCodePayload } from './interfaces.v1'
 import { getThemeDir, serializer, svgToPng } from 'utils/tools'
 import { iconsTheme, iconsThemeV1 } from 'common/types'
 import { FontFactory, SvgFactory } from 'utils'
@@ -13,7 +13,7 @@ const V1Logger = new Logger('V1 Controller')
 
 const getSVGCode = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
   try {
-    const { customizationConfig, iconArray }: getSvgCodePayload = req.body
+    const { customizationConfig, iconArray }: GetSvgCodePayload = req.body
     const theme = req.query.theme as iconsThemeV1 | iconsTheme
     // get the directory that will be used to fetch the icons:
     const themeDir = getThemeDir(theme)
