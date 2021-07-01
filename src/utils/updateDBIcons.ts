@@ -28,20 +28,14 @@ const updateDBIcons = async () => {
      *
      */
 
-    const iconsDictionary = {}
-    // This will add all the icons that has a date bigger than the current version (new/modified icon) - to the iconsDictionary
-    gitlabIcons.filter(icon => isNewIcon(icon.date, currVersionDate)).forEach(element => {
-      iconsDictionary[element.name] = element
-    })
-
     const newIcons: IconInterface[] = []
-    for (const [IconName, iconObject] of Object.entries(iconsDictionary)) {
-      // If the icon doesn't exist in the crreuntDBicons, it means that this icon is new:
-      if (currentDBIcons.findIndex(currentIcon => { return currentIcon.name === IconName }) === -1) {
-        newIcons.push(iconObject as IconInterface)
-      }
+    const updatedIcons: IconInterface[] = []
+    // This will get all the icons that has a date bigger than the current version (new/modified icon):
+    const addedAndUpdatedIcons = gitlabIcons.filter(icon => isNewIcon(icon.date, currVersionDate))
+    // Iterate through the icons to add the svg codes:
+    for (const iconDetails of addedAndUpdatedIcons) {
+      // get the svg and fill the newIcons and the updatedIcons arrays
     }
-    console.log(newIcons)
   } catch (err) {
     NodeLogger.logError('UdpateDBIcons', err)
   }
