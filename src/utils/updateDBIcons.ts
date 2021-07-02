@@ -24,7 +24,7 @@ const updateDBIcons = async () => {
 
     /**
      *
-     * Calculations to determine the changes:
+     * Prepare the new and updated icons Arrays
      *
      */
 
@@ -38,8 +38,19 @@ const updateDBIcons = async () => {
       if (iconWithSvg === 404) {
         continue
       }
-      newIcons.push(iconWithSvg)
+      if (currentDBIcons.findIndex(dbIcon => { return dbIcon.name === iconDetails.name }) === -1) {
+        newIcons.push(iconWithSvg)
+        // TODO:: add all to the db:
+      } else {
+        // UPDATE THE DOCUMENT
+      }
     }
+
+    /**
+     *
+     * Update the database documents
+     *
+     */
   } catch (err) {
     NodeLogger.logError('UdpateDBIcons', err)
   }
