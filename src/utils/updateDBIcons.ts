@@ -3,6 +3,7 @@ import { iconsServices, IconInterface, IIconsModel } from 'components/icons'
 import { infoServices } from 'components/info'
 import { NodeLogger } from 'helpers'
 import { getEncodedLink, isNewIcon, addSvgCodes } from './tools'
+import prepareUpdatedIcon from './tools/updatingIcons/prepareTheUpdate'
 
 const updateDBIcons = async () => {
   try {
@@ -40,11 +41,12 @@ const updateDBIcons = async () => {
       }
       if (currentDBIcons.findIndex(dbIcon => { return dbIcon.name === iconDetails.name }) === -1) {
         newIcons.push(iconWithSvg)
-        // TODO:: add all to the db:
       } else {
-        // UPDATE THE DOCUMENT
+        const updateDetails = prepareUpdatedIcon(iconDetails)
+        iconsServices.updateIcon(iconDetails.name, updateDetails)
       }
     }
+    await iconsServices.insertIcons(newIcons)
 
     /**
      *
