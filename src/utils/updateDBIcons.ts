@@ -25,11 +25,12 @@ const updateDBIcons = async () => {
 
     /**
      *
-     * Prepare the new and updated icons Arrays
+     * Update the database
      *
      */
 
     const newIcons: IconInterface[] = []
+    const updatedIcons: string[] = []
     // This will get all the newer icons (new/modified icon):
     const addedAndUpdatedIcons = gitlabIcons.filter(icon => isNewIcon(icon.date, currVersionDate))
     // Iterate through the icons to add the svg codes:
@@ -40,19 +41,16 @@ const updateDBIcons = async () => {
         continue
       }
       if (currentDBIcons.findIndex(dbIcon => { return dbIcon.name === iconDetails.name }) === -1) {
+        await iconsServices.insertIcon(iconWithSvg)
         newIcons.push(iconWithSvg)
       } else {
         const updateDetails = prepareUpdatedIcon(iconDetails)
-        iconsServices.updateIcon(iconDetails.name, updateDetails)
+        await iconsServices.updateIcon(iconDetails.name, updateDetails)
+        updatedIcons.push(iconDetails.name)
       }
     }
-    await iconsServices.insertIcons(newIcons)
 
-    /**
-     *
-     * Update the database documents
-     *
-     */
+    // TOOD:: GET ALL DELETED ICONS AND DELETE THEM
   } catch (err) {
     NodeLogger.logError('UdpateDBIcons', err)
   }

@@ -3,8 +3,8 @@ import * as iconsModel from './model.icons'
 
 const { Model } = iconsModel
 
-const insertIcons = async (icons: IconInterface[]) => {
-  await Model.collection.insertMany(icons)
+const insertIcon = async (icon: IconInterface) => {
+  await Model.create(icon)
 }
 
 const getAllIcons = async () => {
@@ -17,7 +17,7 @@ const updateIcon = async (iconName: string, updateDetails: Object) => {
 }
 
 export {
-  insertIcons,
+  insertIcon,
   getAllIcons,
   updateIcon
 }
