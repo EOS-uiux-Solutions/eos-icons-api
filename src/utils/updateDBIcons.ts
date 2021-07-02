@@ -2,7 +2,7 @@ import axios from 'axios'
 import { iconsServices, IconInterface, IIconsModel } from 'components/icons'
 import { infoServices } from 'components/info'
 import { NodeLogger } from 'helpers'
-import { getEncodedLink, isNewIcon, getOutlinedFromFile, getSvgFromFile } from './tools'
+import { getEncodedLink, isNewIcon, addSvgCodes } from './tools'
 
 const updateDBIcons = async () => {
   try {
@@ -33,21 +33,12 @@ const updateDBIcons = async () => {
     const addedAndUpdatedIcons = gitlabIcons.filter(icon => isNewIcon(icon.date, currVersionDate))
     // Iterate through the icons to add the svg codes:
     for (const iconDetails of addedAndUpdatedIcons) {
-      // get the main svg code:
-      const svgRequest = await getSvgFromFile(iconDetails)
-      if (svgRequest.status === 404) {
+      // Add svg Codes:
+      const iconWithSvg = await addSvgCodes(iconDetails)
+      if (iconWithSvg === 404) {
         continue
       }
-      // Get the outlined version if available:
-      if (iconDetails.hasOutlined) {
-        const outlinedRequest = await getOutlinedFromFile(iconDetails)
-        if (outlinedRequest.status === 404) {
-          continue
-        }
-        iconDetails.svgOutlined = outlinedRequest.data
-      }
-      iconDetails.svg = svgRequest.data
-      newIcons.push(iconDetails)
+      newIcons.push(iconWithSvg)
     }
   } catch (err) {
     NodeLogger.logError('UdpateDBIcons', err)

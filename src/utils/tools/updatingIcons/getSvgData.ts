@@ -26,7 +26,21 @@ const getOutlinedFromFile = async (iconInfo: IconInterface) => {
   return svgRequest
 }
 
-export {
-  getSvgFromFile,
-  getOutlinedFromFile
+const addSvgCodes = async (iconDetails: IconInterface) => {
+  const svgRequest = await getSvgFromFile(iconDetails)
+  if (svgRequest.status === 404) {
+    return 404
+  }
+  // Get the outlined version if available:
+  if (iconDetails.hasOutlined) {
+    const outlinedRequest = await getOutlinedFromFile(iconDetails)
+    if (outlinedRequest.status === 404) {
+      return 404
+    }
+    iconDetails.svgOutlined = outlinedRequest.data
+  }
+  iconDetails.svg = svgRequest.data
+  return iconDetails
 }
+
+export default addSvgCodes
