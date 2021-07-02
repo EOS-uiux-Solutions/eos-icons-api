@@ -2,8 +2,7 @@ import axios from 'axios'
 import { iconsServices, IconInterface, IIconsModel } from 'components/icons'
 import { infoServices } from 'components/info'
 import { NodeLogger } from 'helpers'
-import { getEncodedLink, isNewIcon } from './tools'
-import { getOutlinedFromFile, getSvgFromFile } from './tools/getSvgData'
+import { getEncodedLink, isNewIcon, getOutlinedFromFile, getSvgFromFile } from './tools'
 
 const updateDBIcons = async () => {
   try {
