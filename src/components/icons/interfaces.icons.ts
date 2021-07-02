@@ -12,6 +12,7 @@ export interface IconInterface {
     category: string | string[],
     type: iconType,
     date: string,
+    svgOutlined?:string,
     hasOutlined?: boolean,
     dateOutlined?: string,
     label?: string

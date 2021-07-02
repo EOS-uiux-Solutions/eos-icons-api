@@ -3,6 +3,7 @@ import { iconsServices, IconInterface, IIconsModel } from 'components/icons'
 import { infoServices } from 'components/info'
 import { NodeLogger } from 'helpers'
 import { getEncodedLink, isNewIcon } from './tools'
+import { getOutlinedFromFile, getSvgFromFile } from './tools/getSvgData'
 
 const updateDBIcons = async () => {
   try {
@@ -29,12 +30,25 @@ const updateDBIcons = async () => {
      */
 
     const newIcons: IconInterface[] = []
-    const updatedIcons: IconInterface[] = []
-    // This will get all the icons that has a date bigger than the current version (new/modified icon):
+    // This will get all the newer icons (new/modified icon):
     const addedAndUpdatedIcons = gitlabIcons.filter(icon => isNewIcon(icon.date, currVersionDate))
     // Iterate through the icons to add the svg codes:
     for (const iconDetails of addedAndUpdatedIcons) {
-      // get the svg and fill the newIcons and the updatedIcons arrays
+      // get the main svg code:
+      const svgRequest = await getSvgFromFile(iconDetails)
+      if (svgRequest.status === 404) {
+        continue
+      }
+      // Get the outlined version if available:
+      if (iconDetails.hasOutlined) {
+        const outlinedRequest = await getOutlinedFromFile(iconDetails)
+        if (outlinedRequest.status === 404) {
+          continue
+        }
+        iconDetails.svgOutlined = outlinedRequest.data
+      }
+      iconDetails.svg = svgRequest.data
+      newIcons.push(iconDetails)
     }
   } catch (err) {
     NodeLogger.logError('UdpateDBIcons', err)

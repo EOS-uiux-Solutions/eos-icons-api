@@ -5,6 +5,7 @@ import { IconInterface } from './interfaces.icons'
 const iconsSchema = new Schema({
   name: { type: String, required: true },
   svg: { type: String, required: true },
+  svgOutlined: String,
   do: { type: String, required: true },
   dont: { type: String, required: true },
   tags: { type: [String], required: true },
