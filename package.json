@@ -12,7 +12,6 @@
     "build": "tsc --project ./",
     "start:dev": "grunt -b ./src moveFiles && NODE_PATH=./src nodemon ./src/server.ts",
     "start": "grunt -b ./src moveFiles && NODE_PATH=./src ts-node --transpile-only ./src/server.ts",
-    "updateDBicons": "NODE_PATH=./src ts-node --transpile-only ./src/utils/updateDBIcons.ts",
     "lint": "eslint \"src/*\"",
     "lint:fix": "eslint \"src/*\" --fix",
     "test:v1": "grunt -b ./src moveFiles && NODE_ENV=test NODE_PATH=./src ts-node --transpile-only ./src/server.ts"
