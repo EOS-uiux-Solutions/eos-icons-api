@@ -62,8 +62,9 @@ const updateDBIcons = async (notifiedByHook = false) => {
     const namesOfNewIcons: string[] = []
     // This will get all the newer icons (new/modified icon):
     const addedAndUpdatedIcons = gitlabIcons.filter(icon => isNewIcon(icon.date, currVersionDate))
-    // Iterate through the icons:
     updateIconsLogger.logInfo('The preparation of the files', { message: 'Finished' })
+
+    // Iterate through the icons:
     for (const iconDetails of addedAndUpdatedIcons) {
       // ADD the SVG codes to the icon's object:
       const filledSVG = await getFilled(iconDetails.name)
@@ -97,6 +98,7 @@ const updateDBIcons = async (notifiedByHook = false) => {
         namesOfUpdatedIcons.push(iconDetails.name)
       }
     }
+
     // Insert the new icons in the Database:
     if (newIcons.length !== 0) {
       await iconsServices.insertIcons(newIcons)

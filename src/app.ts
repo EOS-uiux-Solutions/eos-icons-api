@@ -21,12 +21,11 @@ const app:Express.Application = Express();
   // Redis:
 
   // ************** Other App configurations *****************
-
+  // Run the update Icons Process:
+  updateDBIcons()
   // Configure the appliction (Parser, and additonal headers):
   configure(app)
   // init the routers:
-  updateDBIcons()
-  //
   app.use(configs.API_PREFIX, routers)
   // init the main error handlers:
   errorHandlers(app)
