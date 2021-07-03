@@ -1,10 +1,9 @@
-/* eslint-disable no-unused-vars */
+import mongoose from 'mongoose'
 
 export type iconType = 'animated' | 'static'
 
 // Interface of the icons objects stored in db:
-export interface IconInterface {
-    _id?:string,
+export interface IconInterface extends mongoose.Document{
     name: string,
     svg: string,
     tags: string[],
