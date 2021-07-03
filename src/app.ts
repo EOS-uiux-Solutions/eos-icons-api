@@ -4,7 +4,6 @@ import { configure, routers, errorHandlers } from 'start'
 import { mongoDBconnector } from 'databases'
 import configs from 'configs'
 import { executeTestCommand } from 'tests/testing-script'
-import updateDBIcons from 'utils/updateDBIcons'
 const app:Express.Application = Express();
 
 (async () => {
@@ -25,8 +24,6 @@ const app:Express.Application = Express();
   // Configure the appliction (Parser, and additonal headers):
   configure(app)
   // init the routers:
-  updateDBIcons()
-  //
   app.use(configs.API_PREFIX, routers)
   // init the main error handlers:
   errorHandlers(app)
