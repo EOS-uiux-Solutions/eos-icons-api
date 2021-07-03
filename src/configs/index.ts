@@ -10,6 +10,7 @@ interface configsInterface {
     MongoURI: string
     },
     GITLAB_READ_API: string
+    GITLAB_TAGS_API: string
 }
 
 const configs: configsInterface = {
@@ -18,6 +19,7 @@ const configs: configsInterface = {
   API_PREFIX: process.env.API_PREFIX as string,
   LOG_FILE_PATH: process.env.LOG_FILE_PATH as string,
   GITLAB_READ_API: process.env.GITLAB_READ_API as string,
+  GITLAB_TAGS_API: process.env.GITLAB_TAGS_API as string,
   Databases: {
     MongoURI: process.env.MongoURI as string
   }

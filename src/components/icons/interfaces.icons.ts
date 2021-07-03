@@ -4,6 +4,7 @@ export type iconType = 'animated' | 'static'
 
 // Interface of the icons objects stored in db:
 export interface IconInterface {
+    _id?:string,
     name: string,
     svg: string,
     tags: string[],

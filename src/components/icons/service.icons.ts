@@ -7,6 +7,10 @@ const insertIcons = async (icons: IconInterface[]) => {
   await Model.collection.insertMany(icons)
 }
 
+const deleteIcons = async (iconsIDs: string[]) => {
+  await Model.deleteMany({ _id: { $in: iconsIDs } })
+}
+
 const getAllIcons = async () => {
   const allIcons = await Model.find({})
   return allIcons
@@ -18,6 +22,7 @@ const updateIcon = async (iconName: string, updateDetails: Object) => {
 
 export {
   insertIcons,
+  deleteIcons,
   getAllIcons,
   updateIcon
 }
