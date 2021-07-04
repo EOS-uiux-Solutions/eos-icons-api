@@ -4,9 +4,7 @@ import cmd from 'node-cmd'
 import { iconsServices, IconInterface, IIconsModel } from 'components/icons'
 import { infoServices } from 'components/info'
 import { Logger, NodeLogger } from 'helpers'
-import { getEncodedLink, isNewIcon } from './tools'
-import prepareUpdatedIcon from './tools/updatingIcons/prepareTheUpdate'
-import { getFilled, getOutlined } from './tools/updatingIcons/getSvgCode'
+import { getEncodedLink, isNewIcon, getFilled, getOutlined, prepareUpdatedIcon } from './tools'
 import configs from 'configs'
 // promise-style version of cmd.get
 const pcmdGet = util.promisify(cmd.get)

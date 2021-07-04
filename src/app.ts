@@ -17,12 +17,13 @@ const app:Express.Application = Express();
   // MongoDB
   if (process.env.NODE_ENV !== 'test') {
     await mongoDBconnector()
+    // Run the update Icons Process:
+    await updateDBIcons()
   }
   // Redis:
 
   // ************** Other App configurations *****************
-  // Run the update Icons Process:
-  updateDBIcons()
+
   // Configure the appliction (Parser, and additonal headers):
   configure(app)
   // init the routers:
