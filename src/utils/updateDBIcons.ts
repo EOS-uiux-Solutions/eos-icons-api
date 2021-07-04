@@ -89,12 +89,14 @@ const updateDBIcons = async (notifiedByHook = false) => {
        For updated icons, prepare the update statement, and update each-one.
        **********************************************
        */
-      if (currentDBIcons.findIndex(dbIcon => { return dbIcon.name === iconDetails.name }) === -1) {
+      const IndexOfTheIcon = currentDBIcons.findIndex(dbIcon => { return dbIcon.name === iconDetails.name })
+      if (IndexOfTheIcon === -1) {
         newIcons.push(iconDetails)
         namesOfNewIcons.push(iconDetails.name)
       } else {
+        const idOfTheIcon = currentDBIcons[IndexOfTheIcon]._id
         const updateDetails = prepareUpdatedIcon(iconDetails)
-        await iconsServices.updateIcon(iconDetails.name, updateDetails)
+        await iconsServices.updateIcon(idOfTheIcon, updateDetails)
         namesOfUpdatedIcons.push(iconDetails.name)
       }
     }

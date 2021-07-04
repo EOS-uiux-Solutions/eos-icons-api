@@ -7,7 +7,7 @@ const prepareUpdatedIcon = (newIconDetails: IconInterface) => {
   }
   // loop through the keys
   for (const [key, value] of Object.entries(newIconDetails)) {
-    if (key !== 'name' && key !== 'tags') {
+    if (key !== 'name' && key !== 'tags' && key !== 'category') {
       updateDetails.$set[key] = value
     }
     if (key === 'tags') {

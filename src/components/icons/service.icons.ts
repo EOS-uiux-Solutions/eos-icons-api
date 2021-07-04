@@ -16,8 +16,8 @@ const getAllIcons = async () => {
   return allIcons
 }
 
-const updateIcon = async (iconName: string, updateDetails: Object) => {
-  await Model.findOneAndUpdate({ name: iconName }, updateDetails)
+const updateIcon = async (iconID: string, updateDetails: Object) => {
+  await Model.findOneAndUpdate({ _id: iconID }, updateDetails)
 }
 
 export {
