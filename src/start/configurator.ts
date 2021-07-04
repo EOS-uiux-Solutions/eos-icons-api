@@ -11,7 +11,7 @@ export default (app: Express.Application) => {
         * For Express 4.16.0 and higher: body parser has been re-added to provide request body parsing support out-of-the-box.
         * If you're using a version less than 4.16.0 use body-parser.
         */
-  app.use(Express.json())
+  app.use(Express.json({ limit: '1mb' }))
 
   // Access-control headers:
   app.use((req:Express.Request, res:Express.Response, next:Express.NextFunction) => {
