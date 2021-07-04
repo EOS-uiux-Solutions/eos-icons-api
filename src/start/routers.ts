@@ -11,6 +11,6 @@ router.get('/', function (req, res) {
 // Configure Routes:
 router.use(v1Router.prefix, v1Router.router)
 // V2 Routers:
-router.use(`v2/${iconsRouter.prefix}`, iconsRouter.router)
+router.use(`/v2${iconsRouter.prefix}`, iconsRouter.router)
 
 export default router

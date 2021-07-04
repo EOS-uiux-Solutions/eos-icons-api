@@ -20,7 +20,7 @@ class Logger {
     const logger = winston.createLogger({
       level: 'info',
       format: winston.format.printf(log => {
-        let message = `[${this.caller}: ${log.source}] | ${dateFormat()} |  ${log.level.toUpperCase()} | ${log.message} | `
+        let message = `[${this.caller}: ${log.source}] | ${dateFormat()} | ${log.level.toUpperCase()} | ${log.message} | `
         message = log.logDetails ? `${message} ${JSON.stringify(log.logDetails)} | ` : message
         return message
       }),

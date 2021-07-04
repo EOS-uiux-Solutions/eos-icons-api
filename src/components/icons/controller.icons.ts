@@ -1,13 +1,16 @@
 import Express from 'express'
 import { Logger } from 'helpers'
+import updateDBIcons from 'utils/updateDBIcons'
 
-const V1Logger = new Logger('V1 Controller')
+const IconsLogger = new Logger('Icons Controller')
 
 const newRelease = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
   try {
-    console.log('test')
+    IconsLogger.logInfo('newRelease', { message: 'A request is send to update the icons', context: req.body })
+    res.status(200).json({ message: 'update process will start' })
+    updateDBIcons(true)
   } catch (err) {
-    V1Logger.logError('newRelease', err)
+    IconsLogger.logError('newRelease', err)
     next(err)
   }
 }
