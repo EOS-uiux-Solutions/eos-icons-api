@@ -2,16 +2,16 @@ import { CustomizedConfig, FlipObject } from 'common/types'
 
 class SvgFactory {
     private svgString: string = '';
-    private colorCode: string;
-    private rotateAngle: number;
-    private flip: FlipObject;
+    private colorCode: string | undefined;
+    private rotateAngle: number | undefined;
+    private flip: FlipObject | undefined;
     private customized: boolean;
 
     constructor (svgString: string, customizationConfig: CustomizedConfig, customized: boolean = false) {
       this.svgString = svgString
-      this.colorCode = customizationConfig?.colorCode!
-      this.rotateAngle = customizationConfig?.rotateAngle!
-      this.flip = customizationConfig?.flip!
+      this.colorCode = customizationConfig?.colorCode
+      this.rotateAngle = customizationConfig?.rotateAngle
+      this.flip = customizationConfig?.flip
       this.customized = customized
     }
 
@@ -30,29 +30,38 @@ class SvgFactory {
     }
 
     private changeColor () {
-      return `fill="${this.colorCode}"`
+      if (this.colorCode) {
+        return `fill="${this.colorCode}"`
+      }
+      return ''
     }
 
     private rotateIcon () {
-      return `rotate(${this.rotateAngle}, 12, 12)` // considering viewport 24x24 for all icons
+      if (this.rotateAngle) {
+        return `rotate(${this.rotateAngle}, 12, 12)` // considering viewport 24x24 for all icons
+      }
+      return ''
     }
 
     private flipIcon () {
-      const horizontalFlip = this.flip.horizontal
-      const verticalFlip = this.flip.vertical
-      let translateX = 0
-      let translateY = 0
-      let scaleX = 1
-      let scaleY = 1
-      if (horizontalFlip) {
-        scaleX = -1
-        translateX = 24
+      if (this.flip) {
+        const horizontalFlip = this.flip.horizontal
+        const verticalFlip = this.flip.vertical
+        let translateX = 0
+        let translateY = 0
+        let scaleX = 1
+        let scaleY = 1
+        if (horizontalFlip) {
+          scaleX = -1
+          translateX = 24
+        }
+        if (verticalFlip) {
+          scaleY = -1
+          translateY = 24
+        }
+        return `translate(${translateX}, ${translateY}) scale(${scaleX}, ${scaleY})`
       }
-      if (verticalFlip) {
-        scaleY = -1
-        translateY = 24
-      }
-      return `translate(${translateX}, ${translateY}) scale(${scaleX}, ${scaleY})`
+      return ''
     }
 }
 
