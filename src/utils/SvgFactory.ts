@@ -1,47 +1,32 @@
-import fs from 'fs'
 import { CustomizedConfig, FlipObject } from 'common/types'
 
 class SvgFactory {
-    private svgCode: string = '';
-    private pathToSvg: string;
+    private svgString: string = '';
     private colorCode: string;
     private rotateAngle: number;
     private flip: FlipObject;
     private customized: boolean;
 
-    constructor (pathToSvg: string, customizationConfig: CustomizedConfig, customized: boolean = false) {
-      this.pathToSvg = pathToSvg
+    constructor (svgString: string, customizationConfig: CustomizedConfig, customized: boolean = false) {
+      this.svgString = svgString
       this.colorCode = customizationConfig?.colorCode!
       this.rotateAngle = customizationConfig?.rotateAngle!
       this.flip = customizationConfig?.flip!
       this.customized = customized
     }
 
-    get getSvgCode () {
-      return this.svgCode
-    }
-
-    private readSvgCode () {
-      if (fs.existsSync(this.pathToSvg)) {
-        this.svgCode = fs.readFileSync(this.pathToSvg, 'utf8')
-      } else {
-        this.svgCode = fs.readFileSync(this.pathToSvg.replace('svg-outlined', 'svg'), 'utf8')
-      }
-    }
-
     private modifySvgCode () {
       const gTagOpen = `<g ${this.changeColor()} transform="${this.flipIcon()} ${this.rotateIcon()}">`
-      const index1 = this.svgCode.indexOf('>') + 1
-      const index2 = this.svgCode.lastIndexOf('<')
-      this.svgCode = `${this.svgCode.slice(0, index1)}${gTagOpen}${this.svgCode.slice(index1, index2)}</g></svg>`
+      const index1 = this.svgString.indexOf('>') + 1
+      const index2 = this.svgString.lastIndexOf('<')
+      this.svgString = `${this.svgString.slice(0, index1)}${gTagOpen}${this.svgString.slice(index1, index2)}</g></svg>`
     }
 
     finalizeIcon () {
-      this.readSvgCode()
       if (this.customized) {
         this.modifySvgCode()
       }
-      return this.svgCode
+      return this.svgString
     }
 
     private changeColor () {
