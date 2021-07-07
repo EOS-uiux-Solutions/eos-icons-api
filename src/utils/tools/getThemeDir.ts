@@ -11,7 +11,7 @@ const getThemeDir = (theme: iconsTheme | iconsThemeV1 = iconsTheme.filled) => {
   let themeDir: string
   if (theme === 'svg') {
     themeDir = ThemesDirectories[iconsTheme.filled]
-  } else if (theme === 'svg-outlined') {
+  } else if (theme === 'outlined') {
     themeDir = ThemesDirectories[iconsTheme.outlined]
   } else {
     themeDir = ThemesDirectories[theme]

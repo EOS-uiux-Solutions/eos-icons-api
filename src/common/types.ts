@@ -45,7 +45,7 @@ export enum iconsTheme {
 // Backward compatability for V1 APIs: 
 export enum iconsThemeV1 {
     'svg' = 'svg',
-    'svg-outlined' = 'svg-outlined'
+    'outlined' = 'outlined'
 }
 
 // A dictionary with the themes as a keys:
