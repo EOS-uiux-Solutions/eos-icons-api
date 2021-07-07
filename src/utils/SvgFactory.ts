@@ -1,7 +1,7 @@
 import { CustomizedConfig, FlipObject } from 'common/types'
 
 class SvgFactory {
-    private svgString: string = '';
+    private svgString: string;
     private colorCode: string | undefined;
     private rotateAngle: number | undefined;
     private flip: FlipObject | undefined;
