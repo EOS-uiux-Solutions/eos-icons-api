@@ -1,0 +1,131 @@
+swagger: '2.0'
+info:
+  description: Here's all the magic behind www.eos-icons.com
+  version: 2.0.0
+  title: EOS ICONS APIs
+
+tags:
+- name: icons
+  description: Calls related to the icons
+
+paths:
+  /v2/icons/getAll:
+    post:
+      tags:
+      - icons
+      summary: Get All the icons
+      description: Get all the items in the db with custom color if requested.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: getAllbody
+        schema:
+          $ref: '#/definitions/getAllbody'
+      responses:
+        "200":
+          description: 200 (Success)
+          schema:
+            $ref: '#/definitions/getAllresponse'
+definitions:
+  getAllbody:
+    type: object
+    properties:
+      color:
+        type: string
+        example: '#ff0000'
+  getAllresponse:
+    required:
+    - _id
+    - tags
+    - name
+    - svg
+    - do
+    - dont
+    - category
+    - type
+    - date
+    properties:
+      tags:
+        type: array
+        items:
+          type: string
+      _id:
+        type: string
+      name:
+        type: string
+      svg:
+        type: string
+      svgOutlined:
+        type: string
+      do:
+        type: string
+      dont:
+        type: string
+      category:
+        type: string
+      type:
+        type: string
+      date:
+        type: string
+      hasOutlined:
+        type: boolean
+      dateOutlined:
+        type: boolean
+      label: 
+        type: string
+    example: 
+      success: true
+      message: success
+      data:
+        icons:
+          - tags:
+              - eos
+              - resource
+              - conceptual
+              - non-representational
+              - fawzi
+              - non-realistic
+              - symbolic
+            _id: 60e0f9cb79abccd5a4c0649c
+            name: abstract
+            do: >-
+              <ul><li>Use this icon to represent an abstract resource or
+              tool.</li></ul>
+            dont: <ul><li>n/a.</li></ul>
+            category: virtualization
+            type: static
+            date: 30/11/2020
+            hasOutlined: true
+            dateOutlined: 19/02/2021
+            svg: >-
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g
+              fill="#ff0044" transform=" "><path
+              d="M16,3H8A2,2,0,0,0,6.29,4l-4,7a2,2,0,0,0,0,2l4,7A2,2,0,0,0,8,21h8a2,2,0,0,0,1.74-1l4-7a2,2,0,0,0,0-2l-4-7A2,2,0,0,0,16,3Z"/></g></svg>
+            svgOutlined: >-
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g
+              fill="#ff0044" transform=" "><path
+              d="M21.73188,11,17.72905,4A1.96655,1.96655,0,0,0,16.0099,3H8.00424A2.0381,2.0381,0,0,0,6.271,4L2.26812,11a1.99891,1.99891,0,0,0,0,2L6.271,20a2.03786,2.03786,0,0,0,1.73329,1H16.0099a1.96634,1.96634,0,0,0,1.71915-1l4.00283-7A1.99891,1.99891,0,0,0,21.73188,11ZM16,19H8L4,12,8,5h8l4,7Z"/></g></svg>
+          - tags:
+              - eos
+              - resource
+              - conceptual
+              - non-representational
+              - symbolic
+              - maha-non-realistic
+              - non-realistic
+            _id: 60e107cc13e3d2d9b37435e2
+            name: abstract_incomplete
+            do: >-
+              <ul><li>Use this icon to represent an incomplete abstract resource or
+              tool.</li></ul>
+            dont: <ul><li>n/a.</li></ul>
+            category: virtualization
+            type: static
+            date: 30/11/2020
+            svg: >-
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g
+              fill="#ff0044" transform=" "><path
+              d="M21.72,11.01l-4.01-7A1.96776,1.96776,0,0,0,15.98,3H8A1.96777,1.96777,0,0,0,6.27,4.01L4.74,6.68l-.8,1.39L2.26,11.01A2.0325,2.0325,0,0,0,2,12a2.00444,2.00444,0,0,0,.26.99l1.68,2.94.8,1.39,1.53,2.67A1.96777,1.96777,0,0,0,8,21h7.98a1.96776,1.96776,0,0,0,1.73-1.01l4.01-7a2.00444,2.00444,0,0,0,.26-.99A1.95565,1.95565,0,0,0,21.72,11.01Zm-4.38361,5.97351.00556-.00378-.0044.0075ZM20.28,12,17.345,16.97449c-.11835.00885-.23437.02551-.355.02551A4.99424,4.99424,0,0,1,12,12.09753V11.98A5.004,5.004,0,0,0,7,7a2.95969,2.95969,0,0,0-.31.03L7.89,5h8.26l4.14,7Z"/></g></svg>
