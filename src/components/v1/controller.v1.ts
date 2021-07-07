@@ -112,8 +112,9 @@ const downloadImage = async (req: Express.Request, res: Express.Response, next: 
     const { iconName } = req.query
     if (type && iconName) {
       file = `${tempDirectory}/${dist}/${type}/${iconName}.${type}`
+    } else {
+      file = `${tempDirectory}/${dist}.zip`
     }
-    file = `${tempDirectory}/${dist}.zip`
     res.download(file)
   } catch (err) {
     V1Logger.logError('downloadImage', err)
