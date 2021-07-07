@@ -19,11 +19,12 @@ class FontFactory {
 
     generateGruntCommand () {
       try {
+        const outlined = this.theme === 'outlined' ? 'svg-outlined' : 'svg'
         let command = ''
         for (let i = 0; i < this.icons.length; i++) {
           command += `--extended_src=${this.theme}/${this.icons[i]}.svg `
         }
-        const preparedCommand = `grunt -b ./src --dist=${this.timestamp} ${command} --outlined=${this.theme === 'svg-outlined'}`
+        const preparedCommand = `grunt -b ./src --dist=${this.timestamp} ${command} --outlined=${outlined}`
         return preparedCommand
       } catch (err) {
         throw new Error(`Some error occurred while generating Icons set command: ${err}`)
