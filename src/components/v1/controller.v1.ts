@@ -62,7 +62,8 @@ const fontsApi = async (req: Express.Request, res: Express.Response, next: Expre
     await analyticsServices.createAnalyticDocument(serializedData)
     res.status(200).send((serializedData.timestamp).toString())
   } catch (err) {
-    V1Logger.logError('iconsApi', err)
+    V1Logger.logError('fontsApi', err)
+    next(err)
   }
 }
 
