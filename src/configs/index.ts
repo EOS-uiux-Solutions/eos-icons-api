@@ -11,7 +11,7 @@ interface configsInterface {
     },
     GITLAB_READ_API: string
     GITLAB_TAGS_API: string
-    GITLAP_HOOK_TOKEN: string
+    GITLAB_HOOK_TOKEN: string
 }
 
 const configs: configsInterface = {
@@ -21,7 +21,7 @@ const configs: configsInterface = {
   LOG_FILE_PATH: process.env.LOG_FILE_PATH as string,
   GITLAB_READ_API: process.env.GITLAB_READ_API as string,
   GITLAB_TAGS_API: process.env.GITLAB_TAGS_API as string,
-  GITLAB_HOOK_TOKEN: process.env.GITLAP_HOOK_TOKEN as string,
+  GITLAB_HOOK_TOKEN: process.env.GITLAB_HOOK_TOKEN as string,
   Databases: {
     MongoURI: process.env.MongoURI as string
   }
