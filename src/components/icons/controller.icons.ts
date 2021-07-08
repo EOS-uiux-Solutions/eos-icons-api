@@ -9,7 +9,7 @@ const newRelease = async (req: Express.Request, res: Express.Response, next: Exp
   try {
     if (req.headers['x-gitlab-token'] === configs.GITLAB_HOOK_TOKEN) {
       res.status(200).json({ message: 'Thanks for notifying me' })
-      IconsLogger.logInfo('newRelease', { message: 'an icons\' update is released', context: req.body })
+      IconsLogger.logInfo('newRelease', { message: 'an icons\' update is released' })
       updateDBIcons(true)
     } else {
       res.status(403).json({ message: 'Thank you for acting as Gitlab' })
