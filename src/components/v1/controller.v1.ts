@@ -60,7 +60,8 @@ const fontsApi = async (req: Express.Request, res: Express.Response, next: Expre
     await analyticsServices.createAnalyticDocument(serializedData)
     res.status(200).send((serializedData.timestamp).toString())
   } catch (err) {
-    V1Logger.logError('iconsApi', err)
+    V1Logger.logError('fontsApi', err)
+    next(err)
   }
 }
 
@@ -119,8 +120,9 @@ const downloadImage = async (req: Express.Request, res: Express.Response, next: 
     const { iconName } = req.query
     if (type && iconName) {
       file = `${tempDirectory}/${dist}/${type}/${iconName}.${type}`
+    } else {
+      file = `${tempDirectory}/${dist}.zip`
     }
-    file = `${tempDirectory}/${dist}.zip`
     res.download(file)
   } catch (err) {
     V1Logger.logError('downloadImage', err)
