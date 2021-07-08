@@ -85,6 +85,7 @@ const downloadPNG = async (req: Express.Request, res: Express.Response, next: Ex
     res.download(outputPath)
   } catch (err) {
     V1Logger.logError('pngDownload', err)
+    next(err)
   }
 }
 
