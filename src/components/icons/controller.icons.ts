@@ -3,6 +3,7 @@ import Express from 'express'
 import { Logger, respond } from 'helpers'
 import { SvgFactory } from 'utils'
 import updateDBIcons from 'utils/updateDBIcons'
+import { getStringPayload } from './interfaces.icons'
 import * as iconsServices from './service.icons'
 
 const IconsLogger = new Logger('Icons Controller')
@@ -44,7 +45,19 @@ const getIcons = async (req: Express.Request, res: Express.Response, next: Expre
   }
 }
 
+const getString = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
+  try {
+    const data:getStringPayload = req.body
+    const { stringType } = data
+    console.log(stringType)
+  } catch (err) {
+    IconsLogger.logError('getString', err)
+    next(err)
+  }
+}
+
 export {
   newRelease,
-  getIcons
+  getIcons,
+  getString
 }

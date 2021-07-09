@@ -1,3 +1,4 @@
+import { CustomizedConfig } from 'common/types'
 import mongoose from 'mongoose'
 
 export type iconType = 'animated' | 'static'
@@ -17,3 +18,9 @@ export interface IconInterface extends mongoose.Document{
     dateOutlined?: string,
     label?: string
     }
+
+export interface getStringPayload {
+    stringType: string,
+    icons: string[],
+    customizations?:CustomizedConfig
+}
