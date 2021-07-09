@@ -53,7 +53,62 @@ paths:
           description: 200 (Success)
           schema:
             $ref: '#/definitions/getStringResponse'
+
+  /v2/icons/getFile:
+    post:
+      tags:
+      - icons
+      summary: Get svg or png icons
+      description: Get customized or non-customized, single or multiple, svg or png icons. 
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        type: string
+        enum: [filled,outlined]
+        name: theme
+      - in: body
+        name: getFileBody
+        schema:
+          $ref: '#/definitions/getFileBody'
+      responses:
+        "200":
+          description: 200 (Success) - a file will be downloaded if single icon, or a zip file if multiple icons
 definitions:
+  getFileBody:
+    type: object
+    required: 
+      - icons
+      - exportAs
+    properties:
+      icons:
+        type: array
+        items: 
+          type: string
+        example: [abstract,abstract_incomplete]
+      exportAs:
+        type: string
+        enum: [svg,png]
+        example: svg
+      customizations: 
+        type: object
+        properties:
+          colorCode:
+            type: string
+            example: 'red'
+          rotateAngle:
+            type: string
+            example: 250
+          flip:
+            type: object
+            properties:
+              horizontal: 
+                type: boolean
+              vertical:
+                type: boolean
+            example: {horizontal: true, vertical: false}
   getStringBody:
     type: object
     required: 
