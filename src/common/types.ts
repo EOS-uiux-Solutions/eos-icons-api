@@ -37,16 +37,10 @@ export interface CustomizedIconsPayload extends IconsPayload {
 // *********************************
 
 // Available themes:
-export enum iconsTheme {
-    filled,
-    outlined
-}
+export type iconsTheme = 'filled' | 'outlined'
 
-// Backward compatability for V1 APIs: 
-export enum iconsThemeV1 {
-    'svg' = 'svg',
-    'outlined' = 'outlined'
-}
+// Backward compatability for V1 APIs:
+export type iconsThemeV1 = 'svg' | 'outlined'
 
 // A dictionary with the themes as a keys:
 export type themesDictionary = {
