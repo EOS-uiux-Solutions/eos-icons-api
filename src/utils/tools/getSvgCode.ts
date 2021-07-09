@@ -1,9 +1,9 @@
 import { ThemesDirectories } from 'common/constants'
-import { iconsTheme, iconsThemeV1 } from 'common/types'
+import { iconsThemeV1 } from 'common/types'
 import fs from 'fs'
 
 const getFilled = async (iconName: string) => {
-  const iconPath = `${ThemesDirectories[iconsTheme.filled]}/${iconName}.svg`
+  const iconPath = `${ThemesDirectories.filled}/${iconName}.svg`
   if (fs.existsSync(iconPath)) {
     const svgCode = fs.readFileSync(iconPath, 'utf8')
     return svgCode
@@ -14,7 +14,7 @@ const getFilled = async (iconName: string) => {
 }
 
 const getOutlined = async (iconName: string) => {
-  const outlinedIconPath = `${ThemesDirectories[iconsTheme.outlined]}/${iconName}.svg`
+  const outlinedIconPath = `${ThemesDirectories.outlined}/${iconName}.svg`
   if (fs.existsSync(outlinedIconPath)) {
     const svgCode = fs.readFileSync(outlinedIconPath, 'utf8')
     return svgCode
@@ -25,7 +25,7 @@ const getOutlined = async (iconName: string) => {
 // This's only used for V1 APIs
 const getSvgCode = async (theme: iconsThemeV1, iconName: string) => {
   let svgString = ''
-  if (theme === iconsThemeV1['svg-outlined']) {
+  if (theme === 'outlined') {
     svgString = await getOutlined(iconName)
   } else {
     svgString = await getFilled(iconName)
