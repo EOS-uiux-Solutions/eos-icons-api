@@ -54,7 +54,7 @@ const fontsApi = async (req: Express.Request, res: Express.Response, next: Expre
     const theme = req.query.theme as iconsThemeV1 | iconsTheme
     const serializedData = serializer({ icons: icons }, 'font')
     // generate the font package:
-    const fontMaker = new FontFactory(icons, serializedData.timestamp, theme || iconsThemeV1.svg)
+    const fontMaker = new FontFactory(icons, serializedData.timestamp, theme || 'svg')
     await fontMaker.generateFiles()
     // add analytics data to db:
     await analyticsServices.createAnalyticDocument(serializedData)
