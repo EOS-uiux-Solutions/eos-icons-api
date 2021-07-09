@@ -29,7 +29,93 @@ paths:
           description: 200 (Success)
           schema:
             $ref: '#/definitions/getAllresponse'
+  /v2/icons/getString:
+    post:
+      tags:
+      - icons
+      summary: Get the svg or base64 string of an icon
+      description: Get customized or non-customized, single or multiple, svg or base64 strings of icons. 
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        type: string
+        enum: [filled,outlined]
+        name: theme
+      - in: body
+        name: getStringBody
+        schema:
+          $ref: '#/definitions/getStringBody'
+      responses:
+        "200":
+          description: 200 (Success)
+          schema:
+            $ref: '#/definitions/getStringResponse'
 definitions:
+  getStringBody:
+    type: object
+    required: 
+      - icons
+      - stringType
+    properties:
+      icons:
+        type: array
+        items: 
+          type: string
+        example: [abstract,abstract_incomplete]
+      stringType:
+        type: string
+        enum: [svg,base64]
+        example: svg
+      customizations: 
+        type: object
+        properties:
+          colorCode:
+            type: string
+            example: 'red'
+          rotateAngle:
+            type: string
+            example: 250
+          flip:
+            type: object
+            properties:
+              horizontal: 
+                type: boolean
+              vertical:
+                type: boolean
+            example: {horizontal: true, vertical: false}
+  getStringResponse:
+    required:
+    - stringType
+    - icons
+    properties:
+      stringType:
+        type: string
+        enum: [svg,base64]
+      icons:
+        type: object
+        required: 
+        - name
+        - iconString
+        properties: 
+          name: 
+            type: string
+          iconString: 
+            type: string
+            enum: [svgString, base64String]
+    example: 
+      success: true
+      message: success
+      data:
+        stringType: base64
+        icons:
+          - name: abstract
+            iconString: PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGcgZmlsbD0icmVkIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNCwgMCkgc2NhbGUoLTEsIDEpIHJvdGF0ZSgyNTAsIDEyLCAxMikiPjxwYXRoIGQ9Ik0xNiwzSDhBMiwyLDAsMCwwLDYuMjksNGwtNCw3YTIsMiwwLDAsMCwwLDJsNCw3QTIsMiwwLDAsMCw4LDIxaDhhMiwyLDAsMCwwLDEuNzQtMWw0LTdhMiwyLDAsMCwwLDAtMmwtNC03QTIsMiwwLDAsMCwxNiwzWiIvPjwvZz48L3N2Zz4=
+          - name: abstract_incomplete
+            iconString: PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGcgZmlsbD0icmVkIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNCwgMCkgc2NhbGUoLTEsIDEpIHJvdGF0ZSgyNTAsIDEyLCAxMikiPjxwYXRoIGQ9Ik0yMS43MiwxMS4wMWwtNC4wMS03QTEuOTY3NzYsMS45Njc3NiwwLDAsMCwxNS45OCwzSDhBMS45Njc3NywxLjk2Nzc3LDAsMCwwLDYuMjcsNC4wMUw0Ljc0LDYuNjhsLS44LDEuMzlMMi4yNiwxMS4wMUEyLjAzMjUsMi4wMzI1LDAsMCwwLDIsMTJhMi4wMDQ0NCwyLjAwNDQ0LDAsMCwwLC4yNi45OWwxLjY4LDIuOTQuOCwxLjM5LDEuNTMsMi42N0ExLjk2Nzc3LDEuOTY3NzcsMCwwLDAsOCwyMWg3Ljk4YTEuOTY3NzYsMS45Njc3NiwwLDAsMCwxLjczLTEuMDFsNC4wMS03YTIuMDA0NDQsMi4wMDQ0NCwwLDAsMCwuMjYtLjk5QTEuOTU1NjUsMS45NTU2NSwwLDAsMCwyMS43MiwxMS4wMVptLTQuMzgzNjEsNS45NzM1MS4wMDU1Ni0uMDAzNzgtLjAwNDQuMDA3NVpNMjAuMjgsMTIsMTcuMzQ1LDE2Ljk3NDQ5Yy0uMTE4MzUuMDA4ODUtLjIzNDM3LjAyNTUxLS4zNTUuMDI1NTFBNC45OTQyNCw0Ljk5NDI0LDAsMCwxLDEyLDEyLjA5NzUzVjExLjk4QTUuMDA0LDUuMDA0LDAsMCwwLDcsN2EyLjk1OTY5LDIuOTU5NjksMCwwLDAtLjMxLjAzTDcuODksNWg4LjI2bDQuMTQsN1oiLz48L2c+PC9zdmc+
+      
   getAllbody:
     type: object
     properties:
