@@ -1,3 +1,4 @@
+import { iconsTheme } from 'common/types'
 import mongoose, { Schema } from 'mongoose'
 import { IconInterface } from './interfaces.icons'
 
@@ -22,3 +23,17 @@ iconsSchema.index({ name: 1 })
 export interface IIconsModel extends IconInterface, mongoose.Document { }
 // The model:
 export const Model = mongoose.model<IIconsModel>('icons', iconsSchema)
+
+export type svgFieldsInDB = 'svg' | 'svgOutlined'
+// this method will be used to get the appropriate svg field, base on the theme
+export const getAppropriateSVGField = (theme: iconsTheme) => {
+  let field = 'svg'
+  switch (theme) {
+    case 'filled':
+      break
+    case 'outlined':
+      field = 'svgOutlined'
+      break
+  }
+  return field
+}
