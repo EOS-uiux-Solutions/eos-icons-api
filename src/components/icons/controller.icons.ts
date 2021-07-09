@@ -49,7 +49,6 @@ const getString = async (req: Express.Request, res: Express.Response, next: Expr
   try {
     const data:getStringPayload = req.body
     const { stringType } = data
-    console.log(stringType)
   } catch (err) {
     IconsLogger.logError('getString', err)
     next(err)
