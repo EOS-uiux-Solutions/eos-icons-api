@@ -6,6 +6,7 @@ const prefix = '/icons'
 router.post('/newReleaseGitlab', controller.newRelease)
 router.post('/getIcons', controller.getIcons)
 router.post('/getString', controller.getString)
+router.post('/getFile', controller.getFile)
 
 export {
   router,
