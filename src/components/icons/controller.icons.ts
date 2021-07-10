@@ -3,8 +3,8 @@ import configs from 'configs'
 import Express from 'express'
 import { Logger, respond } from 'helpers'
 import { getBase64 } from 'utils/tools'
-import { updateDBIcons, SvgFactory, ImageFactory } from 'utils'
-import { getStringPayload } from './interfaces.icons'
+import { updateDBIcons, SvgFactory, ImageFactory, FontFactory } from 'utils'
+import { getIcon, getStringPayload } from './interfaces.icons'
 import { getAppropriateSVGField, svgFieldsInDB } from './model.icons'
 import * as iconsServices from './service.icons'
 import { tempDirectory } from 'common/constants'
@@ -101,9 +101,46 @@ const getFile = async (req: Express.Request, res: Express.Response, next: Expres
   }
 }
 
+const getFont = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
+  try {
+    const theme = req.query.theme as iconsTheme
+    const svgField = getAppropriateSVGField(theme) as svgFieldsInDB
+    const data:getIcon = req.body
+    const { icons, customizations } = data
+    const setOfIcons = await iconsServices.getSetOfIcons(icons, `-_id name ${svgField}`)
+    const svgStrings = {}
+    console.log(customizations)
+    for (const icon of setOfIcons) {
+      const iconCustomizer = new SvgFactory(icon[svgField]!, customizations, !!customizations)
+      const customizedSVG = iconCustomizer.finalizeIcon()
+      svgStrings[icon.name] = customizedSVG
+    }
+    const srcFolderTimestamp = Math.floor(Date.now())
+    const imageFactoryData:CustomizedIconsPayload = { ...data, exportAs: 'svg' }
+    const imageCreator = new ImageFactory(imageFactoryData, svgStrings, srcFolderTimestamp, false)
+    await imageCreator.generateTheIconsPack()
+    let outlined = false
+    if (theme === 'outlined') {
+      outlined = true
+    }
+    // generate the font package:
+    const srcFolder = `temp/dist_${srcFolderTimestamp}/svg`
+    const distFolderTimestamp = Math.floor(Date.now())
+    const fontMaker = new FontFactory(icons, srcFolder, distFolderTimestamp, outlined)
+    await fontMaker.generateFiles()
+    const dist = `dist_${distFolderTimestamp}`
+    const zipFolder = `${tempDirectory}/${dist}.zip`
+    res.download(zipFolder)
+  } catch (err) {
+    IconsLogger.logError('getFont', err)
+    next(err)
+  }
+}
+
 export {
   newRelease,
   getIcons,
   getString,
-  getFile
+  getFile,
+  getFont
 }

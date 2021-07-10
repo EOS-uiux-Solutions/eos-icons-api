@@ -9,9 +9,11 @@ class ImageFactory {
     private timestamp: number;
     private iconsOutputPath: string;
     private distDir: string;
+    private createZip: boolean
 
-    constructor (payload: CustomizedIconsPayload, svgStrings: {[key: string]: string}, timestamp: number) {
+    constructor (payload: CustomizedIconsPayload, svgStrings: {[key: string]: string}, timestamp: number, createZip: boolean = true) {
       this.payload = payload
+      this.createZip = createZip
       this.svgStrings = svgStrings
       this.timestamp = timestamp
       this.distDir = `${tempDirectory}/dist_${this.timestamp}`
@@ -55,7 +57,9 @@ class ImageFactory {
       await this.createDirectory()
       await this.createIconFile()
       await addConfigFile(configFilePath, JSON.stringify(this.payload))
-      await zipFolder(this.distDir, zipOutputPath)
+      if (this.payload.icons.length > 1 && this.createZip) {
+        await zipFolder(this.distDir, zipOutputPath)
+      }
     }
 }
 
