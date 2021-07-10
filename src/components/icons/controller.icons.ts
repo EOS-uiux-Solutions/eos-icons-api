@@ -109,7 +109,6 @@ const getFont = async (req: Express.Request, res: Express.Response, next: Expres
     const { icons, customizations } = data
     const setOfIcons = await iconsServices.getSetOfIcons(icons, `-_id name ${svgField}`)
     const svgStrings = {}
-    console.log(customizations)
     for (const icon of setOfIcons) {
       const iconCustomizer = new SvgFactory(icon[svgField]!, customizations, !!customizations)
       const customizedSVG = iconCustomizer.finalizeIcon()
