@@ -76,7 +76,53 @@ paths:
       responses:
         "200":
           description: 200 (Success) - a file will be downloaded if single icon, or a zip file if multiple icons
+  /v2/icons/getFont:
+    post:
+      tags:
+      - icons
+      summary: Get icons as Font
+      description: Get customized or non-customized, single or multiple font of selected icons
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        type: string
+        enum: [filled,outlined]
+        name: theme
+      - in: body
+        name: getFontBody
+        schema:
+          $ref: '#/definitions/getFontBody'
+      responses:
+        "200":
+          description: 200 (Success) - a zip folder will be downloaded
 definitions:
+  getFontBody:
+    type: object
+    required: 
+      - icons
+    properties:
+      icons:
+        type: array
+        items: 
+          type: string
+        example: [abstract,abstract_incomplete]
+      customizations: 
+        type: object
+        properties:
+          rotateAngle:
+            type: string
+            example: 250
+          flip:
+            type: object
+            properties:
+              horizontal: 
+                type: boolean
+              vertical:
+                type: boolean
+            example: {horizontal: true, vertical: false}
   getFileBody:
     type: object
     required: 

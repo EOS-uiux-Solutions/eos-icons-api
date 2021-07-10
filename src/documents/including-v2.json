@@ -239,6 +239,35 @@
 						"description": "This POST request accepts a array of iconNames and returns a Array of respective SvgCode"
 					},
 					"response": []
+				},
+				{
+					"name": "Get Font",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"icons\": [\"cluster_role\", \"abstract\"],\r\n    \"customizations\": {\"rotateAngle\": 250, \"flip\": {\r\n        \"horizontal\": true,\r\n        \"vertical\": false\r\n    }}\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/v2/icons/getFont",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"v2",
+								"icons",
+								"getFont"
+							]
+						},
+						"description": "This POST request accepts a array of iconNames and returns a Array of respective SvgCode"
+					},
+					"response": []
 				}
 			]
 		},
