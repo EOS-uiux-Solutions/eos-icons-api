@@ -4,7 +4,7 @@ import Express from 'express'
 import { Logger, respond } from 'helpers'
 import { getBase64 } from 'utils/tools'
 import { updateDBIcons, SvgFactory } from 'utils'
-import { getStringPayload } from './interfaces.icons'
+import { GetStringPayload } from './interfaces.icons'
 import { getAppropriateSVGField, svgFieldsInDB } from './model.icons'
 import * as iconsServices from './service.icons'
 
@@ -51,7 +51,7 @@ const getString = async (req: Express.Request, res: Express.Response, next: Expr
   try {
     const theme = req.query.theme as iconsTheme
     const svgField = getAppropriateSVGField(theme) as svgFieldsInDB
-    const data:getStringPayload = req.body
+    const data:GetStringPayload = req.body
     const { stringType, icons, customizations } = data
     const setOfIcons = await iconsServices.getSetOfIcons(icons, `-_id name ${svgField}`)
     const customizedIcons = setOfIcons.map(icon => {
