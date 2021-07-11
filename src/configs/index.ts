@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 dotenv.config({ path: './src/configs/.env' })
 
-interface configsInterface {
+interface ConfigsInterface {
     env: string,
     FRONTEND_HOST: string,
     API_PREFIX: string,
@@ -14,7 +14,7 @@ interface configsInterface {
     GITLAB_HOOK_TOKEN: string
 }
 
-const configs: configsInterface = {
+const configs: ConfigsInterface = {
   env: process.env.env as string,
   FRONTEND_HOST: process.env.FRONTEND_HOST as string,
   API_PREFIX: process.env.API_PREFIX as string,
