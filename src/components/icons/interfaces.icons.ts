@@ -30,6 +30,6 @@ export interface getIcon {
     customizations:fontCustomizations
 }
 
-export interface getStringPayload extends getIcon {
+export interface GetStringPayload extends getIcon {
     stringType: string,
 }
