@@ -91,7 +91,7 @@ const updateDBIcons = async (notifiedByHook = false) => {
       }
     }
 
-    if (newIcons.length !== 0) {
+    if (!!newIcons.length) {
       await iconsServices.insertIcons(newIcons)
     }
     for (const dbIcon of currentDBIcons) {
