@@ -4,6 +4,7 @@ import { configure, routers, errorHandlers } from 'start'
 import { mongoDBconnector } from 'databases'
 import configs from 'configs'
 import { executeTestCommand } from 'tests/testing-script'
+import updateDBIcons from 'utils/updateDBIcons'
 const app:Express.Application = Express();
 
 (async () => {
@@ -16,6 +17,8 @@ const app:Express.Application = Express();
   // MongoDB
   if (process.env.NODE_ENV !== 'test') {
     await mongoDBconnector()
+    // Run the update Icons Process:
+    await updateDBIcons()
   }
   // Redis:
 
