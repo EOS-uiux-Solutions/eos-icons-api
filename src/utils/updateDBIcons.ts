@@ -13,7 +13,6 @@ const updateIconsLogger = new Logger('updateDBIcons')
 
 const updateDBIcons = async (notifiedByHook = false) => {
   try {
-    // Latest Database version's info:
     const currentVersionInfo = await infoServices.getLatestVersionInfo()
     // in initial setup, there wouldn't be any versions stored in the db, that's why we set an old date.
     const currVersionDate = new Date(currentVersionInfo ? currentVersionInfo.createdAt : '1999-03-20')
@@ -43,7 +42,6 @@ const updateDBIcons = async (notifiedByHook = false) => {
      **********************************************
      */
 
-    // Current icons:
     const currentDBIcons = await iconsServices.getAllIcons() as IIconsModel[] | IconInterface[]
     updateIconsLogger.logInfo('Retrieving the needed data from the databases and APIs', { message: 'Finished' })
 
@@ -54,27 +52,21 @@ const updateDBIcons = async (notifiedByHook = false) => {
      */
     const newIcons: IconInterface[] = []
     const deletedIcons: string[] = []
-    // for auditing purposes:
     const namesOfDeletedIcons: string[] = []
     const namesOfUpdatedIcons: string[] = []
     const namesOfNewIcons: string[] = []
-    // This will get all the newer icons (new/modified icon):
     const addedAndUpdatedIcons = gitlabIcons.filter(icon => isNewIcon(icon.date, currVersionDate))
     updateIconsLogger.logInfo('The preparation of the files', { message: 'Finished' })
 
-    // Iterate through the icons:
     for (const iconDetails of addedAndUpdatedIcons) {
-      // ADD the SVG codes to the icon's object:
       const filledSVG = await getFilled(iconDetails.name)
       if (filledSVG === 'NOT FOUND') {
         continue
       }
       iconDetails.svg = filledSVG
-      // IF icon has an outlined version, get the svg of it:
       if (iconDetails.hasOutlined) {
         const outlinedSVG = await getOutlined(iconDetails.name)
         if (outlinedSVG === 'NOT FOUND') {
-          // if not found, use the same svg code of the filled version
           iconDetails.svgOutlined = iconDetails.svg
         } else {
           iconDetails.svgOutlined = outlinedSVG
@@ -99,11 +91,9 @@ const updateDBIcons = async (notifiedByHook = false) => {
       }
     }
 
-    // Insert the new icons in the Database:
     if (newIcons.length !== 0) {
       await iconsServices.insertIcons(newIcons)
     }
-    // delete the deleted icons from the db
     for (const dbIcon of currentDBIcons) {
       if (gitlabIcons.findIndex(gitlabIcon => { return gitlabIcon.name === dbIcon.name }) === -1) {
         deletedIcons.push(dbIcon._id as string)
@@ -115,11 +105,7 @@ const updateDBIcons = async (notifiedByHook = false) => {
     updateIconsLogger.logInfo('', { message: 'The process of updating the icons is Finished' })
     console.timeEnd('Updating the icons Process')
 
-    /**
-       **********************************************
-      Add an info about the updated/added/deleted icons
-       **********************************************
-       */
+    // Add an info about the updated/added/deleted icons
     infoServices.createInfoDocument({ iconsAdded: namesOfNewIcons, iconsUpdated: namesOfUpdatedIcons, iconsDeleted: namesOfDeletedIcons })
     updateIconsLogger.logInfo('', { message: 'Update info is added to the db' })
   } catch (err) {
