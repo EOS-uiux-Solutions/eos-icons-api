@@ -19,7 +19,7 @@ export interface IconInterface extends mongoose.Document{
     label?: string
     }
 
-export interface getStringPayload {
+export interface GetStringPayload {
     stringType: string,
     icons: string[],
     customizations:CustomizedConfig
