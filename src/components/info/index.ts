@@ -1,2 +1,2 @@
-export * as infoServices from './info.service'
-export * as infoModel from './info.model'
+export * as infoServices from './service.info'
+export * as infoModel from './model.info'

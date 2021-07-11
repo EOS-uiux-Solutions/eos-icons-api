@@ -8,10 +8,10 @@
   },
   "scripts": {
     "preinstall": "npm update eos-icons ",
-    "postinstall": "grunt -b ./src moveFiles && cp node_modules/eos-icons/animated-svg/*.svg ./src/svg/",
+    "postinstall": "grunt -b ./src moveFiles",
     "build": "tsc --project ./",
-    "start:dev": "grunt -b ./src moveFiles && NODE_PATH=./src nodemon ./src/server.ts",
-    "start": "grunt -b ./src moveFiles && NODE_PATH=./src ts-node --transpile-only ./src/server.ts",
+    "start:dev": "NODE_PATH=./src nodemon ./src/server.ts",
+    "start": "NODE_PATH=./src ts-node --transpile-only ./src/server.ts",
     "lint": "eslint \"src/*\"",
     "lint:fix": "eslint \"src/*\" --fix",
     "test:v1": "grunt -b ./src moveFiles && NODE_ENV=test NODE_PATH=./src ts-node --transpile-only ./src/server.ts"
@@ -41,6 +41,7 @@
     "nodemon": "^2.0.7"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "dotenv": "^10.0.0",
     "eos-icons": "^5.1.0",
     "express": "^4.17.1",

@@ -6,6 +6,11 @@ const dateFormat = () => {
   return new Date(Date.now()).toLocaleString()
 }
 
+interface InfoLog {
+  message: string
+  context?: Object
+}
+
 class Logger {
   private logger: winston.Logger;
   private caller: string;
@@ -13,15 +18,16 @@ class Logger {
     this.caller = caller
 
     const logger = winston.createLogger({
-      level: 'error',
-      format: winston.format.printf(error => {
-        let message = `[${this.caller}: ${error.source}] | ${dateFormat()} |  ${error.level.toUpperCase()} | ${error.message} | `
-        message = error.thrownError ? `${message} ${JSON.stringify(error.thrownError)} | ` : message
+      level: 'info',
+      format: winston.format.printf(log => {
+        let message = `[${this.caller}: ${log.source}] | ${dateFormat()} |  ${log.level.toUpperCase()} | ${log.message} | `
+        message = log.logDetails ? `${message} ${JSON.stringify(log.logDetails)} | ` : message
         return message
       }),
       transports: [
         new winston.transports.Console(),
-        new winston.transports.File({ filename: `${configs.LOG_FILE_PATH}/error.log` })
+        new winston.transports.File({ filename: `${configs.LOG_FILE_PATH}/error.log`, level: 'error' }),
+        new winston.transports.File({ filename: `${configs.LOG_FILE_PATH}/info.log`, level: 'info' })
       ]
     })
 
@@ -29,7 +35,11 @@ class Logger {
   }
 
   logError (source: string, err: Error | HttpError) {
-    this.logger.error(err.message, { source, thrownError: err })
+    this.logger.error(err.message, { source, logDetails: err })
+  }
+
+  logInfo (source: string, info: InfoLog) {
+    this.logger.info(info.message, { source, logDetails: info })
   }
 }
 

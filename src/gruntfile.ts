@@ -69,6 +69,15 @@ module.exports = function (grunt) {
           dest: './svg-outlined/'
         }]
       },
+      animated: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '../node_modules/eos-icons/animated-svg/',
+          src: ['**'],
+          dest: './svg/'
+        }]
+      },
       mergall: {
         files: [{
           expand: true,
@@ -116,5 +125,5 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', ['copy:logo', 'webfont', 'copy:css', 'replace'])
 
-  grunt.registerTask('moveFiles', ['copy:svg', 'copy:svgOutlined', 'copy:mergall', 'copy:mergallOutlined', 'bundleOutlined'])
+  grunt.registerTask('moveFiles', ['copy:svg', 'copy:svgOutlined', 'copy:animated', 'copy:mergall', 'copy:mergallOutlined', 'bundleOutlined'])
 }
