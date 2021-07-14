@@ -12,7 +12,8 @@ export interface IconInterface extends mongoose.Document{
     date: string,
     do:string,
     dont: string,
-    lookModifiedAt?: string
+    svgModifiedAt?: string
+    svgOutlinedModifiedAt?: string
     svgOutlined?:string,
     hasOutlined?: boolean,
     dateOutlined?: string,

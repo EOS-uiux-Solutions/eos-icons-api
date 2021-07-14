@@ -11,7 +11,7 @@ const prepareUpdatedIcon = (newIconDetails: IconInterface, currentDBicon: IconIn
     if (key === 'svg' || key === 'svgOutlined') {
       const isModified = newIconDetails[key] !== currentDBicon[key]
       if (isModified) {
-        updateDetails.$set['lookModifiedAt'] = new Date().toISOString()
+        updateDetails.$set[`${key}ModifiedAt`] = new Date().toISOString()
         updateDetails.$set[key] = value
       }
     } else if (key === 'tags') {
