@@ -12,6 +12,7 @@ const iconsSchema = new Schema({
   category: { type: Schema.Types.Mixed, required: true },
   type: { type: String, required: true },
   date: { type: String, required: true },
+  lookModifiedAt: String,
   hasOutlined: Boolean,
   dateOutlined: String,
   label: String
