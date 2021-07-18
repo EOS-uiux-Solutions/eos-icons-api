@@ -10,7 +10,7 @@ const updateCachedIcons = async () => {
 
   for (const icon of icons) {
     for (const key of Object.keys(icon)) {
-      const iconSetterPromise = redisTools.asyncRedis.hset(redisClient, icon.name, key, icon[key])
+      const iconSetterPromise = redisTools.asyncRedis.hset(redisClient!, icon.name, key, icon[key])
       hsetPromises.push(iconSetterPromise)
     }
   }
