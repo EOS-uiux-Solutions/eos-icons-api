@@ -6,6 +6,7 @@ import { infoServices } from 'components/info'
 import { Logger, NodeLogger } from 'helpers'
 import { getEncodedLink, isNewIcon, getFilled, getOutlined, prepareUpdatedIcon } from './tools'
 import configs from 'configs'
+import { redisServices } from 'databases/Redis'
 // promise-style version of cmd.get
 const pcmdGet = util.promisify(cmd.get)
 
@@ -104,7 +105,9 @@ const updateDBIcons = async (notifiedByHook = false) => {
     }
     updateIconsLogger.logInfo('', { message: 'The process of updating the icons is Finished' })
     console.timeEnd('Updating the icons Process')
-
+    if (notifiedByHook) {
+      await redisServices.updateCachedIcons()
+    }
     // Add an info about the updated/added/deleted icons
     infoServices.createInfoDocument({ iconsAdded: namesOfNewIcons, iconsUpdated: namesOfUpdatedIcons, iconsDeleted: namesOfDeletedIcons })
     updateIconsLogger.logInfo('', { message: 'Update info is added to the db' })
