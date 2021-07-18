@@ -1,7 +1,7 @@
 /* eslint-disable import/first */
 import Express from 'express'
 import { configure, routers, errorHandlers } from 'start'
-import { mongoDBconnector } from 'databases'
+import { mongoDBconnector, redisServices } from 'databases'
 import configs from 'configs'
 import { executeTestCommand } from 'tests/testing-script'
 import updateDBIcons from 'utils/updateDBIcons'
@@ -14,11 +14,12 @@ const app:Express.Application = Express();
   }
   // **************** Connect to databases *******************
 
-  // MongoDB
   if (process.env.NODE_ENV !== 'test') {
     await mongoDBconnector()
     // Run the update Icons Process:
     await updateDBIcons()
+    // Update the cached icons:
+    await redisServices.updateCachedIcons()
   }
   // Redis:
 

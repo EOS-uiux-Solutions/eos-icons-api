@@ -8,6 +8,7 @@ interface ConfigsInterface {
     LOG_FILE_PATH: string
     Databases: {
     MongoURI: string
+    RedisClient: string
     },
     GITLAB_READ_API: string
     GITLAB_TAGS_API: string
@@ -21,7 +22,8 @@ const configs: ConfigsInterface = {
   GITLAB_READ_API: process.env.GITLAB_READ_API as string,
   GITLAB_TAGS_API: process.env.GITLAB_TAGS_API as string,
   Databases: {
-    MongoURI: process.env.MongoURI as string
+    MongoURI: process.env.MongoURI as string,
+    RedisClient: process.env.REDIS_CLIENT_NAME as string
   }
 }
 
