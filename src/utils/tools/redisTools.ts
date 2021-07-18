@@ -7,20 +7,22 @@ import { RedisClient } from 'redis'
 const nonStringFields = ['tags', 'category', 'hasOutlined']
 
 // For Redis Hash: The keys and values must be strings, that's why we need to stringify other types.
-const serialize = (icon: IconInterface) => {
+const serialize = (icon: IconInterface): IconInterface => {
   for (const key of Object.keys(icon)) {
     if (nonStringFields.includes(key)) {
       icon[key] = JSON.stringify(icon[key])
     }
   }
+  return icon
 }
 
-const deserialize = (icon: IconInterface) => {
+const deserialize = (icon: IconInterface): Object => {
   for (const key of Object.keys(icon)) {
     if (nonStringFields.includes(key)) {
       icon[key] = JSON.parse(icon[key])
     }
   }
+  return icon
 }
 
 /**

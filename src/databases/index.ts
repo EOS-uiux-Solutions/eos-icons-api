@@ -1,2 +1,2 @@
 export { default as mongoDBconnector } from './mongoDB'
-export { redisClient, redisServices } from './Redis'
+export { default as redisClient } from './redis'

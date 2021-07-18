@@ -1,10 +1,10 @@
 /* eslint-disable import/first */
 import Express from 'express'
 import { configure, routers, errorHandlers } from 'start'
-import { mongoDBconnector, redisServices } from 'databases'
+import { mongoDBconnector } from 'databases'
 import configs from 'configs'
 import { executeTestCommand } from 'tests/testing-script'
-import updateDBIcons from 'utils/updateDBIcons'
+import { updateDBIcons, updateCachedIcons } from 'utils'
 const app:Express.Application = Express();
 
 (async () => {
@@ -19,7 +19,7 @@ const app:Express.Application = Express();
     // Run the update Icons Process:
     await updateDBIcons()
     // Update the cached icons:
-    await redisServices.updateCachedIcons()
+    await updateCachedIcons()
   }
   // Redis:
 

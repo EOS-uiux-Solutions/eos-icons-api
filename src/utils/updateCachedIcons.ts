@@ -1,7 +1,7 @@
 import { IconInterface } from 'components/icons'
 import { getAllIcons } from 'components/icons/service.icons'
 import { redisTools } from 'utils/tools'
-import redisClient from './redis'
+import { redisClient } from '../databases/'
 
 const updateCachedIcons = async () => {
   const icons: IconInterface[] = await getAllIcons() as IconInterface[]
@@ -9,8 +9,9 @@ const updateCachedIcons = async () => {
   const hsetPromises: Promise<any>[] = []
 
   for (const icon of icons) {
-    for (const key of Object.keys(icon)) {
-      const iconSetterPromise = redisTools.asyncRedis.hset(redisClient!, icon.name, key, icon[key])
+    const serializedIcon = redisTools.serialize(icon)
+    for (const key of Object.keys(serializedIcon)) {
+      const iconSetterPromise = redisTools.asyncRedis.hset(redisClient!, serializedIcon.name, key, serializedIcon[key])
       hsetPromises.push(iconSetterPromise)
     }
   }
@@ -22,6 +23,4 @@ const updateCachedIcons = async () => {
   }
 }
 
-export {
-  updateCachedIcons
-}
+export default updateCachedIcons
