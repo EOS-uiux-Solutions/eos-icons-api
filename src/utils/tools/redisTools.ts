@@ -16,7 +16,7 @@ const serialize = (icon: IconInterface): IconInterface => {
   return icon
 }
 
-const deserialize = (icon: IconInterface): Object => {
+const deserialize = (icon: IconInterface): IconInterface => {
   for (const key of Object.keys(icon)) {
     if (nonStringFields.includes(key)) {
       icon[key] = JSON.parse(icon[key])
