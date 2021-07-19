@@ -1,8 +1,11 @@
+import { iconsTheme } from 'common/types'
 import configs from 'configs'
 import Express from 'express'
 import { Logger, respond } from 'helpers'
-import { SvgFactory } from 'utils'
-import updateDBIcons from 'utils/updateDBIcons'
+import { getBase64 } from 'utils/tools'
+import { updateDBIcons, SvgFactory } from 'utils'
+import { GetStringPayload } from './interfaces.icons'
+import { getAppropriateSVGField, svgFieldsInDB } from './model.icons'
 import * as iconsServices from './service.icons'
 
 const IconsLogger = new Logger('Icons Controller')
@@ -44,7 +47,31 @@ const getIcons = async (req: Express.Request, res: Express.Response, next: Expre
   }
 }
 
+const getString = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
+  try {
+    const theme = req.query.theme as iconsTheme
+    const svgField = getAppropriateSVGField(theme) as svgFieldsInDB
+    const data:GetStringPayload = req.body
+    const { stringType, icons, customizations } = data
+    const setOfIcons = await iconsServices.getSetOfIcons(icons, `-_id name ${svgField}`)
+    const customizedIcons = setOfIcons.map(icon => {
+      const iconCustomizer = new SvgFactory(icon[svgField]!, customizations, !!customizations)
+      const customizedSVG = iconCustomizer.finalizeIcon()
+      const iconString = stringType === 'base64' ? getBase64(customizedSVG) : customizedSVG
+      return {
+        name: icon.name,
+        iconString
+      }
+    })
+    respond(200, { stringType, icons: customizedIcons }, res)
+  } catch (err) {
+    IconsLogger.logError('getString', err)
+    next(err)
+  }
+}
+
 export {
   newRelease,
-  getIcons
+  getIcons,
+  getString
 }
