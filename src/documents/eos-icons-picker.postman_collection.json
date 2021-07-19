@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1ac6ccd4-6e64-4b93-91b3-bb145b1d4ef0",
+		"_postman_id": "f25b70e5-88a1-4af9-9d9d-faa29644e603",
 		"name": "eos-icons-picker",
 		"description": "EOS ICONS PICKER BACKEND",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -12,11 +12,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:3131/",
+					"raw": "{{HOST}}/",
 					"host": [
-						"localhost"
+						"{{HOST}}"
 					],
-					"port": "3131",
 					"path": [
 						""
 					]
@@ -47,11 +46,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:3131/icon/svg/download/admin",
+					"raw": "{{HOST}}/icon/svg/download/admin",
 					"host": [
-						"localhost"
+						"{{HOST}}"
 					],
-					"port": "3131",
 					"path": [
 						"icon",
 						"svg",
@@ -85,11 +83,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:3131/icon/png/download/kubelet/500",
+					"raw": "{{HOST}}/icon/png/download/kubelet/500",
 					"host": [
-						"localhost"
+						"{{HOST}}"
 					],
-					"port": "3131",
 					"path": [
 						"icon",
 						"png",
@@ -139,7 +136,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"icons\": [\"cluster_role\", \"pin\", \"timeout\"],\n    \"exportAs\" : \"png\",\n    \"exportSize\": \"500\",\n    \"customizationConfig\": {\"colorCode\": \"#000000\", \"rotateAngle\": 250, \"flip\": {\n        \"horizontal\": true,\n        \"vertical\": false\n    }}\n}\n",
+					"raw": "{\n    \"icons\": [\"cluster_role\", \"pin\", \"timeout\"],\n    \"exportAs\" : \"png\",\n    \"exportSize\": \"500\",\n    \"customizationConfig\": {\"colorCode\": \"#ffe900\", \"rotateAngle\": 90, \"flip\": {\n        \"horizontal\": true,\n        \"vertical\": false\n    }}\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -147,11 +144,10 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3131/icon-customization",
+					"raw": "{{HOST}}/icon-customization",
 					"host": [
-						"localhost"
+						"{{HOST}}"
 					],
-					"port": "3131",
 					"path": [
 						"icon-customization"
 					]
@@ -169,19 +165,19 @@
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
-							"// // check for zip file in download",
-							"// pm.sendRequest(`http://localhost:3131/download?ts=${pm.response.text()}`, (error, response) => {",
-							"// //   console.log(error);",
-							"//   if (error) {",
-							"//     console.log(error);",
-							"//   }",
-							"//   pm.test('Check ZIP file', () => {",
-							"//     pm.expect(error).to.equal(null);",
-							"//     pm.expect(response).to.have.property('code', 200);",
-							"//     pm.expect(response).to.have.property('status', 'OK');",
-							"//     pm.expect(response).to.be.header(\"Content-Type\", \"application/zip\");",
-							"//   });",
-							"// });"
+							"// check for zip file in download",
+							"pm.sendRequest(`http://localhost:3131/download?ts=${pm.response.text()}`, (error, response) => {",
+							"//   console.log(error);",
+							"  if (error) {",
+							"    console.log(error);",
+							"  }",
+							"  pm.test('Check ZIP file', () => {",
+							"    pm.expect(error).to.equal(null);",
+							"    pm.expect(response).to.have.property('code', 200);",
+							"    pm.expect(response).to.have.property('status', 'OK');",
+							"    pm.expect(response).to.be.header(\"Content-Type\", \"application/zip\");",
+							"  });",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -192,7 +188,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"icons\": [\"timeout\", \"abstract\", \"4k\"]}",
+					"raw": "{\"icons\": [\"cluster_role\", \"pin\", \"timeout\"]}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -200,11 +196,10 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3131/iconsapi",
+					"raw": "{{HOST}}/iconsapi",
 					"host": [
-						"localhost"
+						"{{HOST}}"
 					],
-					"port": "3131",
 					"path": [
 						"iconsapi"
 					]
@@ -219,7 +214,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"iconArray\": [\"5g\", \"4k\"]\r\n}",
+					"raw": "{\r\n    \"iconArray\": [\"1k_plus\"],\r\n        \"customizationConfig\": {\"colorCode\": \"#ffe900\", \"rotateAngle\": 90, \"flip\": {\r\n        \"horizontal\": true,\r\n        \"vertical\": false\r\n    }}\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -227,21 +222,51 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3131/icon/svg/svgcode",
-					"protocol": "http",
+					"raw": "{{HOST}}/icon/svg/svgcode?theme=svg",
 					"host": [
-						"localhost"
+						"{{HOST}}"
 					],
-					"port": "3131",
 					"path": [
 						"icon",
 						"svg",
 						"svgcode"
+					],
+					"query": [
+						{
+							"key": "theme",
+							"value": "svg"
+						}
 					]
 				},
 				"description": "This POST request accepts a array of iconNames and returns a Array of respective SvgCode"
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "HOST",
+			"value": "http://localhost:3131"
 		}
 	]
 }
