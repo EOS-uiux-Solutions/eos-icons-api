@@ -1,23 +1,21 @@
 import fs, { promises as pfs } from 'fs'
-import SvgFactory from './SvgFactory'
-import { svgToPng, addConfigFile, zipFolder, getThemeDir } from './tools'
+import { svgToPng, addConfigFile, zipFolder } from './tools'
 import { tempDirectory } from 'common/constants'
-import { CustomizedIconsPayload, iconsTheme, iconsThemeV1 } from 'common/types'
+import { CustomizedIconsPayload } from 'common/types'
 
 class ImageFactory {
-    private payload: any;
+  private payload: CustomizedIconsPayload
+  private svgStrings: {[key: string]: string}
     private timestamp: number;
     private iconsOutputPath: string;
     private distDir: string;
-    // Will be used to locate the icons folder based on the theme
-    private themeDir: string;
 
-    constructor (payload: CustomizedIconsPayload, timestamp: number, theme: iconsThemeV1 | iconsTheme) {
+    constructor (payload: CustomizedIconsPayload, svgStrings: {[key: string]: string}, timestamp: number) {
       this.payload = payload
+      this.svgStrings = svgStrings
       this.timestamp = timestamp
       this.distDir = `${tempDirectory}/dist_${this.timestamp}`
-      this.iconsOutputPath = `${this.distDir}/${this.payload.exportAs}`
-      this.themeDir = getThemeDir(theme)
+      this.iconsOutputPath = `${this.distDir}/${payload.exportAs}`
     }
 
     private async createDirectory () {
@@ -33,32 +31,17 @@ class ImageFactory {
       }
     }
 
-    private modifySvg (iconPath: string) {
-      try {
-        const config = this.payload.customizationConfig
-        const svgCustomizer = new SvgFactory(iconPath, config, !!config)
-        const customizedSvg = svgCustomizer.finalizeIcon()
-        return customizedSvg
-      } catch (err) {
-        throw new Error(`Some error occurred while modifying - ${iconPath} - :  ${err}`)
-      }
-    }
-
     private async createIconFile () {
       try {
-        for (let i = 0; i < this.payload.icons.length; i++) {
-          const iconName = this.payload.icons[i]
-          const iconPath = `${this.themeDir}/${iconName}.svg`
+        for (const [iconName, svgString] of Object.entries(this.svgStrings)) {
           const outputPath = `${this.iconsOutputPath}/${iconName}.${this.payload.exportAs}`
-          // make the modification on the svg:
-          const modifiedSvg = this.modifySvg(iconPath)
           if (this.payload.exportAs === 'png') {
             // if the requested type is png make the conversion:
-            const pngBuffer = await svgToPng(this.payload.exportSize, modifiedSvg)
+            const pngBuffer = await svgToPng(this.payload.exportSize as number, svgString)
             await pfs.writeFile(outputPath, pngBuffer)
           } else {
             // else, write the svg file
-            await pfs.writeFile(outputPath, modifiedSvg)
+            await pfs.writeFile(outputPath, svgString)
           }
         }
       } catch (err) {

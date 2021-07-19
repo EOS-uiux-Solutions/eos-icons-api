@@ -3,7 +3,7 @@ import { ThemesDirectories } from 'common/constants'
 
 // *********************************
 // This function is used to return the appropriate directory, based on the theme:
-// we're handling the case of `svg` and `svg-outlined` manually for now, until the full
+// we're handling the case of `svg` and `outlined` manually for now, until the full
 // depreciation of version 1 APIs
 // *********************************
 
