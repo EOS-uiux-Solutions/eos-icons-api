@@ -64,13 +64,11 @@ const updateDBIcons = async (notifiedByHook = false) => {
         continue
       }
       iconDetails.svg = filledSVG
-      if (iconDetails.hasOutlined) {
-        const outlinedSVG = await getOutlined(iconDetails.name)
-        if (outlinedSVG === 'NOT FOUND') {
-          iconDetails.svgOutlined = iconDetails.svg
-        } else {
-          iconDetails.svgOutlined = outlinedSVG
-        }
+      const outlinedSVG = await getOutlined(iconDetails.name)
+      if (outlinedSVG === 'NOT FOUND') {
+        iconDetails.svgOutlined = iconDetails.svg
+      } else {
+        iconDetails.svgOutlined = outlinedSVG
       }
 
       /**

@@ -3,18 +3,18 @@ import Express from 'express'
 import { Logger } from 'helpers'
 import { GetSvgCodePayload } from './interfaces.v1'
 import { getSvgCode, getThemeDir, serializer, svgToPng } from 'utils/tools'
-import { iconsTheme, iconsThemeV1 } from 'common/types'
 import { FontFactory, SvgFactory } from 'utils'
 import { analyticsServices } from '../analytics'
 import { tempDirectory } from 'common/constants'
 import ImageFactory from 'utils/imageFactory'
+import { iconsThemeV1 } from 'common/types'
 
 const V1Logger = new Logger('V1 Controller')
 
 const getSVGCode = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
   try {
     const { customizationConfig, iconArray }: GetSvgCodePayload = req.body
-    const theme = req.query.theme as iconsThemeV1
+    const { theme } = req.body
     const customizedSVGs: string[] = []
     // loop through the icons, fetch the svg using the svg factory
     // and make the changes if customizations is requested
@@ -33,7 +33,7 @@ const getSVGCode = async (req: Express.Request, res: Express.Response, next: Exp
 
 const downloadSVG = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
   try {
-    const theme = req.query.theme as iconsThemeV1 | iconsTheme
+    const theme = req.query.theme as iconsThemeV1
     const iconName = req.params.iconName as string
     // set paths:
     const themeDir = getThemeDir(theme)
@@ -50,8 +50,7 @@ const downloadSVG = async (req: Express.Request, res: Express.Response, next: Ex
 
 const fontsApi = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
   try {
-    const icons = req.body.icons as string[]
-    const theme = req.query.theme as iconsThemeV1 | iconsTheme
+    const { theme, icons } = req.body
     const serializedData = serializer({ icons: icons }, 'font')
     let outlined = false
     let srcFolder = 'svg'
@@ -75,7 +74,7 @@ const downloadPNG = async (req: Express.Request, res: Express.Response, next: Ex
   try {
     const iconName = req.params.iconName as string
     const pngSize = +req.params.pngSize as number
-    const theme = req.query.theme as iconsThemeV1 | iconsTheme
+    const theme = req.query.theme as iconsThemeV1
     // set paths:
     const themeDir = getThemeDir(theme)
     const iconPath = `${themeDir}/${iconName}.svg`
@@ -95,10 +94,9 @@ const downloadPNG = async (req: Express.Request, res: Express.Response, next: Ex
 
 const iconCustomization = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
   try {
-    const { icons } = req.body
+    const { theme, icons } = req.body
     const { customizationConfig } = req.body
     const timestamp = Math.floor(Date.now())
-    const theme = req.query.theme as iconsThemeV1
     const svgStrings = {}
     for (let i = 0; i < icons.length; i++) {
       const svgString = await getSvgCode(theme, icons[i])

@@ -1,4 +1,4 @@
-import { CustomizedIconsPayload, iconsTheme } from 'common/types'
+import { CustomizedIconsPayload } from 'common/types'
 import configs from 'configs'
 import Express from 'express'
 import { Logger, respond } from 'helpers'
@@ -50,7 +50,7 @@ const getIcons = async (req: Express.Request, res: Express.Response, next: Expre
 
 const getString = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
   try {
-    const theme = req.query.theme as iconsTheme
+    const { theme } = req.body
     const svgField = getAppropriateSVGField(theme) as svgFieldsInDB
     const data:GetStringPayload = req.body
     const { stringType, icons, customizations } = data
@@ -73,7 +73,7 @@ const getString = async (req: Express.Request, res: Express.Response, next: Expr
 
 const getFile = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
   try {
-    const theme = req.query.theme as iconsTheme
+    const { theme } = req.body
     const svgField = getAppropriateSVGField(theme) as svgFieldsInDB
     const data:CustomizedIconsPayload = req.body
     const { exportAs, icons, customizationConfig } = data
@@ -103,7 +103,7 @@ const getFile = async (req: Express.Request, res: Express.Response, next: Expres
 
 const getFont = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
   try {
-    const theme = req.query.theme as iconsTheme
+    const { theme } = req.body
     const svgField = getAppropriateSVGField(theme) as svgFieldsInDB
     const data:getIcon = req.body
     const { icons, customizations } = data
