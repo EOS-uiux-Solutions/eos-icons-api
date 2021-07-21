@@ -1,4 +1,4 @@
-import { CustomizedIconsPayload } from 'common/types'
+import { CustomizedIconsPayload, iconsTheme } from 'common/types'
 import configs from 'configs'
 import Express from 'express'
 import { Logger, respond } from 'helpers'
@@ -119,7 +119,7 @@ const getFont = async (req: Express.Request, res: Express.Response, next: Expres
     const imageCreator = new ImageFactory(imageFactoryData, svgStrings, srcFolderTimestamp, false)
     await imageCreator.generateTheIconsPack()
     let outlined = false
-    if (theme === 'outlined') {
+    if (theme === iconsTheme.outlined) {
       outlined = true
     }
     // generate the font package:

@@ -31,9 +31,9 @@ export type svgFieldsInDB = 'svg' | 'svgOutlined'
 export const getAppropriateSVGField = (theme: iconsTheme) => {
   let field = 'svg'
   switch (theme) {
-    case 'filled':
+    case iconsTheme.filled:
       break
-    case 'outlined':
+    case iconsTheme.outlined:
       field = 'svgOutlined'
       break
   }

@@ -54,7 +54,7 @@ const fontsApi = async (req: Express.Request, res: Express.Response, next: Expre
     const serializedData = serializer({ icons: icons }, 'font')
     let outlined = false
     let srcFolder = 'svg'
-    if (theme === 'outlined') {
+    if (theme === iconsThemeV1.outlined) {
       outlined = true
       srcFolder = 'svg-outlined'
     }
