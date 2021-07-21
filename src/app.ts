@@ -16,10 +16,6 @@ const app:Express.Application = Express();
 
   if (process.env.NODE_ENV !== 'test') {
     await mongoDBconnector()
-    // Run the update Icons Process:
-    await updateDBIcons()
-    // Update the cached icons:
-    await updateCachedIcons()
   }
   // Redis:
 
@@ -29,6 +25,11 @@ const app:Express.Application = Express();
   configure(app)
   // init the routers:
   app.use(configs.API_PREFIX, routers)
+  // Run the updating processes:
+  if (process.env.NODE_ENV !== 'test') {
+    updateDBIcons()
+    updateCachedIcons()
+  }
   // init the main error handlers:
   errorHandlers(app)
 })()
