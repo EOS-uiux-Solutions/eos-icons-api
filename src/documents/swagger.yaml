@@ -40,10 +40,6 @@ paths:
       produces:
       - application/json
       parameters:
-      - in: query
-        type: string
-        enum: [filled,outlined]
-        name: theme
       - in: body
         name: getStringBody
         schema:
@@ -65,10 +61,6 @@ paths:
       produces:
       - application/json
       parameters:
-      - in: query
-        type: string
-        enum: [filled,outlined]
-        name: theme
       - in: body
         name: getFileBody
         schema:
@@ -87,10 +79,6 @@ paths:
       produces:
       - application/json
       parameters:
-      - in: query
-        type: string
-        enum: [filled,outlined]
-        name: theme
       - in: body
         name: getFontBody
         schema:
@@ -123,6 +111,9 @@ definitions:
               vertical:
                 type: boolean
             example: {horizontal: true, vertical: false}
+      theme: 
+        type: string
+        example: filled
   getFileBody:
     type: object
     required: 
@@ -155,6 +146,9 @@ definitions:
               vertical:
                 type: boolean
             example: {horizontal: true, vertical: false}
+      theme: 
+        type: string
+        example: outlined
   getStringBody:
     type: object
     required: 

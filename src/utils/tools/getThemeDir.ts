@@ -7,11 +7,11 @@ import { ThemesDirectories } from 'common/constants'
 // depreciation of version 1 APIs
 // *********************************
 
-const getThemeDir = (theme: iconsTheme | iconsThemeV1 = 'filled') => {
+const getThemeDir = (theme: iconsTheme | iconsThemeV1 = iconsTheme.filled) => {
   let themeDir: string
-  if (theme === 'svg') {
+  if (theme === iconsThemeV1.svg) {
     themeDir = ThemesDirectories.filled
-  } else if (theme === 'outlined') {
+  } else if (theme === iconsTheme.outlined) {
     themeDir = ThemesDirectories.outlined
   } else {
     themeDir = ThemesDirectories[theme]

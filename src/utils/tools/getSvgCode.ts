@@ -25,7 +25,7 @@ const getOutlined = async (iconName: string) => {
 // This's only used for V1 APIs
 const getSvgCode = async (theme: iconsThemeV1, iconName: string) => {
   let svgString = ''
-  if (theme === 'outlined') {
+  if (theme === iconsThemeV1.outlined) {
     svgString = await getOutlined(iconName)
   } else {
     svgString = await getFilled(iconName)
