@@ -53,8 +53,14 @@ const fontsApi = async (req: Express.Request, res: Express.Response, next: Expre
     const icons = req.body.icons as string[]
     const theme = req.query.theme as iconsThemeV1 | iconsTheme
     const serializedData = serializer({ icons: icons }, 'font')
+    let outlined = false
+    let srcFolder = 'svg'
+    if (theme === 'outlined') {
+      outlined = true
+      srcFolder = 'svg-outlined'
+    }
     // generate the font package:
-    const fontMaker = new FontFactory(icons, serializedData.timestamp, theme || 'svg')
+    const fontMaker = new FontFactory(icons, srcFolder, serializedData.timestamp, outlined)
     await fontMaker.generateFiles()
     // add analytics data to db:
     await analyticsServices.createAnalyticDocument(serializedData)
