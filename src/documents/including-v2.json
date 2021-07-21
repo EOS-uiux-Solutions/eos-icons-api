@@ -210,6 +210,35 @@
 							"body": "{\n    \"success\": true,\n    \"message\": \"success\",\n    \"data\": {\n        \"stringType\": \"base64\",\n        \"icons\": [\n            {\n                \"name\": \"abstract\",\n                \"iconString\": \"PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGcgZmlsbD0icmVkIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNCwgMCkgc2NhbGUoLTEsIDEpIHJvdGF0ZSgyNTAsIDEyLCAxMikiPjxwYXRoIGQ9Ik0xNiwzSDhBMiwyLDAsMCwwLDYuMjksNGwtNCw3YTIsMiwwLDAsMCwwLDJsNCw3QTIsMiwwLDAsMCw4LDIxaDhhMiwyLDAsMCwwLDEuNzQtMWw0LTdhMiwyLDAsMCwwLDAtMmwtNC03QTIsMiwwLDAsMCwxNiwzWiIvPjwvZz48L3N2Zz4=\"\n            },\n            {\n                \"name\": \"abstract_incomplete\",\n                \"iconString\": \"PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGcgZmlsbD0icmVkIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNCwgMCkgc2NhbGUoLTEsIDEpIHJvdGF0ZSgyNTAsIDEyLCAxMikiPjxwYXRoIGQ9Ik0yMS43MiwxMS4wMWwtNC4wMS03QTEuOTY3NzYsMS45Njc3NiwwLDAsMCwxNS45OCwzSDhBMS45Njc3NywxLjk2Nzc3LDAsMCwwLDYuMjcsNC4wMUw0Ljc0LDYuNjhsLS44LDEuMzlMMi4yNiwxMS4wMUEyLjAzMjUsMi4wMzI1LDAsMCwwLDIsMTJhMi4wMDQ0NCwyLjAwNDQ0LDAsMCwwLC4yNi45OWwxLjY4LDIuOTQuOCwxLjM5LDEuNTMsMi42N0ExLjk2Nzc3LDEuOTY3NzcsMCwwLDAsOCwyMWg3Ljk4YTEuOTY3NzYsMS45Njc3NiwwLDAsMCwxLjczLTEuMDFsNC4wMS03YTIuMDA0NDQsMi4wMDQ0NCwwLDAsMCwuMjYtLjk5QTEuOTU1NjUsMS45NTU2NSwwLDAsMCwyMS43MiwxMS4wMVptLTQuMzgzNjEsNS45NzM1MS4wMDU1Ni0uMDAzNzgtLjAwNDQuMDA3NVpNMjAuMjgsMTIsMTcuMzQ1LDE2Ljk3NDQ5Yy0uMTE4MzUuMDA4ODUtLjIzNDM3LjAyNTUxLS4zNTUuMDI1NTFBNC45OTQyNCw0Ljk5NDI0LDAsMCwxLDEyLDEyLjA5NzUzVjExLjk4QTUuMDA0LDUuMDA0LDAsMCwwLDcsN2EyLjk1OTY5LDIuOTU5NjksMCwwLDAtLjMxLjAzTDcuODksNWg4LjI2bDQuMTQsN1oiLz48L2c+PC9zdmc+\"\n            }\n        ]\n    }\n}"
 						}
 					]
+				},
+				{
+					"name": "Get File (PNG, SVG)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"icons\": [\"cluster_role\", \"pin\", \"timeout\"],\r\n    \"exportAs\" : \"svg\",\r\n    \"exportSize\": \"500\",\r\n    \"customizationConfig\": {\"colorCode\": \"#000000\", \"rotateAngle\": 250, \"flip\": {\r\n        \"horizontal\": true,\r\n        \"vertical\": false\r\n    }}\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/v2/icons/getFile",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"v2",
+								"icons",
+								"getFile"
+							]
+						},
+						"description": "This POST request accepts a array of iconNames and returns a Array of respective SvgCode"
+					},
+					"response": []
 				}
 			]
 		},
