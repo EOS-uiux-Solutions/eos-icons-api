@@ -1,4 +1,3 @@
 node_modules
 dist
 src/logs/*
-src/configs/default.json

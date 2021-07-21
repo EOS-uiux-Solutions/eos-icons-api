@@ -16,6 +16,12 @@ const getAllIcons = async () => {
   return allIcons
 }
 
+// neededFields, must be space separated
+const getSetOfIcons = async (icons: string[], neededFields: string = '') => {
+  const iconsSet = await Model.find({ name: { $in: icons } }, neededFields)
+  return iconsSet
+}
+
 const updateIcon = async (iconID: string, updateDetails: Object) => {
   await Model.findOneAndUpdate({ _id: iconID }, updateDetails)
 }
@@ -24,5 +30,6 @@ export {
   insertIcons,
   deleteIcons,
   getAllIcons,
+  getSetOfIcons,
   updateIcon
 }

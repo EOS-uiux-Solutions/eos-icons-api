@@ -2,29 +2,29 @@ import util from 'util'
 import cmd from 'node-cmd'
 import { zipFolder, addConfigFile } from './tools'
 import { tempDirectory } from '../common/constants'
-import { iconsTheme, iconsThemeV1 } from 'common/types'
 // promise-style version of cmd.get
 const pcmdGet = util.promisify(cmd.get)
 
 class FontFactory {
     private icons: string[]
+    private srcFolder: string
     private timestamp: number
-    private theme: iconsTheme | iconsThemeV1
+    private isOutlined: boolean
 
-    constructor (icons: string[], timestamp: number, theme: iconsTheme | iconsThemeV1) {
+    constructor (icons: string[], srcFolder:string, timestamp: number, outlined: boolean) {
       this.icons = icons
+      this.srcFolder = srcFolder
       this.timestamp = timestamp
-      this.theme = theme
+      this.isOutlined = outlined
     }
 
     generateGruntCommand () {
       try {
-        const outlined = this.theme === 'outlined' ? 'svg-outlined' : 'svg'
         let command = ''
         for (let i = 0; i < this.icons.length; i++) {
-          command += `--extended_src=${outlined}/${this.icons[i]}.svg `
+          command += `--extended_src=${this.srcFolder}/${this.icons[i]}.svg `
         }
-        const preparedCommand = `grunt -b ./src --dist=${this.timestamp} ${command} --outlined=${outlined === 'svg-outlined'}`
+        const preparedCommand = `grunt -b ./src --dist=${this.timestamp} ${command} --outlined=${this.isOutlined}`
         return preparedCommand
       } catch (err) {
         throw new Error(`Some error occurred while generating Icons set command: ${err}`)
