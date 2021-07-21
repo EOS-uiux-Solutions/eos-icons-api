@@ -20,7 +20,7 @@ const updateDBIcons = async (notifiedByHook = false) => {
       // if not notified by hook, we need to make sure that there's a new release first
       const eosIconsTAGS = await axios.get(configs.GITLAB_TAGS_API)
       const latestReleaseDate = eosIconsTAGS.data[0].commit.committed_date
-      if (latestReleaseDate <= currVersionDate) {
+      if (new Date(latestReleaseDate) <= currVersionDate) {
         updateIconsLogger.logInfo('', { message: 'icons is up to date, updating process is finished' })
         return
       }
@@ -85,13 +85,13 @@ const updateDBIcons = async (notifiedByHook = false) => {
         namesOfNewIcons.push(iconDetails.name)
       } else {
         const idOfTheIcon = currentDBIcons[IndexOfTheIcon]._id
-        const updateDetails = prepareUpdatedIcon(iconDetails)
+        const updateDetails = prepareUpdatedIcon(iconDetails, currentDBIcons[IndexOfTheIcon])
         await iconsServices.updateIcon(idOfTheIcon, updateDetails)
         namesOfUpdatedIcons.push(iconDetails.name)
       }
     }
 
-    if (!!newIcons.length) {
+    if (newIcons.length) {
       await iconsServices.insertIcons(newIcons)
     }
     for (const dbIcon of currentDBIcons) {
