@@ -1,73 +1,67 @@
-import fs from 'fs'
 import { CustomizedConfig, FlipObject } from 'common/types'
 
 class SvgFactory {
-    private svgCode: string = '';
-    private pathToSvg: string;
-    private colorCode: string;
-    private rotateAngle: number;
-    private flip: FlipObject;
+    private svgString: string;
+    private colorCode: string | undefined;
+    private rotateAngle: number | undefined;
+    private flip: FlipObject | undefined;
     private customized: boolean;
 
-    constructor (pathToSvg: string, customizationConfig: CustomizedConfig, customized: boolean = false) {
-      this.pathToSvg = pathToSvg
-      this.colorCode = customizationConfig?.colorCode!
-      this.rotateAngle = customizationConfig?.rotateAngle!
-      this.flip = customizationConfig?.flip!
+    constructor (svgString: string, customizationConfig: CustomizedConfig, customized: boolean = false) {
+      this.svgString = svgString
+      this.colorCode = customizationConfig?.colorCode
+      this.rotateAngle = customizationConfig?.rotateAngle
+      this.flip = customizationConfig?.flip
       this.customized = customized
-    }
-
-    get getSvgCode () {
-      return this.svgCode
-    }
-
-    private readSvgCode () {
-      if (fs.existsSync(this.pathToSvg)) {
-        this.svgCode = fs.readFileSync(this.pathToSvg, 'utf8')
-      } else {
-        this.svgCode = fs.readFileSync(this.pathToSvg.replace('svg-outlined', 'svg'), 'utf8')
-      }
     }
 
     private modifySvgCode () {
       const gTagOpen = `<g ${this.changeColor()} transform="${this.flipIcon()} ${this.rotateIcon()}">`
-      const index1 = this.svgCode.indexOf('>') + 1
-      const index2 = this.svgCode.lastIndexOf('<')
-      this.svgCode = `${this.svgCode.slice(0, index1)}${gTagOpen}${this.svgCode.slice(index1, index2)}</g></svg>`
+      const index1 = this.svgString.indexOf('>') + 1
+      const index2 = this.svgString.lastIndexOf('<')
+      this.svgString = `${this.svgString.slice(0, index1)}${gTagOpen}${this.svgString.slice(index1, index2)}</g></svg>`
     }
 
     finalizeIcon () {
-      this.readSvgCode()
       if (this.customized) {
         this.modifySvgCode()
       }
-      return this.svgCode
+      return this.svgString
     }
 
     private changeColor () {
-      return `fill="${this.colorCode}"`
+      if (this.colorCode) {
+        return `fill="${this.colorCode}"`
+      }
+      return ''
     }
 
     private rotateIcon () {
-      return `rotate(${this.rotateAngle}, 12, 12)` // considering viewport 24x24 for all icons
+      if (this.rotateAngle) {
+        return `rotate(${this.rotateAngle}, 12, 12)` // considering viewport 24x24 for all icons
+      }
+      return ''
     }
 
     private flipIcon () {
-      const horizontalFlip = this.flip.horizontal
-      const verticalFlip = this.flip.vertical
-      let translateX = 0
-      let translateY = 0
-      let scaleX = 1
-      let scaleY = 1
-      if (horizontalFlip) {
-        scaleX = -1
-        translateX = 24
+      if (this.flip) {
+        const horizontalFlip = this.flip.horizontal
+        const verticalFlip = this.flip.vertical
+        let translateX = 0
+        let translateY = 0
+        let scaleX = 1
+        let scaleY = 1
+        if (horizontalFlip) {
+          scaleX = -1
+          translateX = 24
+        }
+        if (verticalFlip) {
+          scaleY = -1
+          translateY = 24
+        }
+        return `translate(${translateX}, ${translateY}) scale(${scaleX}, ${scaleY})`
       }
-      if (verticalFlip) {
-        scaleY = -1
-        translateY = 24
-      }
-      return `translate(${translateX}, ${translateY}) scale(${scaleX}, ${scaleY})`
+      return ''
     }
 }
 

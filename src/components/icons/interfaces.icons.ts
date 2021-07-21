@@ -1,3 +1,4 @@
+import { FlipObject } from 'common/types'
 import mongoose from 'mongoose'
 
 export type iconType = 'animated' | 'static'
@@ -19,3 +20,18 @@ export interface IconInterface extends mongoose.Document{
     dateOutlined?: string,
     label?: string
     }
+
+export interface fontCustomizations {
+        rotateAngle?: number,
+        size?: number
+        flip?: FlipObject
+}
+
+export interface getIcon {
+    icons: string[],
+    customizations:fontCustomizations
+}
+
+export interface GetStringPayload extends getIcon {
+    stringType: string,
+}
