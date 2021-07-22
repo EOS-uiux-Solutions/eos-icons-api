@@ -4,7 +4,7 @@ import { configure, routers, errorHandlers } from 'start'
 import { mongoDBconnector } from 'databases'
 import configs from 'configs'
 import { executeTestCommand } from 'tests/testing-script'
-import updateDBIcons from 'utils/updateDBIcons'
+import { updateDBIcons, updateCachedIcons } from 'utils'
 const app:Express.Application = Express();
 
 (async () => {
@@ -14,7 +14,6 @@ const app:Express.Application = Express();
   }
   // **************** Connect to databases *******************
 
-  // MongoDB
   if (process.env.NODE_ENV !== 'test') {
     await mongoDBconnector()
   }
@@ -29,6 +28,7 @@ const app:Express.Application = Express();
   // Run the updating processes:
   if (process.env.NODE_ENV !== 'test') {
     updateDBIcons()
+    updateCachedIcons()
   }
   // init the main error handlers:
   errorHandlers(app)

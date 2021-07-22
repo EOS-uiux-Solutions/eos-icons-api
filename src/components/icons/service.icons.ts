@@ -12,7 +12,7 @@ const deleteIcons = async (iconsIDs: string[]) => {
 }
 
 const getAllIcons = async () => {
-  const allIcons = await Model.find({})
+  const allIcons = await Model.find({}).lean()
   return allIcons
 }
 
