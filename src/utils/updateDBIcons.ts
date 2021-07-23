@@ -104,9 +104,7 @@ const updateDBIcons = async (notifiedByHook = false) => {
     }
     updateIconsLogger.logInfo('', { message: 'The process of updating the icons is Finished' })
     console.timeEnd('Updating the icons Process')
-    if (notifiedByHook) {
-      await updateCachedIcons()
-    }
+    await updateCachedIcons()
     // Add an info about the updated/added/deleted icons
     infoServices.createInfoDocument({ iconsAdded: namesOfNewIcons, iconsUpdated: namesOfUpdatedIcons, iconsDeleted: namesOfDeletedIcons })
     updateIconsLogger.logInfo('', { message: 'Update info is added to the db' })
