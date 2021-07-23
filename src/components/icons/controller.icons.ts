@@ -30,7 +30,11 @@ const newRelease = async (req: Express.Request, res: Express.Response, next: Exp
 const getIcons = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
   try {
     const { color } = req.body
-    const icons = await iconsServices.getAllIcons()
+    let icons: IconInterface[] = []
+    icons = await redisServices.getAllIconsCache()
+    if (icons.length === 0) {
+      icons = await iconsServices.getAllIcons()
+    }
     if (color) {
       icons.map(icon => {
         const svgCustomizer = new SvgFactory(icon.svg, { colorCode: color }, true)

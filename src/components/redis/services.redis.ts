@@ -2,6 +2,20 @@ import { IconInterface } from 'components/icons'
 import { redisClient } from 'databases'
 import { redisTools } from 'utils/tools'
 
+const getAllIconsCache = async () => {
+  const hgetPromises: Promise<any>[] = []
+  const icons = await redisTools.asyncRedis.keys(redisClient!) as string[]
+  for (const icon of icons) {
+    const iconGetterPromise = redisTools.asyncRedis.hgetAll(redisClient!, icon)
+    hgetPromises.push(iconGetterPromise)
+  }
+  const setOfIcons = await Promise.all(hgetPromises)
+  const deserializedIcons = setOfIcons.map(icon => {
+    return redisTools.deserialize(icon)
+  })
+  return deserializedIcons
+}
+
 // neededFields, must be space separated
 const getsetOfIconsCache = async (icons: string[], neededFields: string) => {
   const hgetPromises: Promise<any>[] = []
@@ -32,5 +46,6 @@ const getsetOfIconsCache = async (icons: string[], neededFields: string) => {
 }
 
 export {
-  getsetOfIconsCache
+  getsetOfIconsCache,
+  getAllIconsCache
 }

@@ -55,10 +55,19 @@ function asyncHmget (redisClient: RedisClient, name: string, neededFields: strin
   })
 }
 
+function asyncKeys (redisClient: RedisClient) {
+  return new Promise(resolve => {
+    redisClient.keys('*', (_, data) => {
+      resolve(data)
+    })
+  })
+}
+
 const asyncRedis = {
   hset: asyncHset,
   hgetAll: asyncHgetall,
-  hmget: asyncHmget
+  hmget: asyncHmget,
+  keys: asyncKeys
 }
 
 export {
