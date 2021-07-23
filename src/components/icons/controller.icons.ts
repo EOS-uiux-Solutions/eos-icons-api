@@ -4,10 +4,11 @@ import Express from 'express'
 import { Logger, respond } from 'helpers'
 import { getBase64 } from 'utils/tools'
 import { updateDBIcons, SvgFactory, ImageFactory, FontFactory } from 'utils'
-import { getIcon, GetStringPayload } from './interfaces.icons'
+import { getIcon, GetStringPayload, IconInterface } from './interfaces.icons'
 import { getAppropriateSVGField, svgFieldsInDB } from './model.icons'
 import * as iconsServices from './service.icons'
 import { tempDirectory } from 'common/constants'
+import { redisServices } from 'components/redis'
 
 const IconsLogger = new Logger('Icons Controller')
 
@@ -54,7 +55,11 @@ const getString = async (req: Express.Request, res: Express.Response, next: Expr
     const svgField = getAppropriateSVGField(theme) as svgFieldsInDB
     const data:GetStringPayload = req.body
     const { stringType, icons, customizations } = data
-    const setOfIcons = await iconsServices.getSetOfIcons(icons, `-_id name ${svgField}`)
+    let setOfIcons: IconInterface[] = []
+    setOfIcons = await redisServices.getsetOfIconsCache(icons, `name ${svgField}`)
+    if (setOfIcons.length === 0) {
+      setOfIcons = await iconsServices.getSetOfIcons(icons, `-_id name ${svgField}`)
+    }
     const customizedIcons = setOfIcons.map(icon => {
       const iconCustomizer = new SvgFactory(icon[svgField]!, customizations, !!customizations)
       const customizedSVG = iconCustomizer.finalizeIcon()
@@ -77,7 +82,11 @@ const getFile = async (req: Express.Request, res: Express.Response, next: Expres
     const svgField = getAppropriateSVGField(theme) as svgFieldsInDB
     const data:CustomizedIconsPayload = req.body
     const { exportAs, icons, customizationConfig } = data
-    const setOfIcons = await iconsServices.getSetOfIcons(icons, `-_id name ${svgField}`)
+    let setOfIcons: IconInterface[] = []
+    setOfIcons = await redisServices.getsetOfIconsCache(icons, `name ${svgField}`)
+    if (setOfIcons.length === 0) {
+      setOfIcons = await iconsServices.getSetOfIcons(icons, `-_id name ${svgField}`)
+    }
     const svgStrings = {}
     for (const icon of setOfIcons) {
       const iconCustomizer = new SvgFactory(icon[svgField]!, customizationConfig!, !!customizationConfig)
@@ -107,7 +116,11 @@ const getFont = async (req: Express.Request, res: Express.Response, next: Expres
     const svgField = getAppropriateSVGField(theme) as svgFieldsInDB
     const data:getIcon = req.body
     const { icons, customizations } = data
-    const setOfIcons = await iconsServices.getSetOfIcons(icons, `-_id name ${svgField}`)
+    let setOfIcons: IconInterface[] = []
+    setOfIcons = await redisServices.getsetOfIconsCache(icons, `name ${svgField}`)
+    if (setOfIcons.length === 0) {
+      setOfIcons = await iconsServices.getSetOfIcons(icons, `-_id name ${svgField}`)
+    }
     const svgStrings = {}
     for (const icon of setOfIcons) {
       const iconCustomizer = new SvgFactory(icon[svgField]!, customizations, !!customizations)
