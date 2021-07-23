@@ -27,7 +27,7 @@ const app:Express.Application = Express();
   app.use(configs.API_PREFIX, routers)
   // Run the updating processes:
   if (process.env.NODE_ENV !== 'test') {
-    updateDBIcons()
+    await updateDBIcons()
     updateCachedIcons()
   }
   // init the main error handlers:
