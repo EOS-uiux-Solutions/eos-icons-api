@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "bad-words": "^3.0.4",
     "dotenv": "^10.0.0",
     "eos-icons": "^5.1.0",
     "express": "^4.17.1",

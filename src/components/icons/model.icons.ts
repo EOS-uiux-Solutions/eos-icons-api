@@ -22,7 +22,7 @@ const iconsSchema = new Schema({
 // Indexes
 iconsSchema.index({ name: 1 })
 // the latter interface contains ORM-based functions such as save().
-export interface IIconsModel extends IconInterface, mongoose.Document { }
+export interface IIconsModel extends IconInterface { }
 // The model:
 export const Model = mongoose.model<IIconsModel>('icons', iconsSchema)
 
