@@ -1,5 +1,6 @@
 import Filter from 'bad-words'
 import { iconsServices } from 'components/icons'
+import configs from 'configs'
 import Express from 'express'
 import { HTTPException, Logger, respond } from 'helpers'
 import { Suggestion, suggestionStatus } from './interfaces.suggestion'
@@ -18,7 +19,7 @@ const addSuggestion = async (req: Express.Request, res: Express.Response, next: 
     }
 
     const iconInfo = await iconsServices.getSetOfIcons([iconName], type)
-    const iconSuggestions = await suggestionServices.getSuggestions(iconName)
+    const iconSuggestions = await suggestionServices.getIconSuggestions(iconName)
     const existentData = iconInfo[0][type]
     const suggestedData: string[] = []
     // if this the first suggestions, the db will respond with null
@@ -55,6 +56,22 @@ const addSuggestion = async (req: Express.Request, res: Express.Response, next: 
   }
 }
 
+const getAllSuggestions = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
+  try {
+    const { secretkey } = req.headers
+    const status = req.query.status as suggestionStatus
+    if (secretkey !== configs.ADMIN_SECRET_KEY) {
+      throw new HTTPException(401, "You're not authorized")
+    }
+    const suggestions = await suggestionServices.getAllSuggestions(status)
+    respond(200, suggestions, res)
+  } catch (err) {
+    suggestionLogger.logError('getAllSuggestions', err)
+    next(err)
+  }
+}
+
 export {
-  addSuggestion
+  addSuggestion,
+  getAllSuggestions
 }

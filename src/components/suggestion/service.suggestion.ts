@@ -1,9 +1,14 @@
-import { Suggestion } from './interfaces.suggestion'
+import { Suggestion, suggestionStatus } from './interfaces.suggestion'
 import * as suggestionsModel from './model.suggestion'
 
 const { Model } = suggestionsModel
 
-const getSuggestions = async (iconName: string) => {
+const getAllSuggestions = async (status: suggestionStatus) => {
+  const suggestions = await Model.find({ 'suggestions.status': status }).lean()
+  return suggestions
+}
+
+const getIconSuggestions = async (iconName: string) => {
   const suggestionsInfo = await Model.findOne({ iconName }, 'suggestions').lean()
   return suggestionsInfo
 }
@@ -17,5 +22,6 @@ const addSuggestions = async (iconName: string, suggestionsInfo: Suggestion[]) =
 
 export {
   addSuggestions,
-  getSuggestions
+  getIconSuggestions,
+  getAllSuggestions
 }

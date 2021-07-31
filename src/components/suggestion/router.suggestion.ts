@@ -4,6 +4,7 @@ const router = express.Router()
 
 const prefix = '/suggestion'
 router.post('/add', controller.addSuggestion)
+router.get('/getAll', controller.getAllSuggestions)
 
 export {
   router,
