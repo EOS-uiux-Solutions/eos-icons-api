@@ -3,7 +3,7 @@ import * as suggestionsModel from './model.suggestion'
 
 const { Model } = suggestionsModel
 
-const getSuggestions = async (iconName: string) => {
+const getIconSuggestions = async (iconName: string) => {
   const suggestionsInfo = await Model.findOne({ iconName }, 'suggestions').lean()
   return suggestionsInfo
 }
@@ -17,5 +17,5 @@ const addSuggestions = async (iconName: string, suggestionsInfo: Suggestion[]) =
 
 export {
   addSuggestions,
-  getSuggestions
+  getIconSuggestions
 }

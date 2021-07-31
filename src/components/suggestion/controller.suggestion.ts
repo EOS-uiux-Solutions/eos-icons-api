@@ -18,7 +18,7 @@ const addSuggestion = async (req: Express.Request, res: Express.Response, next: 
     }
 
     const iconInfo = await iconsServices.getSetOfIcons([iconName], type)
-    const iconSuggestions = await suggestionServices.getSuggestions(iconName)
+    const iconSuggestions = await suggestionServices.getIconSuggestions(iconName)
     const existentData = iconInfo[0][type]
     const suggestedData: string[] = []
     // if this the first suggestions, the db will respond with null
