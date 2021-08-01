@@ -79,11 +79,12 @@ const decide = async (req: Express.Request, res: Express.Response, next: Express
       throw new HTTPException(401, "You're not authorized")
     }
     const updatePromises: Promise<any>[] = []
+    if (status === suggestionStatus.approved) {
+      await iconsServices.addTags(iconName, suggestions)
+    }
     suggestions.forEach((suggestion: string) => {
-      if (status === suggestionStatus.rejected) {
-        const updated = suggestionServices.rejectSuggestion(iconName, suggestion)
-        updatePromises.push(updated)
-      }
+      const updated = suggestionServices.updateStatus(iconName, status, suggestion)
+      updatePromises.push(updated)
     })
     await Promise.all(updatePromises)
     respond(200, 'Updated successfully', res)

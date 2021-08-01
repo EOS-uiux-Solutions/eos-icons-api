@@ -23,7 +23,13 @@ const getSetOfIcons = async (icons: string[], neededFields: string = '') => {
 }
 
 const updateIcon = async (iconID: string, updateDetails: Object) => {
-  await Model.findOneAndUpdate({ _id: iconID }, updateDetails)
+  const updated = await Model.findOneAndUpdate({ _id: iconID }, updateDetails)
+  return updated
+}
+
+const addTags = async (iconName: string, tags: string[]) => {
+  const added = await Model.findOneAndUpdate({ name: iconName }, { $addToSet: { tags: { $each: tags } } })
+  return added
 }
 
 export {
@@ -31,5 +37,6 @@ export {
   deleteIcons,
   getAllIcons,
   getSetOfIcons,
-  updateIcon
+  updateIcon,
+  addTags
 }
