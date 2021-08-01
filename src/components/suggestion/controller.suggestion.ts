@@ -1,8 +1,10 @@
 import Filter from 'bad-words'
-import { iconsServices } from 'components/icons'
+import { IconInterface, iconsServices } from 'components/icons'
 import configs from 'configs'
+import { redisClient } from 'databases'
 import Express from 'express'
 import { HTTPException, Logger, respond } from 'helpers'
+import { redisTools } from 'utils/tools'
 import { Suggestion, suggestionStatus } from './interfaces.suggestion'
 import * as suggestionServices from './service.suggestion'
 
@@ -74,22 +76,28 @@ const getAllSuggestions = async (req: Express.Request, res: Express.Response, ne
 const decide = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
   try {
     const { secretkey } = req.headers
-    const { status, iconName, suggestions } = req.body
+    const { type, status, iconName, suggestions } = req.body
     if (secretkey !== configs.ADMIN_SECRET_KEY) {
       throw new HTTPException(401, "You're not authorized")
     }
+
     const updatePromises: Promise<any>[] = []
     if (status === suggestionStatus.approved) {
-      await iconsServices.addTags(iconName, suggestions)
+      const updatedIcon = await iconsServices.addSuggested(iconName, type, suggestions) as IconInterface
+      // overwrite the cached key:
+      const serializedIcon = redisTools.serialize(updatedIcon)
+      await redisTools.asyncRedis.hset(redisClient!, iconName, type, serializedIcon[type])
     }
+
     suggestions.forEach((suggestion: string) => {
-      const updated = suggestionServices.updateStatus(iconName, status, suggestion)
+      const updated = suggestionServices.updateStatus(type, iconName, status, suggestion)
       updatePromises.push(updated)
     })
     await Promise.all(updatePromises)
+
     respond(200, 'Updated successfully', res)
   } catch (err) {
-    suggestionLogger.logError('getAllSuggestions', err)
+    suggestionLogger.logError('decide', err)
     next(err)
   }
 }

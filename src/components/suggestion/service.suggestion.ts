@@ -1,4 +1,4 @@
-import { Suggestion, suggestionStatus } from './interfaces.suggestion'
+import { Suggestion, suggestionStatus, suggestionType } from './interfaces.suggestion'
 import * as suggestionsModel from './model.suggestion'
 
 const { Model } = suggestionsModel
@@ -20,9 +20,9 @@ const addSuggestions = async (iconName: string, suggestionsInfo: Suggestion[]) =
   return updated
 }
 
-const updateStatus = async (iconName: string, status: suggestionStatus, suggestion: string) => {
+const updateStatus = async (type: suggestionType, iconName: string, status: suggestionStatus, suggestion: string) => {
   const update = { $set: { 'suggestions.$.status': suggestionStatus[status] } }
-  const updated = await Model.findOneAndUpdate({ iconName, 'suggestions.suggestion': suggestion }, update)
+  const updated = await Model.findOneAndUpdate({ iconName, 'suggestions.suggestion': suggestion, 'suggestions.type': type }, update)
   return updated
 }
 
