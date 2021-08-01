@@ -28,13 +28,14 @@ const updateIcon = async (iconID: string, updateDetails: Object) => {
   return updated
 }
 
-const addSuggested = async (iconName: string, type: suggestionInterfaces.suggestionType, additions: string[] | string) => {
+const addSuggested = async (iconName: string, type: suggestionInterfaces.suggestionType, additions: string[]) => {
   const updateDetails = { $set: {}, $addToSet: {} }
   if (type === 'tags') {
     updateDetails.$addToSet[type] = { $each: additions }
-  } else if (type === 'category') { // category might be a string or an array
-    if (typeof additions === 'string') {
-      updateDetails.$set[type] = additions
+  } else if (type === 'category') {
+    // category is string
+    if (additions.length === 1) {
+      updateDetails.$set[type] = additions[0]
     } else {
       updateDetails.$addToSet[type] = { $each: additions }
     }
