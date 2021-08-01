@@ -71,7 +71,30 @@ const getAllSuggestions = async (req: Express.Request, res: Express.Response, ne
   }
 }
 
+const decide = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
+  try {
+    const { secretkey } = req.headers
+    const { status, iconName, suggestions } = req.body
+    if (secretkey !== configs.ADMIN_SECRET_KEY) {
+      throw new HTTPException(401, "You're not authorized")
+    }
+    const updatePromises: Promise<any>[] = []
+    suggestions.forEach((suggestion: string) => {
+      if (status === suggestionStatus.rejected) {
+        const updated = suggestionServices.rejectSuggestion(iconName, suggestion)
+        updatePromises.push(updated)
+      }
+    })
+    await Promise.all(updatePromises)
+    respond(200, 'Updated successfully', res)
+  } catch (err) {
+    suggestionLogger.logError('getAllSuggestions', err)
+    next(err)
+  }
+}
+
 export {
   addSuggestion,
-  getAllSuggestions
+  getAllSuggestions,
+  decide
 }

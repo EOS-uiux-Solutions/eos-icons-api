@@ -20,8 +20,15 @@ const addSuggestions = async (iconName: string, suggestionsInfo: Suggestion[]) =
   return updated
 }
 
+const rejectSuggestion = async (iconName: string, suggestion: string) => {
+  const update = { $set: { 'suggestions.$.status': suggestionStatus.rejected } }
+  const updated = await Model.findOneAndUpdate({ iconName, 'suggestions.suggestion': suggestion }, update)
+  return updated
+}
+
 export {
   addSuggestions,
   getIconSuggestions,
-  getAllSuggestions
+  getAllSuggestions,
+  rejectSuggestion
 }
