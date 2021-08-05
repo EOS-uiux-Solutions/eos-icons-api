@@ -6,9 +6,88 @@ info:
 
 tags:
 - name: icons
-  description: Calls related to the icons
+  description: APIs related to the icons
+- name: suggestions
+  description: APIs related to the suggestions
 
 paths:
+  /v2/suggestions/decide:
+    post:
+      tags:
+      - suggestions
+      summary: Approve/reject any suggestion
+      description: This api is responsible for approving/rejecting a suggestion
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: decideSuggestionsBody
+        schema:
+          $ref: '#/definitions/decideSuggestionsBody'
+      - in: header
+        name: secretkey
+        type: string
+        required: true
+      responses:
+        "200":
+          description: 200 (Success)
+          schema:
+            $ref: '#/definitions/decideSuggestionsResponse'
+  /v2/suggestions/add:
+    post:
+      tags:
+      - suggestions
+      summary: Add tag/category suggestion
+      description: this api is responsible for adding a suggestion
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: AddSuggestionsBody
+        schema:
+          $ref: '#/definitions/AddSuggestionsBody'
+      - in: header
+        name: secretkey
+        type: string
+        required: true
+      responses:
+        "200":
+          description: 200 (Success)
+          schema:
+            $ref: '#/definitions/AddSuggestionsResponse'
+        "400":
+          description: The icon contains a blacklisted word
+        "409":
+          description: The icon is already exist or already suggested
+  /v2/suggestions/getAll:
+    post:
+      tags:
+      - suggestions
+      summary: Get all suggestions
+      description: Get all pending/rejected/approved suggestions
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: status
+        type: string
+        required: false
+        description: the filtered status, if not specified all suggestions will be returned 
+      - in: header
+        name: secretkey
+        type: string
+        required: true
+      responses:
+        "200":
+          description: 200 (Success)
+          schema:
+            $ref: '#/definitions/getAllsuggestionsResponse'
   /v2/icons/getAll:
     post:
       tags:
@@ -49,7 +128,6 @@ paths:
           description: 200 (Success)
           schema:
             $ref: '#/definitions/getStringResponse'
-
   /v2/icons/getFile:
     post:
       tags:
@@ -87,6 +165,78 @@ paths:
         "200":
           description: 200 (Success) - a zip folder will be downloaded
 definitions:
+  decideSuggestionsBody:
+    required:
+    - iconName
+    - type
+    - suggestions
+    - status
+    properties:
+      iconName:
+        type: string
+      type: 
+        type: string
+        enum: [tags,category]
+      status: 
+        type: string
+        enum: [rejected,approved]
+      suggestions: 
+        type: array
+        items:
+          type: string
+    example: 
+      iconName: abstract
+      type: tags
+      suggestions:
+        - base
+        - tag2
+      status: approved
+  decideSuggestionsResponse:
+    example: 
+      success: true
+      message: success
+      data: Updated successfully
+  getAllsuggestionsResponse:
+    type: object
+    required: 
+      - suggestions
+    properties:
+      _id:
+        type: string
+      iconName:
+        type: string
+      suggestions: 
+        type: array
+        items:
+          type: object
+          example: {
+                    "_id": "610468f77a9a59c82d5d3af2",
+                    "suggestion": "base",
+                    "type": "tags",
+                    "status": "approved"
+                }
+  AddSuggestionsBody:
+    required:
+    - iconName
+    - suggestions
+    - type
+    properties:
+      iconName:
+        type: string
+      suggestion:
+        type: string
+      type: 
+        type: string
+        enum: [tags,category]
+    example: 
+      iconName: abstract
+      suggestion: base
+      type: tags
+  AddSuggestionsResponse:
+    example: 
+      success: true
+      message: success
+      data: suggestions added successfully
   getFontBody:
     type: object
     required: 
