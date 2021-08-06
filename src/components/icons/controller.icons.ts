@@ -45,8 +45,8 @@ const getIcons = async (req: Express.Request, res: Express.Response, next: Expre
         }
         return icon
       })
-      return respond(200, { icons }, res)
     }
+    return respond(200, { icons }, res)
   } catch (err) {
     IconsLogger.logError('getIcons', err)
     next(err)
