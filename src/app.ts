@@ -1,6 +1,7 @@
 /* eslint-disable import/first */
 import Express from 'express'
 import { configure, routers, errorHandlers } from 'start'
+// eslint-disable-next-line no-unused-vars
 import { mongoDBconnector, updateAlgoliaIcons } from 'databases'
 import configs from 'configs'
 import { executeTestCommand } from 'tests/testing-script'
@@ -29,7 +30,7 @@ const app:Express.Application = Express();
   if (process.env.NODE_ENV !== 'test') {
     await updateDBIcons()
     updateCachedIcons()
-    // uncomment this if you want to update the algolia icons manually.
+    // ### uncomment The line below if you want to update the algolia icons manually.
     // await updateAlgoliaIcons()
   }
   // init the main error handlers:
