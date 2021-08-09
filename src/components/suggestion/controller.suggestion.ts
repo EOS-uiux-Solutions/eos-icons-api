@@ -1,6 +1,5 @@
 import Filter from 'bad-words'
 import { IconInterface, iconsServices } from 'components/icons'
-import configs from 'configs'
 import { redisClient } from 'databases'
 import Express from 'express'
 import { HTTPException, Logger, respond } from 'helpers'
@@ -60,11 +59,7 @@ const addSuggestion = async (req: Express.Request, res: Express.Response, next: 
 
 const getAllSuggestions = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
   try {
-    const { secretkey } = req.headers
     const status = req.query.status as suggestionStatus
-    if (secretkey !== configs.ADMIN_SECRET_KEY) {
-      throw new HTTPException(401, "You're not authorized")
-    }
     const suggestions = await suggestionServices.getAllSuggestions(status)
     respond(200, suggestions, res)
   } catch (err) {
@@ -75,12 +70,7 @@ const getAllSuggestions = async (req: Express.Request, res: Express.Response, ne
 
 const decide = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
   try {
-    const { secretkey } = req.headers
     const { type, status, iconName, suggestions } = req.body
-    if (secretkey !== configs.ADMIN_SECRET_KEY) {
-      throw new HTTPException(401, "You're not authorized")
-    }
-
     const updatePromises: Promise<any>[] = []
     if (status === suggestionStatus.approved) {
       const updatedIcon = await iconsServices.addSuggested(iconName, type, suggestions) as IconInterface

@@ -1,4 +1,5 @@
 import { suggestionInterfaces } from 'components/suggestion'
+import { suggestionType } from 'components/suggestion/interfaces.suggestion'
 import { IconInterface } from './interfaces.icons'
 import * as iconsModel from './model.icons'
 
@@ -30,9 +31,9 @@ const updateIcon = async (iconID: string, updateDetails: Object) => {
 
 const addSuggested = async (iconName: string, type: suggestionInterfaces.suggestionType, additions: string[]) => {
   const updateDetails = { $set: {}, $addToSet: {} }
-  if (type === 'tags') {
+  if (type === suggestionType.tags) {
     updateDetails.$addToSet[type] = { $each: additions }
-  } else if (type === 'category') {
+  } else if (type === suggestionType.category) {
     // category is string
     if (additions.length === 1) {
       updateDetails.$set[type] = additions[0]
