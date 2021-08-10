@@ -3,7 +3,8 @@ import mongoose from 'mongoose'
 
 export enum suggestionStatus {
     pending = 'pending',
-    rejected = 'rejected'
+    rejected = 'rejected',
+    approved = 'approved'
 }
 
 export enum suggestionType {

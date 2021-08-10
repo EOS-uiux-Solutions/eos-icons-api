@@ -1,7 +1,9 @@
 import Filter from 'bad-words'
-import { iconsServices } from 'components/icons'
+import { IconInterface, iconsServices } from 'components/icons'
+import { redisClient } from 'databases'
 import Express from 'express'
 import { HTTPException, Logger, respond } from 'helpers'
+import { redisTools } from 'utils/tools'
 import { Suggestion, suggestionStatus } from './interfaces.suggestion'
 import * as suggestionServices from './service.suggestion'
 
@@ -55,6 +57,43 @@ const addSuggestion = async (req: Express.Request, res: Express.Response, next: 
   }
 }
 
+const getAllSuggestions = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
+  try {
+    const status = req.query.status as suggestionStatus
+    const suggestions = await suggestionServices.getAllSuggestions(status)
+    respond(200, suggestions, res)
+  } catch (err) {
+    suggestionLogger.logError('getAllSuggestions', err)
+    next(err)
+  }
+}
+
+const decide = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
+  try {
+    const { type, status, iconName, suggestions } = req.body
+    const updatePromises: Promise<any>[] = []
+    if (status === suggestionStatus.approved) {
+      const updatedIcon = await iconsServices.addSuggested(iconName, type, suggestions) as IconInterface
+      // overwrite the cached key:
+      const serializedIcon = redisTools.serialize(updatedIcon)
+      await redisTools.asyncRedis.hset(redisClient!, iconName, type, serializedIcon[type])
+    }
+
+    suggestions.forEach((suggestion: string) => {
+      const updated = suggestionServices.updateStatus(type, iconName, status, suggestion)
+      updatePromises.push(updated)
+    })
+    await Promise.all(updatePromises)
+
+    respond(200, 'Updated successfully', res)
+  } catch (err) {
+    suggestionLogger.logError('decide', err)
+    next(err)
+  }
+}
+
 export {
-  addSuggestion
+  addSuggestion,
+  getAllSuggestions,
+  decide
 }
