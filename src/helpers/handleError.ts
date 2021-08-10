@@ -5,6 +5,14 @@ interface HttpError extends Error {
     message: string
 }
 
+class HTTPException extends Error {
+  constructor (private statusCode: number, message: string) {
+    super()
+    this.message = message
+    this.statusCode = statusCode
+  }
+}
+
 const handleError = (err: HttpError, res: Express.Response) => {
   const { message, statusCode = 500 }: HttpError = err
   res.status(statusCode).json({
@@ -16,5 +24,6 @@ const handleError = (err: HttpError, res: Express.Response) => {
 
 export {
   handleError,
-  HttpError
+  HttpError,
+  HTTPException
 }

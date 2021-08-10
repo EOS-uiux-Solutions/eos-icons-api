@@ -1,3 +1,5 @@
+import { suggestionInterfaces } from 'components/suggestion'
+import { suggestionType } from 'components/suggestion/interfaces.suggestion'
 import { IconInterface } from './interfaces.icons'
 import * as iconsModel from './model.icons'
 
@@ -23,7 +25,24 @@ const getSetOfIcons = async (icons: string[], neededFields: string = '') => {
 }
 
 const updateIcon = async (iconID: string, updateDetails: Object) => {
-  await Model.findOneAndUpdate({ _id: iconID }, updateDetails)
+  const updated = await Model.findOneAndUpdate({ _id: iconID }, updateDetails)
+  return updated
+}
+
+const addSuggested = async (iconName: string, type: suggestionInterfaces.suggestionType, additions: string[]) => {
+  const updateDetails = { $set: {}, $addToSet: {} }
+  if (type === suggestionType.tags) {
+    updateDetails.$addToSet[type] = { $each: additions }
+  } else if (type === suggestionType.category) {
+    // category is string
+    if (additions.length === 1) {
+      updateDetails.$set[type] = additions[0]
+    } else {
+      updateDetails.$addToSet[type] = { $each: additions }
+    }
+  }
+  const added = await Model.findOneAndUpdate({ name: iconName }, updateDetails)
+  return added
 }
 
 export {
@@ -31,5 +50,6 @@ export {
   deleteIcons,
   getAllIcons,
   getSetOfIcons,
-  updateIcon
+  updateIcon,
+  addSuggested
 }
