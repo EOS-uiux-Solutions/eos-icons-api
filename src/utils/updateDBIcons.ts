@@ -7,6 +7,7 @@ import { Logger, NodeLogger } from 'helpers'
 import { getEncodedLink, isNewIcon, getFilled, getOutlined, prepareUpdatedIcon } from './tools'
 import configs from 'configs'
 import updateCachedIcons from './updateCachedIcons'
+import { updateAlgoliaIcons } from 'databases'
 
 // promise-style version of cmd.get
 const pcmdGet = util.promisify(cmd.get)
@@ -106,6 +107,7 @@ const updateDBIcons = async (notifiedByHook = false) => {
     console.timeEnd('Updating the icons Process')
     if (notifiedByHook) {
       await updateCachedIcons()
+      await updateAlgoliaIcons()
     }
     // Add an info about the updated/added/deleted icons
     infoServices.createInfoDocument({ iconsAdded: namesOfNewIcons, iconsUpdated: namesOfUpdatedIcons, iconsDeleted: namesOfDeletedIcons })

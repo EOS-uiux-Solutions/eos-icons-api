@@ -12,6 +12,8 @@ interface ConfigsInterface {
     GITLAB_READ_API: string
     GITLAB_TAGS_API: string
     GITLAB_HOOK_TOKEN: string
+    ALGOLIA_APP_ID: string,
+    ALGOLIA_ADMIN_KEY: string
     ADMIN_SECRET_KEY: string
 }
 
@@ -23,6 +25,8 @@ const configs: ConfigsInterface = {
   GITLAB_READ_API: process.env.GITLAB_READ_API as string,
   GITLAB_TAGS_API: process.env.GITLAB_TAGS_API as string,
   GITLAB_HOOK_TOKEN: process.env.GITLAB_HOOK_TOKEN as string,
+  ALGOLIA_APP_ID: process.env.ALGOLIA_APP_ID as string,
+  ALGOLIA_ADMIN_KEY: process.env.ALGOLIA_ADMIN_KEY as string,
   ADMIN_SECRET_KEY: process.env.ADMIN_SECRET_KEY as string,
   Databases: {
     MongoURI: process.env.MongoURI as string
