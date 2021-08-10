@@ -1,7 +1,6 @@
 import express from 'express'
-import { isAdmin } from 'middlewares'
+import { validateSchema, isAdmin } from 'middlewares'
 import * as controller from './controller.suggestion'
-import { validateSchema } from 'middlewares'
 import * as validationSchemas from './validation.suggestion'
 const router = express.Router()
 
