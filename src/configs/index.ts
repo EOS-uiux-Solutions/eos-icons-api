@@ -8,6 +8,7 @@ interface ConfigsInterface {
     LOG_FILE_PATH: string
     Databases: {
     MongoURI: string
+    RedisHOST: string
     },
     GITLAB_READ_API: string
     GITLAB_TAGS_API: string
@@ -29,7 +30,8 @@ const configs: ConfigsInterface = {
   ALGOLIA_ADMIN_KEY: process.env.ALGOLIA_ADMIN_KEY as string,
   ADMIN_SECRET_KEY: process.env.ADMIN_SECRET_KEY as string,
   Databases: {
-    MongoURI: process.env.MongoURI as string
+    MongoURI: process.env.MongoURI as string,
+    RedisHOST: process.env.RedisHOST as string
   }
 }
 
