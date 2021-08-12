@@ -15,7 +15,8 @@
     "lint": "eslint \"src/*\"",
     "lint:fix": "eslint \"src/*\" --fix",
     "test:v1": "grunt -b ./src moveFiles && NODE_ENV=test NODE_PATH=./src ts-node --transpile-only ./src/server.ts",
-    "test:v2": "TS_NODE_PROJECT=\"tsconfig.testing.json\" NODE_PATH=./src mocha --require ts-node/register \"./{,!(node_modules)/**/}*.test.ts\" --exit"
+    "test:v2": "TS_NODE_PROJECT=\"tsconfig.testing.json\" NODE_PATH=./src mocha --require ts-node/register \"./{,!(node_modules)/**/}*.test.ts\" --exit",
+    "test": "npm run test:v1 && npm run test:v2"
   },
   "repository": {
     "type": "git",
