@@ -26,9 +26,16 @@ const updateStatus = async (type: suggestionType, iconName: string, status: sugg
   return updated
 }
 
+// will be used in tests
+const deleteSuggestion = async (iconName: string, suggestion: string) => {
+  const deleted = await Model.updateOne({ iconName }, { $pull: { suggestions: { suggestion } } })
+  return deleted
+}
+
 export {
   addSuggestions,
   getIconSuggestions,
   getAllSuggestions,
-  updateStatus
+  updateStatus,
+  deleteSuggestion
 }
