@@ -52,7 +52,8 @@ git clone https://github.com/EOS-uiux-Solutions/eos-icons-api
       https://redis.io/topics/quickstart
     - Install the dependenices and run the server: 
     1. Install dependencies using `npm install`
-    2. Start the server using `npm start`
+    2. Install grunt globally `npm install -g grunt-cli`
+    3. Start the server using `npm start`
     - Your server will be started at `http://localhost:3131`
 
 
