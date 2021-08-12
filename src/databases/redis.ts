@@ -4,8 +4,6 @@ import redis from 'redis'
 // Redis Client:
 let redisClient: redis.RedisClient | undefined
 if (process.env.NODE_ENV !== 'test') {
-  const redisHost = configs.Databases.RedisHOST
-  const redisPort = 6379
-  redisClient = redis.createClient(redisPort, redisHost)
+  redisClient = redis.createClient(configs.Databases.REDISCLOUD_URL)
 }
 export default redisClient

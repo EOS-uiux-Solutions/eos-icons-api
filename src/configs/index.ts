@@ -8,7 +8,7 @@ interface ConfigsInterface {
     LOG_FILE_PATH: string
     Databases: {
     MongoURI: string
-    RedisHOST: string
+    REDISCLOUD_URL: string
     },
     GITLAB_READ_API: string
     GITLAB_TAGS_API: string
@@ -31,7 +31,7 @@ const configs: ConfigsInterface = {
   ADMIN_SECRET_KEY: process.env.ADMIN_SECRET_KEY as string,
   Databases: {
     MongoURI: process.env.MongoURI as string,
-    RedisHOST: process.env.RedisHOST as string
+    REDISCLOUD_URL: process.env.REDISCLOUD_URL as string
   }
 }
 
