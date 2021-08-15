@@ -45,11 +45,18 @@ const addSuggested = async (iconName: string, type: suggestionInterfaces.suggest
   return added
 }
 
+// will be used in tests
+const deleteApprovedSuggestion = async (iconName: string, suggestion: string) => {
+  const deleted = await Model.updateOne({ iconName }, { $pull: { tags: { suggestion } } })
+  return deleted
+}
+
 export {
   insertIcons,
   deleteIcons,
   getAllIcons,
   getSetOfIcons,
   updateIcon,
-  addSuggested
+  addSuggested,
+  deleteApprovedSuggestion
 }

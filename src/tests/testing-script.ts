@@ -12,6 +12,7 @@ export const executeTestCommand = () => {
       process.exit(1)
     }
     console.log(`${stdout}`)
+    console.log('Version 1 APIs tests are finished')
     process.exit(0)
   })
 }
