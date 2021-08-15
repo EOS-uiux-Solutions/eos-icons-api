@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"color\": \"#ff0044\"\r\n}",
+							"raw": "{\r\n    \"color\": \"red\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -145,7 +145,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"icons\": [\"cluster_role\", \"pin\", \"timeout\"],\r\n    \"exportAs\" : \"svg\",\r\n    \"exportSize\": \"500\",\r\n    \"customizationConfig\": {\"colorCode\": \"#000000\", \"rotateAngle\": 250, \"flip\": {\r\n        \"horizontal\": true,\r\n        \"vertical\": false\r\n    }}, \r\n    \"theme\":  \"outlined\"\r\n}\r\n",
+							"raw": "{\r\n    \"icons\": [\"cluster_role\", \"pin\", \"timeout\"],\r\n    \"exportAs\" : \"svg\",\r\n    \"exportSize\": 500,\r\n    \"customizationConfig\": {\"colorCode\": \"#000000\", \"rotateAngle\": 250, \"flip\": {\r\n        \"horizontal\": true,\r\n        \"vertical\": false\r\n    }}, \r\n    \"theme\":  \"outlined\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -174,7 +174,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n   \"icons\": [\"fawzi\", \"ahmed\"],\r\n   \"stringType\": \"base64\",\r\n   \"customizations\": {\"colorCode\": \"red\", \"rotateAngle\": 250, \"flip\": {\r\n        \"horizontal\": true,\r\n        \"vertical\": false\r\n    }},\r\n    \"theme\":  \"outlined\"\r\n}",
+							"raw": "{\r\n   \"icons\": [\"abstract\"],\r\n   \"stringType\": \"svg\",\r\n   \"customizations\": {\"colorCode\": \"red\", \"rotateAngle\": 250, \"flip\": {\r\n        \"horizontal\": true,\r\n        \"vertical\": false\r\n    }},\r\n    \"theme\":  \"outlined\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -543,6 +543,76 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"success\": false,\n    \"data\": {},\n    \"message\": \"The suggestion contains a blacklisted word\"\n}"
+						},
+						{
+							"name": "validation error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \"iconName\": \"abstract\",\r\n   \"type\": \"tags\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/v2/suggestion/add",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"v2",
+										"suggestion",
+										"add"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "76"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4c-HMYC0KKyQPoMqVlwc+8f/5O8QCE\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 06 Aug 2021 09:47:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"data\": {},\n    \"message\": \"[\\\"\\\\\\\"suggestion\\\\\\\" is required\\\"]\"\n}"
 						}
 					]
 				},
