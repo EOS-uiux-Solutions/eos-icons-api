@@ -68,8 +68,7 @@ jobs:
         run: npm install
 
       - name: Install required python packages
-        run: sudo apt-get install fontforge ttfautohint
-
+        run: sudo apt-get update && sudo apt-get install fontforge ttfautohint
       - name: Testing V1 APIs
         run: npm run test:v1
         
