@@ -2,10 +2,9 @@ import { CustomizedIconsPayload, iconsTheme } from 'common/types'
 import configs from 'configs'
 import Express from 'express'
 import { Logger, respond } from 'helpers'
-import { getBase64 } from 'utils/tools'
 import { updateDBIcons, SvgFactory, ImageFactory, FontFactory } from 'utils'
 import { getIcon, GetStringPayload, IconInterface } from './interfaces.icons'
-import { getAppropriateSVGField, svgFieldsInDB } from './model.icons'
+import { getAppropriateBase64Field, getAppropriateSVGField, svgFieldsInDB } from './model.icons'
 import * as iconsServices from './service.icons'
 import { tempDirectory } from 'common/constants'
 import { redisServices } from 'components/redis'
@@ -57,17 +56,18 @@ const getString = async (req: Express.Request, res: Express.Response, next: Expr
   try {
     const { theme } = req.body
     const svgField = getAppropriateSVGField(theme) as svgFieldsInDB
+    const base64Field = getAppropriateBase64Field(theme) as svgFieldsInDB
     const data:GetStringPayload = req.body
     const { stringType, icons, customizations } = data
     let setOfIcons: IconInterface[] = []
-    setOfIcons = await redisServices.getsetOfIconsCache(icons, `name ${svgField}`)
+    setOfIcons = await redisServices.getsetOfIconsCache(icons, `name ${svgField} ${base64Field}`)
     if (setOfIcons.length === 0) {
-      setOfIcons = await iconsServices.getSetOfIcons(icons, `-_id name ${svgField}`)
+      setOfIcons = await iconsServices.getSetOfIcons(icons, `-_id name ${svgField} ${base64Field}`)
     }
     const customizedIcons = setOfIcons.map(icon => {
       const iconCustomizer = new SvgFactory(icon[svgField]!, customizations, !!customizations)
       const customizedSVG = iconCustomizer.finalizeIcon()
-      const iconString = stringType === 'base64' ? getBase64(customizedSVG) : customizedSVG
+      const iconString = stringType === 'base64' ? icon[base64Field] : customizedSVG
       return {
         name: icon.name,
         iconString

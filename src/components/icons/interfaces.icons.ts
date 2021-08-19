@@ -7,6 +7,8 @@ export type iconType = 'animated' | 'static'
 export interface IconInterface extends mongoose.Document{
     name: string,
     svg: string,
+    base64: string,
+    base64Outlined: string,
     tags: string[],
     category: string | string[],
     type: iconType,

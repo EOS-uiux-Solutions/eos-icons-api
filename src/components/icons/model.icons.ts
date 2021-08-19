@@ -6,6 +6,8 @@ import { IconInterface } from './interfaces.icons'
 const iconsSchema = new Schema({
   name: { type: String, required: true },
   svg: { type: String, required: true },
+  base64: { type: String, required: true },
+  base64Outlined: { type: String, required: true },
   svgOutlined: String,
   do: { type: String, required: true },
   dont: { type: String, required: true },
@@ -27,7 +29,8 @@ export interface IIconsModel extends IconInterface { }
 export const Model = mongoose.model<IIconsModel>('icons', iconsSchema)
 
 export type svgFieldsInDB = 'svg' | 'svgOutlined'
-// this method will be used to get the appropriate svg field, base on the theme
+export type base64FieldsInDB = 'base64' | 'base64Outlined'
+// this method will be used to get the appropriate svg field, based on the theme
 export const getAppropriateSVGField = (theme: iconsTheme) => {
   let field = 'svg'
   switch (theme) {
@@ -35,6 +38,19 @@ export const getAppropriateSVGField = (theme: iconsTheme) => {
       break
     case iconsTheme.outlined:
       field = 'svgOutlined'
+      break
+  }
+  return field
+}
+
+// this method will be used to get the appropriate base64 field, based on the theme
+export const getAppropriateBase64Field = (theme: iconsTheme) => {
+  let field = 'base64'
+  switch (theme) {
+    case iconsTheme.filled:
+      break
+    case iconsTheme.outlined:
+      field = 'base64Outlined'
       break
   }
   return field

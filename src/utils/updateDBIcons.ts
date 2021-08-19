@@ -4,7 +4,7 @@ import cmd from 'node-cmd'
 import { iconsServices, IconInterface, IIconsModel } from 'components/icons'
 import { infoServices } from 'components/info'
 import { Logger, NodeLogger } from 'helpers'
-import { getEncodedLink, isNewIcon, getFilled, getOutlined, prepareUpdatedIcon } from './tools'
+import { getEncodedLink, isNewIcon, getFilled, getOutlined, prepareUpdatedIcon, getBase64 } from './tools'
 import configs from 'configs'
 import updateCachedIcons from './updateCachedIcons'
 import { updateAlgoliaIcons } from 'databases'
@@ -73,6 +73,8 @@ const updateDBIcons = async (notifiedByHook = false) => {
       } else {
         iconDetails.svgOutlined = outlinedSVG
       }
+      iconDetails.base64 = getBase64(iconDetails.svg)
+      iconDetails.base64Outlined = getBase64(iconDetails.svgOutlined)
 
       /**
        **********************************************
