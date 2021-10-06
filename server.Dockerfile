@@ -5,6 +5,7 @@ WORKDIR /usr/src/app
 
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 COPY package*.json ./
+COPY ./src/gruntfile.ts ./src/
 # Install required packages
 RUN apt-get update -y && \
     apt-get install fontforge ttfautohint -y
