@@ -6,6 +6,9 @@
   "engines": {
     "node": "14.16.0"
   },
+  "config": {
+    "unsafe-perm": true
+  },
   "scripts": {
     "preinstall": "npm update eos-icons ",
     "postinstall": "grunt -b ./src moveFiles",
