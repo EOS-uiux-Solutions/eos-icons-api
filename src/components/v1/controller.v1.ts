@@ -25,7 +25,7 @@ const getSVGCode = async (req: Express.Request, res: Express.Response, next: Exp
       customizedSVGs.push(customizedSvg)
     }
     res.status(200).json({ responseObject: customizedSVGs })
-  } catch (err) {
+  } catch (err: any) {
     V1Logger.logError('getSVGCode', err)
     next(err)
   }
@@ -42,7 +42,7 @@ const downloadSVG = async (req: Express.Request, res: Express.Response, next: Ex
     const serializedData = serializer({ icons: [iconName] }, 'svg')
     analyticsServices.createAnalyticDocument(serializedData)
     res.download(iconPath)
-  } catch (err) {
+  } catch (err: any) {
     V1Logger.logError('getSVGCode', err)
     next(err)
   }
@@ -64,7 +64,7 @@ const fontsApi = async (req: Express.Request, res: Express.Response, next: Expre
     // add analytics data to db:
     await analyticsServices.createAnalyticDocument(serializedData)
     res.status(200).send((serializedData.timestamp).toString())
-  } catch (err) {
+  } catch (err: any) {
     V1Logger.logError('fontsApi', err)
     next(err)
   }
@@ -86,7 +86,7 @@ const downloadPNG = async (req: Express.Request, res: Express.Response, next: Ex
     const serializedData = serializer({ icons: [iconName] }, 'png')
     analyticsServices.createAnalyticDocument(serializedData)
     res.download(outputPath)
-  } catch (err) {
+  } catch (err: any) {
     V1Logger.logError('pngDownload', err)
     next(err)
   }
@@ -100,6 +100,9 @@ const iconCustomization = async (req: Express.Request, res: Express.Response, ne
     const svgStrings = {}
     for (let i = 0; i < icons.length; i++) {
       const svgString = await getSvgCode(theme, icons[i])
+      if (svgString === 'NOT FOUND') {
+        throw new Error(`${icons[i]} icon's file is not found`)
+      }
       const svgCustomizer = new SvgFactory(svgString, customizationConfig, !!customizationConfig)
       const customizedSvg = svgCustomizer.finalizeIcon()
       svgStrings[icons[i]] = customizedSvg
@@ -109,7 +112,7 @@ const iconCustomization = async (req: Express.Request, res: Express.Response, ne
     const serializedData = serializer(req.body, req.body.exportAs, true)
     analyticsServices.createAnalyticDocument(serializedData)
     res.status(200).send((timestamp).toString())
-  } catch (err) {
+  } catch (err: any) {
     V1Logger.logError('iconCustomization', err)
     next(err)
   }
@@ -129,7 +132,7 @@ const downloadImage = async (req: Express.Request, res: Express.Response, next: 
       file = `${tempDirectory}/${dist}.zip`
     }
     res.download(file)
-  } catch (err) {
+  } catch (err: any) {
     V1Logger.logError('downloadImage', err)
     next(err)
   }

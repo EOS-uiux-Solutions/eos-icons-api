@@ -9,9 +9,10 @@ COPY package*.json ./
 RUN apt-get update -y && \
     apt-get install fontforge ttfautohint -y
 # Install app dependencies
+RUN npm set unsafe-perm true
 RUN npm install -g grunt-cli
 RUN npm install
 # Bundle app source
-COPY . .
+COPY . .heroku
 EXPOSE 3131
 CMD [ "npm","start" ]
