@@ -4,6 +4,7 @@ import svg2img from 'svg2img'
 const psvg2img = pify(svg2img)
 
 const svgToPng = async (pngSize: number, svgPath: string) => {
+  console.log(`debug: ${svgPath}`)
   try {
     const svgOptions = {
       width: pngSize,
