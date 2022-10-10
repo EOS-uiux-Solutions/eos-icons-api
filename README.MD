@@ -66,17 +66,16 @@ git clone https://github.com/EOS-uiux-Solutions/eos-icons-api
 3. You can test All the APIs using `npm run test` 
 
 
+## Learn more about the EOS UX/UI Solutions
 
+- [EOS Icons](https://eos-icons.com)
 
-## Learn more about the EOS Design System
+- [EOS User Story](https://userstory.site)
 
-* [EOS Design System](https://www.eosdesignsystem.com/)
+- [Follow us on Twitter](https://twitter.com/eos_uxui)
 
-* [EOS Icons](icons.eosdesignsystem.com/)
+- [Join us on Slack](https://slack.userstory.site)
 
-* [Follow us on Twitter](https://twitter.com/eosdesignsystem)
-
-* [Join us in Slack](https://slack.eosdesignsystem.com)
 
 ### Our "thank you" section
 
